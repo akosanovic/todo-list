@@ -1,0 +1,15 @@
+
+html{
+	font-size: 16px;
+}
+body{
+	font-size: $fs;
+	line-height: $lh;
+	font-family: $ff;
+}
+h1{
+	-webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}

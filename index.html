@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>To Do List</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="css/script.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!-- FAVICON -->
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+	<div class="pageContainer page--container">
+		<div class="pageContent">
+			<header class="header">
+				<h1>toDo </h1>
+			</header>
+
+			<main class="mainContainer">
+				<div class="mainContent">
+					<!-- Task List:: BEGIN -->
+					<ul class="toDoList card--container">
+						
+						<li class="toDoCard to--do--card "> 
+							<div class="taskStatus">
+								<input type="checkbox" name="taskStatus">
+							</div>	
+
+
+							<div class="taskDescription">
+								<input type="text" class="taskDescriptionInput task--input" name="taskDescription" placeholder="Remember... Remember" autofocus>
+							</div>
+						</li> 
+
+					
+					<!-- Dynamically filled with JS/TS -->
+
+					</ul><!-- Task List:: END -->
+
+					<div class="listFooter">
+						
+					</div>
+				</div> <!-- Main Content:: END -->
+			</main>
+		</div><!-- Page Content:: END -->
+	</div><!-- Page Container:: END -->
+
+
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+	<!-- <script type="text/javascript" src="js/style.js"></script> -->
+
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

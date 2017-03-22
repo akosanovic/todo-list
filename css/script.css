@@ -1,0 +1,198 @@
+/* line 5, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 2, ../scss/_main-style.scss */
+html {
+  font-size: 16px;
+}
+
+/* line 5, ../scss/_main-style.scss */
+body {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-family: "Helvetica";
+}
+
+/* line 10, ../scss/_main-style.scss */
+h1 {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+/* line 2, ../scss/_page-layout.scss */
+.pageContainer {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f5f5f5;
+}
+/* line 8, ../scss/_page-layout.scss */
+.pageContainer .pageContent {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* line 15, ../scss/_page-layout.scss */
+.mainContainer {
+  background: #fff;
+}
+/* line 17, ../scss/_page-layout.scss */
+.mainContainer .mainContent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+}
+
+/* line 26, ../scss/_page-layout.scss */
+.header {
+  opacity: 0.65;
+  color: rgba(168, 168, 168, 0.85);
+  font-size: 4.5rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* line 3, ../scss/_list.scss */
+.toDoList {
+  -moz-box-shadow: 10px 10px 5px 0px #e8e8e8;
+  -webkit-box-shadow: 10px 10px 5px 0px #e8e8e8;
+  box-shadow: 10px 10px 5px 0px #e8e8e8;
+}
+/* line 5, ../scss/_list.scss */
+.toDoList:before {
+  content: "";
+  display: block;
+  border-top: 2rem solid rgba(25, 20, 20, 0.75);
+  opacity: 0.5;
+}
+/* line 11, ../scss/_list.scss */
+.toDoList .toDoCard {
+  overflow: hidden;
+  *zoom: 1;
+  background-color: #fff;
+  color: #333;
+  border-bottom: 1px solid rgba(136, 136, 136, 0.5);
+}
+/* line 16, ../scss/_list.scss */
+.toDoList .toDoCard:last-child {
+  border-bottom-width: 2px;
+}
+/* line 19, ../scss/_list.scss */
+.toDoList .toDoCard .taskStatus {
+  float: left;
+  display: block;
+  width: 5%;
+  padding: 0.75rem 0;
+  border-right: 1px solid red;
+}
+/* line 26, ../scss/_list.scss */
+.toDoList .toDoCard .taskDescription {
+  float: left;
+  position: relative;
+  display: block;
+  width: 90%;
+}
+/* line 32, ../scss/_list.scss */
+.toDoList .toDoCard .taskDescription .taskDescriptionInput {
+  padding: 0.75rem 0 0.75rem 0.75rem;
+  font-size: 1rem;
+  height: 1.5rem;
+  border: 0;
+  display: block;
+  width: 100%;
+  color: #333;
+}
+/* line 41, ../scss/_list.scss */
+.toDoList .toDoCard .taskDescription .taskDescriptionInput:focus {
+  border: 0;
+  outline-offset: 0;
+  outline: 0;
+}
+/* line 47, ../scss/_list.scss */
+.toDoList .toDoCard .taskDescription .closeCardIconContainer {
+  position: absolute;
+  right: -2.5rem;
+  top: 0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  font-family: cursive;
+}
+/* line 58, ../scss/_list.scss */
+.toDoList .toDoCard .taskDescription .closeCardIconContainer:focus, .toDoList .toDoCard .taskDescription .closeCardIconContainer:hover {
+  border: 0.5px solid rgba(128, 128, 128, 0.5);
+  background-color: #e7e7e7;
+}
+/* line 63, ../scss/_list.scss */
+.toDoList .toDoCard .taskDescription .closeCardIconContainer .fa-check {
+  display: inline-block;
+  font-size: 1rem;
+  text-align: center;
+}

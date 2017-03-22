@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "compileOnSave": true,
+        "module": "es6",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": true
+
+    },
+    // "include": [
+    // 	"ts/*"
+    // ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}

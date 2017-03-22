@@ -1,0 +1,71 @@
+
+
+.toDoList{
+	@include box-shadow( 10px 10px 5px 0px rgba(232,232,232,1) );
+	&:before{
+		content: "";
+		display: block;
+		border-top: 2rem solid rgba(25, 20, 20, 0.75);
+		opacity: 0.5;
+	}
+	.toDoCard {
+		@include clearfix;
+		background-color: $white;
+		color: #333;
+		border-bottom: 1px solid rgba(136, 136, 136, .5);
+		&:last-child{
+			border-bottom-width: 2px;
+		}
+		.taskStatus {
+			float: left;
+			display: block;
+			width: 5%;
+			padding: $lh/2 0;
+			border-right: 1px solid red;
+		}
+		.taskDescription {
+			float: left;
+			position: relative;
+			display: block;
+			width: 90%;
+			
+			.taskDescriptionInput {
+				padding: $lh/2 0 $lh/2  $lh/2;
+				font-size: $fs;
+				height: $lh;
+				border: 0;
+				display: block;
+				width: 100%;
+				color: #333;
+
+				&:focus {
+					border:0;
+					outline-offset: 0;
+					outline: 0;
+				}
+			}
+			.closeCardIconContainer{
+				position: absolute;
+				right: -2.5rem;
+				top: $lh/5;
+				width: $lh;
+				height: $lh;
+
+				cursor: pointer;
+				text-align: center;
+				font-weight: bold;
+				font-family: cursive;
+				&:focus,
+				&:hover{
+					border: 0.5px solid rgba(128, 128, 128, 0.5);
+					background-color: #e7e7e7;
+				}
+				.fa-check{
+					display: inline-block;
+					font-size: $fs;
+					text-align: center;
+				}
+			}
+		}
+	}
+}
