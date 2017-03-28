@@ -30,7 +30,8 @@
 			border-left: 1px solid red;
 			
 			.taskDescriptionInput {
-				padding: $lh/2 0 $lh/2  $lh/2;
+				text-indent: $lh/2;
+				padding: $lh/2 0 $lh/2 0;
 				font-size: $fs;
 				height: $lh;
 				border: 0;
@@ -44,7 +45,7 @@
 					outline: 0;
 				}
 			}
-			.closeCardIconContainer{
+			.cardModifyBtnContainer{
 				position: absolute;
 				right: -2.5rem;
 				top: $lh/5;
@@ -56,14 +57,33 @@
 				font-weight: bold;
 				font-family: cursive;
 				&:focus,
-				&:hover{
-					border: 0.5px solid rgba(128, 128, 128, 0.5);
-					background-color: #e7e7e7;
+				&:hover,
+				&:active{
+					border: 0;
+					outline: 0;
+				}
+				&.showSubmitNewTaskButton{
+					&:focus,
+					&:hover{
+						border: 0.5px solid rgba(128, 128, 128, 0.5);
+						background-color: #e7e7e7;
+					}
+					.fa-check{
+						visibility: visible;
+						opacity: 1;
+					}
 				}
 				.fa-check{
 					display: inline-block;
+					visibility: hidden;
+					opacity: 0;
+
 					font-size: $fs;
 					text-align: center;
+					
+					&:focus{
+						outline: 0;
+					}
 				}
 			}
 		}
