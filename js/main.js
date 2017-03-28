@@ -75,42 +75,95 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 
+/*
+    Adding new task card can be done on enter, clicking on the submit button or clicking enter on submit button
+    Every task is submited:
+        - New task input field is empty and focus is back on it
+
+*/
 var ToDoCard = (function () {
     function ToDoCard() {
         // data property storing page container
         // visible globally 
         this.pageContainer = __WEBPACK_IMPORTED_MODULE_0_jquery__('.page--container');
+        // append new task cards
         this.cardContainer = this.pageContainer.find('.card--container');
+        // take user value from input field for new task cards
+        this.newTaskInputField = this.pageContainer.find('.new--task--input');
+        // show submit task button on input
+        this.submitNewTask = this.pageContainer.find('.submit--new--task--btn');
         // initializing event handlers on document 
         __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("keypress", this.keypressHandler.bind(this));
         __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("click", this.clickHandler.bind(this));
-        console.log("this is ", this);
+        // display submit new task button
+        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on('input', this.inputHandler.bind(this));
     }
     ToDoCard.prototype.keypressHandler = function (e) {
-        if (e.charCode === 13) {
-            console.log(e.charCode);
-            this.appendElementToContainer(this.cardContainer, this.renderToDoCard(this.fetchUserInput()));
+        // which key was pressed
+        var keyPressed = e.charCode;
+        // what element was the target of the keypress
+        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
+        // if there is value in New Task Input  
+        // display check icon
+        // if enter was pressed on new task input
+        // add new task card to the card container 
+        if (keyPressed === 13) {
+            var newTaskInputField = target.closest(this.newTaskInputField);
+            if (newTaskInputField.length > 0) {
+                this.appendNewTaskToCardContainer();
+                this.toggleSubmitButton();
+            }
+            var submitButton = target.closest(this.submitNewTask);
+            if (submitButton.length > 0) {
+                this.appendNewTaskToCardContainer();
+                this.toggleSubmitButton();
+            }
         }
     };
     ToDoCard.prototype.clickHandler = function (e) {
         var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
+        // submit user input to the new card
+        var element = target.closest(this.submitNewTask);
+        if (element.length > 0) {
+            this.appendNewTaskToCardContainer();
+            this.toggleSubmitButton();
+        }
+    };
+    ToDoCard.prototype.inputHandler = function (e) {
+        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
+        var element = target.closest(this.newTaskInputField);
+        if (element.length > 0) {
+            this.toggleSubmitButton();
+        }
     };
     ToDoCard.prototype.fetchUserInput = function () {
-        var userInputField = this.pageContainer.find('.new--task--input');
-        var userInputValue = userInputField.val();
+        var userInputValue = this.newTaskInputField.val();
         if (userInputValue) {
-            var userInput = userInputValue;
             // clear text input for new input
-            userInputField.val('');
-            return userInput;
+            this.newTaskInputField.val('');
+            return userInputValue;
         }
     };
     ToDoCard.prototype.renderToDoCard = function (inputValue) {
         if (inputValue) {
-            var toDoCardHTML = "\n\t\t\t\t\t\t\t<li class='toDoCard to--do--card '>\n\t\t\t\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t\t\t\t<input type='checkbox' name='taskStatus'>\n\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t\t\t\t<input type='text' class='taskDescriptionInput task--input' name='taskDescription' value = \"" + inputValue + "\">\n\t\t\t\t\t\t\t\t\t<div class='closeCardIconContainer close--card'>\n\t\t\t\t\t\t\t\t\t\t<i class='fa fa-times' aria-hidden='true' ></i>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</li> ";
+            var toDoCardHTML = "<li class='toDoCard to--do--card '>\n\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t<input type='checkbox' name='taskStatus'>\n\t\t\t\t\t</div>\n\n\n\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t<input type='text' class='taskDescriptionInput to--do--task--input' name='taskDescription' disabled value = \"" + inputValue + "\">\n\t\t\t\t\t\t<div class='cardModifyBtnContainer card--modify--btn'>\n\t\t\t\t\t\t\t<i class='fa fa-times' aria-hidden='true' ></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</li> ";
             return toDoCardHTML;
         }
     };
+    ToDoCard.prototype.appendNewTaskToCardContainer = function () {
+        return this.appendElementToContainer(this.cardContainer, this.renderToDoCard(this.fetchUserInput()));
+    };
+    // show/hide buton if New Task input has value
+    ToDoCard.prototype.toggleSubmitButton = function () {
+        var inputValue = this.newTaskInputField.val();
+        if (inputValue.length > 0) {
+            this.submitNewTask.addClass('showSubmitNewTaskButton');
+        }
+        else {
+            this.submitNewTask.removeClass('showSubmitNewTaskButton');
+        }
+    };
+    // helper classes
     ToDoCard.prototype.appendElementToContainer = function (containerToAppend, valueToAppen) {
         return containerToAppend.append(valueToAppen);
     };
