@@ -77,40 +77,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var ToDoCard = (function () {
     function ToDoCard() {
+        // data property storing page container
+        // visible globally 
         this.pageContainer = __WEBPACK_IMPORTED_MODULE_0_jquery__('.page--container');
-        this.keypressHandler = function (e) {
-            if (e.charCode === 13) {
-                this.getUserInputContent();
-            }
-        };
         this.cardContainer = this.pageContainer.find('.card--container');
+        // initializing event handlers on document 
         __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("keypress", this.keypressHandler.bind(this));
+        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("click", this.clickHandler.bind(this));
+        console.log("this is ", this);
     }
-    ToDoCard.prototype.getUserInputContent = function () {
-        this.userInputField = this.pageContainer.find('.task--input');
-        this.userInputValue = this.userInputField.val();
-        if (this.userInputValue.length > 0) {
-            var userInput = this.userInputValue;
-            this.userInputField.val("");
-            this.fillCardContent(userInput);
+    ToDoCard.prototype.keypressHandler = function (e) {
+        if (e.charCode === 13) {
+            console.log(e.charCode);
+            this.appendElementToContainer(this.cardContainer, this.renderToDoCard(this.fetchUserInput()));
         }
     };
-    ToDoCard.prototype.fillCardContent = function (userInput) {
-        var cardBluePrint = "<li class='toDoCard to--do--card '>\n\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t<input type='checkbox' name='taskStatus'>\n\t\t\t\t\t</div>\n\n\n\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t<input type='text' class='taskDescriptionInput task--input' name='taskDescription' value = \" " + userInput + "\">\n\t\t\t\t\t\t<div class='closeCardIconContainer close--card'>\n\t\t\t\t\t\t\t<i class='fa fa-times' aria-hidden='true' ></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</li> ";
-        this.renderNewToDoCard(cardBluePrint);
+    ToDoCard.prototype.clickHandler = function (e) {
+        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
     };
-    ToDoCard.prototype.appendElement = function (appendTo, appendElement) {
-        appendTo.append(appendElement);
+    ToDoCard.prototype.fetchUserInput = function () {
+        var userInputField = this.pageContainer.find('.new--task--input');
+        var userInputValue = userInputField.val();
+        if (userInputValue) {
+            var userInput = userInputValue;
+            // clear text input for new input
+            userInputField.val('');
+            return userInput;
+        }
     };
-    ToDoCard.prototype.renderNewToDoCard = function (userInputPlaceholder) {
-        this.appendElement(this.cardContainer, this.fillCardContent(userInputPlaceholder));
+    ToDoCard.prototype.renderToDoCard = function (inputValue) {
+        if (inputValue) {
+            var toDoCardHTML = "\n\t\t\t\t\t\t\t<li class='toDoCard to--do--card '>\n\t\t\t\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t\t\t\t<input type='checkbox' name='taskStatus'>\n\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t\t\t\t<input type='text' class='taskDescriptionInput task--input' name='taskDescription' value = \"" + inputValue + "\">\n\t\t\t\t\t\t\t\t\t<div class='closeCardIconContainer close--card'>\n\t\t\t\t\t\t\t\t\t\t<i class='fa fa-times' aria-hidden='true' ></i>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</li> ";
+            return toDoCardHTML;
+        }
+    };
+    ToDoCard.prototype.appendElementToContainer = function (containerToAppend, valueToAppen) {
+        return containerToAppend.append(valueToAppen);
     };
     return ToDoCard;
 }());
-// loading aplication once DOM is ready using 'jQuery.ready'
+// loading aplication once DOM is ready using $(callback)
 __WEBPACK_IMPORTED_MODULE_0_jquery__(function () {
-    var myCard = new ToDoCard();
-    //console.log(myCard.cardContainer.append(myCard.renderCard("hello")));
+    var todoCard = new ToDoCard();
 });
 
 
