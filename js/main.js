@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -72,8 +72,44 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToDoItem", function() { return ToDoItem; });
+var ToDoItem = (function () {
+    function ToDoItem(taskDescription, taskId) {
+        this.taskDescription = taskDescription;
+        this.taskId = taskId;
+        this.htmlContent = this.getHtml();
+        this.jqueryElement = $(this.htmlContent);
+    }
+    ToDoItem.prototype.appendTo = function (parent) {
+        parent.append(this.jqueryElement);
+    };
+    ToDoItem.prototype.getHtml = function () {
+        var toDoCardHTML = "<li class='toDoCard to--do--card' data-id=\"" + this.taskId + "\"'>\n\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t<input type='checkbox' class=\"task--checkbox\" name='taskStatus'>\n\t\t\t\t\t</div>\n\n\n\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t<input type='text' class='taskDescriptionInput to--do--task--input' name='taskDescription' disabled value = \"" + this.taskDescription + "\">\n\t\t\t\t\t\t<div class='cardModifyBtnContainer card--modify--btn'>\n\t\t\t\t\t\t\t<i class='fa fa-times' aria-hidden='true' ></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</li> ";
+        return toDoCardHTML;
+    };
+    ToDoItem.prototype.onClick = function (e) {
+    };
+    ToDoItem.prototype.getTaskId = function () {
+        return this.taskId;
+    };
+    ToDoItem.prototype.getTaskDescription = function () {
+        return this.taskDescription;
+    };
+    return ToDoItem;
+}());
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ToDoItem__ = __webpack_require__(0);
+
 
 /*
     Adding new task card can be done on enter, clicking on the submit button or clicking enter on submit button
@@ -94,6 +130,10 @@ var ToDoCard = (function () {
         this.newTaskInputField = this.pageContainer.find('.new--task--input');
         // show submit task button on input
         this.submitNewTask = this.pageContainer.find('.submit--new--task--btn');
+        this.todoTasksCardContainer = this.pageContainer.find('.todo--tasks--container');
+        this.doneTasksCardContainer = this.pageContainer.find('.done--tasks--container');
+        // counter
+        this.numberOfTasks = 0;
         // object is updated: 
         // on task submit
         // on task delete
@@ -112,22 +152,20 @@ var ToDoCard = (function () {
     }
     // INITIALIZING HANDLERS :: BEGIN
     ToDoCard.prototype.keypressHandler = function (e) {
-        // what element was the target of the keypress
         var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
         // if there is value in New Task Input  
         // display check icon
         // if enter was pressed on new task input
         // add new task card to the card container 
         if (e.charCode === 13 || e.which === 13 || e.key == 'Enter') {
-            console.log("enter clicked");
             var newTaskInputField = target.closest(this.newTaskInputField);
             if (newTaskInputField.length > 0) {
-                this.submitNewValue();
+                this.createNewTask();
             }
             // when using tab to move to submit button
             var submitButton = target.closest(this.submitNewTask);
             if (submitButton.length > 0) {
-                this.submitNewValue();
+                this.createNewTask();
             }
         }
     };
@@ -139,13 +177,26 @@ var ToDoCard = (function () {
         }
     };
     ToDoCard.prototype.clickHandler = function (e) {
+        // element = target.closest('.to--do--card')
+        // if element.length > 0
+        // 		clickedTaskId = element.attr("data-task-id")
+        // 
+        // 		for card in cardData.todoTasks
+        // 				if card.taskId
         var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
         // submit user input to the new card
-        var element = target.closest(this.submitNewTask);
-        if (element.length > 0) {
-            this.submitNewValue();
+        var submitButton = target.closest(this.submitNewTask);
+        if (submitButton.length > 0) {
+            this.createNewTask();
         }
         // change status of taskcard
+        // toggle task compleated status
+        var checkbox = this.pageContainer.find('.task--checkbox');
+        var checkboxClicked = target.closest(checkbox);
+        if (checkboxClicked.length > 0) {
+            var taskModified = checkboxClicked.closest('.to--do--card');
+            this.toggleTaskCompleatStatus(checkboxClicked, taskModified);
+        }
         // remove task card
     };
     ToDoCard.prototype.doubleClickHandler = function (e) {
@@ -154,14 +205,16 @@ var ToDoCard = (function () {
         var toDoCardClicked = target.closest(this.toDoCardElement);
         if (toDoCardClicked.length > 0) {
             // enable todo card text editing
-            console.log(toDoCardClicked);
             toDoCardClicked.find('.to--do--task--input').prop('disabled', false);
         }
     }; // INITIALIZING HANDLERS :: END
     // if there is value in New Input Task and value is submited 
     // update both object array and screen display
-    ToDoCard.prototype.submitNewValue = function () {
-        var newTask = this.fetchUserInput();
+    ToDoCard.prototype.createNewTask = function () {
+        var newTask = {
+            id: this.numberOfTasks++,
+            taskDescription: this.fetchUserInput()
+        };
         this.appendNewTaskToCardContainer(newTask);
         this.updateDataObject(newTask);
         this.toggleSubmitButton();
@@ -179,7 +232,11 @@ var ToDoCard = (function () {
         }
     };
     ToDoCard.prototype.appendNewTaskToCardContainer = function (newTask) {
-        return this.appendElementToContainer(this.todoTaskListContainer, this.renderToDoCard(newTask));
+        console.log(newTask.id);
+        var item = new __WEBPACK_IMPORTED_MODULE_1__ToDoItem__["ToDoItem"](newTask.taskDescription, newTask.id);
+        item.appendTo(this.todoTaskListContainer);
+        this.cardData.todoTasks.push(item);
+        // return this.appendElementToContainer( this.todoTaskListContainer, this.renderToDoCard( newTask ));
     };
     // show/hide buton if New Task input has value
     ToDoCard.prototype.toggleSubmitButton = function () {
@@ -191,16 +248,42 @@ var ToDoCard = (function () {
             this.submitNewTask.removeClass('showSubmitNewTaskButton');
         }
     };
-    ToDoCard.prototype.renderToDoCard = function (inputValue) {
-        if (inputValue) {
-            var toDoCardHTML = "<li class='toDoCard to--do--card data-id=\" placeholder \"'>\n\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t<input type='checkbox' name='taskStatus'>\n\t\t\t\t\t</div>\n\n\n\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t<input type='text' class='taskDescriptionInput to--do--task--input' name='taskDescription' disabled value = \"" + inputValue + "\">\n\t\t\t\t\t\t<div class='cardModifyBtnContainer card--modify--btn'>\n\t\t\t\t\t\t\t<i class='fa fa-times' aria-hidden='true' ></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</li> ";
-            return toDoCardHTML;
+    // MODIFYING TODO CARDS
+    // to do cards on double click change content
+    // toggle cards from done to todo list on checkbox click
+    // remove cards on click on delete button
+    // store all cards into local storage - string JSON.stringify
+    // on tab reopening reload cards 
+    // store all ( todo, done ) cards in object 
+    ToDoCard.prototype.toggleTaskCompleatStatus = function (checkboxClicked, taskCardWithModifiedCompleatStatus) {
+    };
+    ToDoCard.prototype.toggleTaskCompleatedStatus = function (checkboxClicked, taskCardWithModifiedCompleatStatus) {
+        console.log(this.cardData);
+        var idOfModifiedTask = taskCardWithModifiedCompleatStatus.data('id');
+        var lengthOftoDoArray = this.cardData.todoTasks.length;
+        var lengthOfDoneTasksArray = this.cardData.todoTasks.length;
+        //  move task to done list
+        if (checkboxClicked.is(':checked')) {
+            taskCardWithModifiedCompleatStatus.remove();
+            this.doneTasksCardContainer.append(taskCardWithModifiedCompleatStatus);
+            for (var i = 0; i < lengthOftoDoArray; i++) {
+                var currnetTask = this.cardData.todoTasks[i];
+                if (idOfModifiedTask === this.cardData.todoTasks[i].id) {
+                    var modifiedObject = this.cardData.todoTasks[i];
+                    this.cardData.todoTasks.splice(modifiedObject);
+                }
+            }
+        }
+        else {
+            taskCardWithModifiedCompleatStatus.remove();
+            this.todoTasksCardContainer.prepend(taskCardWithModifiedCompleatStatus);
         }
     };
     // helper classes
     ToDoCard.prototype.appendElementToContainer = function (containerToAppend, valueToAppen) {
         return containerToAppend.append(valueToAppen);
     };
+    // when enter is pressed clear new input field
     ToDoCard.prototype.clearInputField = function (inputFieldToClear) {
         return inputFieldToClear.val('');
     };
@@ -213,7 +296,7 @@ __WEBPACK_IMPORTED_MODULE_0_jquery__(function () {
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10464,9 +10547,10 @@ return jQuery;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(1);
 module.exports = __webpack_require__(0);
 
 

@@ -5,7 +5,8 @@ module.exports = {
 	devtool: 'source-map',
 	entry:[
 		// './ts/style.ts',
-		'./ts/ToDoCard.ts'
+		'./ts/ToDoCard.ts',
+		'./ts/ToDoItem.ts'
 	],
 	output:{
 		path: "js",

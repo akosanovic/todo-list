@@ -1,5 +1,5 @@
 import * as $ from 'jquery';
-
+import {ToDoItem} from './ToDoItem';
 /*
 	Adding new task card can be done on enter, clicking on the submit button or clicking enter on submit button
 	Every task is submited:
@@ -15,18 +15,23 @@ class ToDoCard{
     pageContainer: JQuery = $('.page--container');
     
     // holds both list of todo tasks and list of done tasks
-     cardContainer: JQuery = this.pageContainer.find('.card--container');
+    cardContainer: JQuery = this.pageContainer.find('.card--container');
 
     // append new task cards
     todoTaskListContainer: JQuery = this.pageContainer.find('.todo--tasks--container');
     
     // take user value from input field for new task cards
-    newTaskInputField: JQuery = this.pageContainer.find('.new--task--input');
+    newTaskInputField: JQuery = this.pageContainer.find('.new--task--input');      
 
     // show submit task button on input
     submitNewTask: JQuery = this.pageContainer.find('.submit--new--task--btn');
 
+	todoTasksCardContainer: JQuery = this.pageContainer.find('.todo--tasks--container');
+	
+	doneTasksCardContainer: JQuery = this.pageContainer.find('.done--tasks--container');
 
+    // counter
+    numberOfTasks: number = 0;
 
     // todo card not existing on load, defined on duble click
 	toDoCardElement: JQuery;              
@@ -34,8 +39,6 @@ class ToDoCard{
     // data filled on keypress event
 	taskInputs: JQuery;
 
-	
-	
 
 	constructor(){
 
@@ -71,8 +74,6 @@ class ToDoCard{
 	// INITIALIZING HANDLERS :: BEGIN
 
 	keypressHandler(e): void {
-		
-		// what element was the target of the keypress
 		let target: JQuery = $(e.target);
 
 		// if there is value in New Task Input  
@@ -81,17 +82,17 @@ class ToDoCard{
 		// if enter was pressed on new task input
 		// add new task card to the card container 
 		if(  e.charCode === 13 || e.which === 13 || e.key == 'Enter'){
-			console.log("enter clicked")
+		
 
 			let newTaskInputField = target.closest( this.newTaskInputField );	
 				
 			if(newTaskInputField.length > 0){
-				this.submitNewValue();
+				this.createNewTask();
 			}
 			// when using tab to move to submit button
 			let submitButton = target.closest(this.submitNewTask);
 			if(submitButton.length > 0){
-				this.submitNewValue();
+				this.createNewTask();
 			}
 		}
 	}
@@ -109,22 +110,40 @@ class ToDoCard{
 
 	clickHandler(e): void{
 
+		// element = target.closest('.to--do--card')
+		// if element.length > 0
+		// 		clickedTaskId = element.attr("data-task-id")
+		// 
+		// 		for card in cardData.todoTasks
+		// 				if card.taskId
+
 		let target:JQuery = $(e.target);
 
 		// submit user input to the new card
-		let element = target.closest(this.submitNewTask);
+		let submitButton = target.closest(this.submitNewTask);
 		
-		if(element.length > 0){
+		if(submitButton.length > 0){
 			
-			this.submitNewValue();
+			this.createNewTask();
 		}
 		// change status of taskcard
+		// toggle task compleated status
+		let checkbox: JQuery = this.pageContainer.find('.task--checkbox');
+		
+		let checkboxClicked = target.closest(checkbox);
+		
+		if(checkboxClicked.length > 0){
+
+			let taskModified: JQuery =  checkboxClicked.closest( '.to--do--card');	
+
+			
+			this.toggleTaskCompleatStatus( checkboxClicked, taskModified );
+		}
 
 		// remove task card
 	}
 
-	doubleClickHandler(e): void{
-		
+	doubleClickHandler(e): void{		
 		let target: JQuery = $(e.target);
 		
 		this.toDoCardElement = this.pageContainer.find('.to--do--card');
@@ -132,7 +151,6 @@ class ToDoCard{
 
 		if(toDoCardClicked.length > 0 ){
 			// enable todo card text editing
-			console.log(toDoCardClicked);
 			toDoCardClicked.find('.to--do--task--input').prop('disabled', false);
 		}
 
@@ -142,9 +160,14 @@ class ToDoCard{
 
 	// if there is value in New Input Task and value is submited 
 	// update both object array and screen display
-	submitNewValue(){
+	createNewTask(){
 
-		let newTask = this.fetchUserInput();
+	
+		var newTask = {
+			id: this.numberOfTasks++,
+			taskDescription: this.fetchUserInput()
+		}
+		
 
 		
 		this.appendNewTaskToCardContainer( newTask );
@@ -154,7 +177,7 @@ class ToDoCard{
 
 
 	
-	updateDataObject( newTask ){
+	updateDataObject( newTask: Object ){
 
 		// when user submits new task
 		this.cardData.todoTasks.push( newTask )
@@ -169,20 +192,20 @@ class ToDoCard{
 			
 			// clear text input for new input
 			this.clearInputField( this.newTaskInputField )
-
-
 			return newTaskData;
 		}
 	}
 
+	appendNewTaskToCardContainer ( newTask ): void {
 
-	
-	
+		console.log(newTask.id)
 
+		var item : ToDoItem = new ToDoItem(newTask.taskDescription, newTask.id);
+		item.appendTo(this.todoTaskListContainer);
 
-	appendNewTaskToCardContainer ( newTask ): JQuery{
+		this.cardData.todoTasks.push( item )
 
-		return this.appendElementToContainer( this.todoTaskListContainer, this.renderToDoCard( newTask ));
+		// return this.appendElementToContainer( this.todoTaskListContainer, this.renderToDoCard( newTask ));
 
 	}
 
@@ -199,44 +222,6 @@ class ToDoCard{
 		}
 	}
 
-	renderToDoCard( inputValue ): string{ 	
-
-		if(inputValue){
-			var toDoCardHTML = 
-				`<li class='toDoCard to--do--card data-id=" placeholder "'>
-					<div class='taskStatus'>
-						<input type='checkbox' name='taskStatus'>
-					</div>
-
-
-					<div class='taskDescription'>
-						<input type='text' class='taskDescriptionInput to--do--task--input' name='taskDescription' disabled value = \"`+inputValue+`\">
-						<div class='cardModifyBtnContainer card--modify--btn'>
-							<i class='fa fa-times' aria-hidden='true' ></i>
-						</div>
-					</div>
-				</li> `
-
-			return toDoCardHTML;
-		}
-	}
-
-
-
-
-
-
-	// helper classes
-	appendElementToContainer( containerToAppend, valueToAppen ): JQuery{
-		return containerToAppend.append(valueToAppen);
-	}
-
-	clearInputField( inputFieldToClear: JQuery ): JQuery{
-		return inputFieldToClear.val('');
-	}
-
-
-
 
 	// MODIFYING TODO CARDS
 
@@ -248,8 +233,63 @@ class ToDoCard{
 	// store all ( todo, done ) cards in object 
 
 
+		toggleTaskCompleatStatus( checkboxClicked, taskCardWithModifiedCompleatStatus ){
+		
 
-	// 
+		}
+
+
+
+
+	toggleTaskCompleatedStatus( checkboxClicked, taskCardWithModifiedCompleatStatus ){
+		
+
+		console.log(
+			this.cardData
+			)
+
+		var idOfModifiedTask = taskCardWithModifiedCompleatStatus.data('id');
+		
+		let lengthOftoDoArray = this.cardData.todoTasks.length;
+		let lengthOfDoneTasksArray = this.cardData.todoTasks.length;
+
+		//  move task to done list
+		if(checkboxClicked.is(':checked')){
+			taskCardWithModifiedCompleatStatus.remove();
+
+
+			this.doneTasksCardContainer.append( taskCardWithModifiedCompleatStatus );
+
+
+			for(var i = 0; i < lengthOftoDoArray; i++ ){
+
+				let currnetTask = this.cardData.todoTasks[i];
+
+				if (idOfModifiedTask === this.cardData.todoTasks[i].id){
+					let modifiedObject = this.cardData.todoTasks[i];
+					this.cardData.todoTasks.splice(modifiedObject);
+				
+				}
+			}
+		}
+
+		// move task from done to to-do list
+		else{
+			taskCardWithModifiedCompleatStatus.remove();
+			this.todoTasksCardContainer.prepend( taskCardWithModifiedCompleatStatus );
+		}		
+	}
+
+
+	// helper classes
+	appendElementToContainer( containerToAppend, valueToAppen ): JQuery{
+		return containerToAppend.append(valueToAppen);
+	}
+
+	// when enter is pressed clear new input field
+	clearInputField( inputFieldToClear: JQuery ): JQuery{
+		return inputFieldToClear.val('');
+	}
 
 }
 
