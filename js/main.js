@@ -78,7 +78,7 @@ var ToDoItem = (function () {
         this.parentContext = parentContext;
         this.taskId = taskObject.id;
         this.taskDescription = taskObject.taskDescription;
-        this.taskCompleated = taskObject.done;
+        this.taskCompleted = taskObject.done;
         this.htmlContent = this.getHtml();
         this.jqueryElement = $(this.htmlContent);
     }
@@ -93,7 +93,8 @@ var ToDoItem = (function () {
         parent.append(this.jqueryElement);
     };
     ToDoItem.prototype.getHtml = function () {
-        var toDoCardHTML = "<li class='toDoCard to--do--card' data-task-id=\"" + this.taskId + "\"'>\n\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t<input type='checkbox' class=\"task--done--status\" name='taskStatus'>\n\t\t\t\t\t</div>\n\n\n\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t<input type='text' class='taskDescriptionInput to--do--task--input' name='taskDescription' disabled value = \"" + this.taskDescription + "\">\n\t\t\t\t\t\t<div class='cardModifyBtnContainer card--modify--btn'>\n\t\t\t\t\t\t\t<i class='fa fa-times item--delete--button' aria-hidden='true' ></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</li> ";
+        var checkedAttr = this.taskCompleted ? "checked" : "";
+        var toDoCardHTML = "<li class='toDoCard to--do--card' data-task-id=\"" + this.taskId + ("\"'>\n\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t<input type='checkbox' class=\"task--done--status\" name='taskStatus' " + checkedAttr + ">\n\t\t\t\t\t</div>\n\n\n\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t<input type='text' class='taskDescriptionInput to--do--task--input' name='taskDescription' disabled value = \"") + this.taskDescription + "\">\n\t\t\t\t\t\t<div class='cardModifyBtnContainer card--modify--btn'>\n\t\t\t\t\t\t\t<i class='fa fa-times item--delete--button' aria-hidden='true' ></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</li> ";
         return toDoCardHTML;
     };
     ToDoItem.prototype.onClick = function (e) {
@@ -105,13 +106,12 @@ var ToDoItem = (function () {
         var checkboxClicked = target.closest('.task--done--status');
         if (checkboxClicked.length > 0) {
             if (checkboxClicked.is(':checked')) {
-                console.log("task compleated", this.taskCompleated);
-                this.taskCompleated = true;
-                this.parentContext.moveTaskToDone(this.jqueryElement, this.taskId);
+                this.taskCompleted = true;
+                this.parentContext.toggleDoneTask(this.jqueryElement, this.taskId, this.taskCompleted);
             }
             else {
-                this.taskCompleated = false;
-                this.parentContext.moveTaskToTodoList(this.jqueryElement, this.taskId);
+                this.taskCompleted = false;
+                this.parentContext.toggleDoneTask(this.jqueryElement, this.taskId, this.taskCompleted);
             }
         }
     };
@@ -120,6 +120,9 @@ var ToDoItem = (function () {
     };
     ToDoItem.prototype.getTaskDescription = function () {
         return this.taskDescription;
+    };
+    ToDoItem.prototype.getTaskStatus = function () {
+        return this.taskCompleted;
     };
     return ToDoItem;
 }());
@@ -139,8 +142,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /*
-    Adding new task card can be done on enter, clicking on the submit button or clicking enter on submit button
-    Every task is submited:
+    Adding new task card can be done on enter, clicking on submit button
+    Every task is submitted:
         - New task input field is empty and focus is back on it
 
 */
@@ -160,7 +163,18 @@ var DailyToDoCard = (function () {
         this.todoTasksCardContainer = this.pageContainer.find('.todo--tasks--container');
         this.doneTasksCardContainer = this.pageContainer.find('.done--tasks--container');
         // counter
-        this.numberOfTasks = 0;
+        this.taskCounter = 0;
+        // renderCurrentTasks() : void {
+        // 	for (let objectElement in this.todoTaskObject) {
+        // 		for (let task in this.todoTaskObject[objectElement]) {
+        // 			if (task.taskCompleted) {
+        // 				// task.appendTo(todo)
+        // 			} else {
+        // 				// task.appendTo(done)
+        // 			}
+        // 		}
+        // 	}
+        // }
         // object is updated: 
         // on task submit
         // on task delete
@@ -169,6 +183,15 @@ var DailyToDoCard = (function () {
             'todoTasks': [],
             'doneTasks': []
         };
+        // Local storage is consist of:
+        //  - converted from todoItem to todoJSON
+        // todo task list
+        // done task list
+        // counter
+        this.localStorageObject = {
+            counter: 0,
+            taskArray: []
+        };
         // initializing event handlers on document 
         __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("keypress", this.keypressHandler.bind(this));
         // display submit new task button
@@ -176,27 +199,47 @@ var DailyToDoCard = (function () {
         __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("click", this.clickHandler.bind(this));
         // remove disabled property from todo(uncopleated cards)
         __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("dblclick", this.doubleClickHandler.bind(this));
+        this.getValueFromLocalStorage();
     }
     DailyToDoCard.prototype.updateLocalStorage = function () {
-        var myString;
+        localStorage.clear();
+        this.localStorageObject.taskArray = [];
+        this.localStorageObject.counter = 0;
         for (var objectElement in this.todoTaskObject) {
             var arrayOfTodoTaskObject = this.todoTaskObject[objectElement];
-            for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
-                for (var propOfObjProp in arrayOfTodoTaskObject[i]) {
-                    myString += JSON.stringify(propOfObjProp + ": " + arrayOfTodoTaskObject[i][propOfObjProp]);
+            if (arrayOfTodoTaskObject.length > 0) {
+                for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
+                    var todoTaskObject = arrayOfTodoTaskObject[i];
+                    var taskJSON = {
+                        taskId: todoTaskObject.taskId,
+                        taskDescription: todoTaskObject.taskDescription,
+                        taskCompleted: todoTaskObject.taskCompleted
+                    };
+                    this.localStorageObject.taskArray.push(taskJSON);
                 }
             }
         }
+        this.localStorageObject.counter = this.taskCounter;
+        localStorage.setItem('localStorageObject', JSON.stringify(this.localStorageObject));
     };
     DailyToDoCard.prototype.getValueFromLocalStorage = function () {
-        for (var objectElement in this.todoTaskObject) {
-            var arrayOfTodoTaskObject = this.todoTaskObject[objectElement];
-            for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
-                for (var propOfObjProp in arrayOfTodoTaskObject[i]) {
-                    var myString = JSON.stringify(propOfObjProp + ": " + arrayOfTodoTaskObject[i][propOfObjProp]);
-                    console.log(myString);
-                }
-            }
+        if (localStorage.length > 0) {
+            var localStorageObject = JSON.parse(localStorage.getItem('localStorageObject'));
+            this.renderTasksFromLocalStorage(localStorageObject);
+        }
+    };
+    DailyToDoCard.prototype.renderTasksFromLocalStorage = function (localStorageObject) {
+        // reseting counter
+        this.taskCounter = localStorageObject.taskArray.length;
+        var localStorageItem;
+        for (var i = 0; i < localStorageObject.taskArray.length; i++) {
+            localStorageItem = localStorageObject.taskArray[i];
+            var newTask = {
+                id: i,
+                taskDescription: localStorageItem.taskDescription,
+                done: localStorageItem.taskCompleted
+            };
+            this.appendNewTaskToCardContainer(newTask);
         }
     };
     // INITIALIZING HANDLERS :: BEGIN
@@ -233,7 +276,6 @@ var DailyToDoCard = (function () {
                     if (clickedTaskId === arrayOfTodoTaskObject[i].taskId) {
                         var clickedTaskCard = arrayOfTodoTaskObject[i];
                         clickedTaskCard.onClick(e);
-                        console.log(this.todoTaskObject);
                     }
                 }
             }
@@ -243,42 +285,27 @@ var DailyToDoCard = (function () {
         if (submitButton.length > 0) {
             this.createNewTask();
         }
-        // element = target.closest('.to--do--card')
-        // if element.length > 0
-        // 		clickedTaskId = element.attr("data-task-id")
-        // 
-        // 		for card in todoTaskObject.todoTasks
-        // 				if card.taskId
-        // change status of taskcard
-        // toggle task compleated status
-        var checkbox = this.pageContainer.find('.task--checkbox');
-        var checkboxClicked = target.closest(checkbox);
-        if (checkboxClicked.length > 0) {
-            var taskModified = checkboxClicked.closest('.to--do--card');
-        }
-        // remove task card
     };
     DailyToDoCard.prototype.doubleClickHandler = function (e) {
         var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
-        this.toDoCardElement = this.pageContainer.find('.to--do--card');
-        var toDoCardClicked = target.closest(this.toDoCardElement);
-        if (toDoCardClicked.length > 0) {
-            toDoCardClicked.find('.to--do--task--input').prop('disabled', false);
+        this.todoCardElement = this.pageContainer.find('.to--do--card');
+        var todoCardElement = target.closest(this.todoCardElement);
+        if (todoCardElement.length > 0) {
+            todoCardElement.find('.to--do--task--input').prop('disabled', false);
         }
     }; // INITIALIZING HANDLERS :: END
+    // CREATE NEW TASK OBJECT
     DailyToDoCard.prototype.createNewTask = function () {
         var newTaskDescription = this.newTaskInputField.val();
         if (newTaskDescription) {
             this.newTaskInputField.val('');
             var newTask = {
-                id: this.numberOfTasks++,
+                id: this.taskCounter++,
                 taskDescription: newTaskDescription,
                 done: false
             };
             this.appendNewTaskToCardContainer(newTask);
             this.toggleSubmitButton();
-            this.updateLocalStorage();
-            //console.log(this.getValueFromLocalStorage());
         }
     };
     DailyToDoCard.prototype.fetchUserInput = function () {
@@ -290,8 +317,15 @@ var DailyToDoCard = (function () {
     };
     DailyToDoCard.prototype.appendNewTaskToCardContainer = function (newTask) {
         var item = new __WEBPACK_IMPORTED_MODULE_1__todoItem__["ToDoItem"](newTask, this);
-        item.appendTo(this.todoTaskListContainer);
-        this.todoTaskObject['todoTasks'].push(item);
+        if (item.getTaskStatus()) {
+            item.appendTo(this.doneTasksCardContainer);
+            this.todoTaskObject['doneTasks'].push(item);
+        }
+        else {
+            item.appendTo(this.todoTaskListContainer);
+            this.todoTaskObject['todoTasks'].push(item);
+        }
+        this.updateLocalStorage();
     };
     // show/hide buton if New Task input has value
     DailyToDoCard.prototype.toggleSubmitButton = function () {
@@ -313,36 +347,38 @@ var DailyToDoCard = (function () {
                 }
             }
         }
+        this.updateLocalStorage();
     };
-    DailyToDoCard.prototype.moveTaskToDone = function (jQueryElement, taskId) {
-        jQueryElement.remove();
-        this.doneTasksCardContainer.append(jQueryElement);
+    DailyToDoCard.prototype.toggleDoneTask = function (jQueryElement, taskId, taskCompleted) {
         var todoList = this.todoTaskObject['todoTasks'];
         var doneTaskList = this.todoTaskObject['doneTasks'];
         var removedObject;
-        for (var i = 0; i < todoList.length; i++) {
-            var elementId = todoList[i].taskId;
-            if (taskId === todoList[i].taskId) {
-                removedObject = todoList.splice(i, 1);
-                doneTaskList.push(removedObject[0]);
+        if (taskCompleted) {
+            jQueryElement.remove();
+            this.doneTasksCardContainer.append(jQueryElement);
+            for (var i = 0; i < todoList.length; i++) {
+                var elementId = todoList[i].taskId;
+                if (taskId === todoList[i].taskId) {
+                    removedObject = todoList.splice(i, 1);
+                    doneTaskList.push(removedObject[0]);
+                }
             }
         }
-    };
-    DailyToDoCard.prototype.moveTaskToTodoList = function (jQueryElement, taskId) {
-        jQueryElement.remove();
-        this.todoTaskListContainer.append(jQueryElement);
-        var todoList = this.todoTaskObject['todoTasks'];
-        var doneTaskList = this.todoTaskObject['doneTasks'];
-        var removedObject;
-        for (var i = 0; i < doneTaskList.length; i++) {
-            if (taskId === doneTaskList[i].taskId) {
-                removedObject = doneTaskList.splice(i, 1);
-                todoList.push(removedObject[0]);
+        else {
+            jQueryElement.remove();
+            this.todoTaskListContainer.append(jQueryElement);
+            for (var i = 0; i < todoList.length; i++) {
+                var elementId = todoList[i].taskId;
+                if (taskId === todoList[i].taskId) {
+                    removedObject = todoList.splice(i, 1);
+                    doneTaskList.push(removedObject[0]);
+                }
             }
         }
+        this.updateLocalStorage();
     };
     return DailyToDoCard;
-}());
+}()); // Class DailyToDoCard :: END
 
 // loading aplication once DOM is ready using $(callback)
 __WEBPACK_IMPORTED_MODULE_0_jquery__(function () {
