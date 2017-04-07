@@ -1,0 +1,208 @@
+
+
+// Main Todo Card
+.mainTodoCardContainer {
+	position: relative;
+	min-width : 20rem;
+	height: 100%;
+	border: 5px solid $pink;
+	height: 28rem;
+	overflow: hidden;
+
+	@media screen and(min-height: 28rem)and(min-width: $br-w-ms){
+		min-height: 57.5rem;
+	}
+	@media screen and (max-width: $br-w-ms){
+		border: 0;
+		min-width: 100%;
+		height: 100%;
+	}
+	.mainTodoCard {
+		padding: 0 $lh;	
+		@media screen and(max-width: $br-w-ms){
+			padding: 0;
+		}
+
+
+
+		.cardHeader {
+
+			@include clearfix;
+			position: relative;
+			padding: $lh*2 0;
+			margin : 0 auto;
+			text-align: center;
+			.todoLogoContainer {
+				position: absolute;
+				top: 4rem;
+				left: 0;
+
+				display: inline-block;
+				height: 4rem;
+				width : 4rem;
+				vertical-align: middle;
+			}
+
+			.addNewButtonContainer {
+				@include transition(all 0.7s ease-in-out);
+				position: relative;
+				display: inline-block;
+				height: $lh*4;
+				width : $lh *4;
+				.addNewTaskButton {
+					display: inline-block;
+					height: $lh*4;
+					width : $lh *4;
+					cursor: pointer;
+				}
+				&.hideFloatingButtons {
+					.addCardFloatingButton {
+						@include transition(all 0.7s ease-in-out);
+						position: absolute;
+						top: $lh;
+						right: 0;
+						z-index: -10;
+						color   : $pink;
+
+					}
+					.addTaskFloatingButton {
+						@include transition(all 0.7s ease-in-out);
+						position: absolute;
+						bottom: $lh;
+						right: 0;
+						z-index: -10;
+						color   : $pink;
+					}
+				}
+				&.showFloatingButtons {
+					.addCardFloatingButton{
+						@include transition(all 0.7s ease-in-out);
+						z-index: 10;
+						top: -($lh/2) !important;
+						right: -($lh*3.5);
+						position: absolute;
+						color   : $pink;
+					}
+					.addTaskFloatingButton {
+						@include transition(all 0.7s ease-in-out);
+						z-index: 10;
+						right  : -($lh*3.5);
+						bottom  : -($lh/2) !important;
+						position: absolute;
+						color   : $pink;
+					}
+				}
+				
+				
+
+				//Visible on click on add New Button
+				.floatingButtons {
+
+					.floatingButtonContent {
+						@include border-radius(50%);
+						position: relative;
+						display: inline-block;
+						width : $lh*2;
+						height: $lh*2;
+						
+						background-color: $white;
+						font-size  : $lh;
+						line-height: $lh;
+
+						cursor: pointer;
+						vertical-align: middle;
+						@include box-shadow( 1px 3px 3px 3px rgba(206,213,225,0.75));
+						.fa {
+							position: absolute;
+							top : $lh/2;
+							left: 14px;
+							font-size  : $lh;
+							line-height: $lh 						
+						}						
+					}
+					.buttonDescription {
+						font-weight: 600;
+					}
+				}
+			}
+		} // Main Todo Card Header :: END
+
+
+		// Main Todo Card Body  :: BEGIN
+		.cardBodyContainer {
+			padding-bottom: $lh;
+
+			.cardBodyContent {
+				@media screen and (max-height: 900px){
+					position: relative;
+					overflow: hidden;				
+					height: 50vh;
+				}
+				@media screen and (max-width: $br-w-ms){
+					height: 100%;	
+				}
+				.mainTodoCardTitle {
+
+					margin-bottom: $lh/2;
+					color: $blue-gray;
+					text-transform: uppercase;
+					font-size: $lh/2;
+				}
+				.oldestTaskListContainer {
+					position: absolute;
+					// not solution find another one`  -  
+					top   : 15rem;
+					left  : $lh;
+					right : $lh;
+					bottom: 0;
+					overflow: auto;
+					color: $pink-light;
+					@media screen and (max-height: 900px){
+						top   : $lh*2;
+						bottom: $lh;
+						left  : 0;
+						right : 0;
+					}
+					@media screen and (max-width: $br-w-ms){
+						position: static;
+					}
+					.mainTodoCardTaskItem {
+						margin-bottom: $lh;
+						border-color: $pink-light;
+					}
+				
+				}
+			}
+		}// Main Todo Card Body  :: END
+	}
+}
+.emptyMainTodoCardTaskList {
+
+	display: none;
+	// When there is no task 
+	position: static !important;
+	color: $blue-dark;
+	&:before {
+		content: "";
+		background: transparent url('../images/cocktail.svg') no-repeat;
+		display: block;
+		height: $lh*4;
+		width :  $lh*4;
+		margin: 0 auto;
+	}
+	&:after {
+		content: "It’s time for cocktail, \a
+				All tasks are done!";
+		white-space: pre;
+		display: block;
+		width: 20rem;
+		margin: $lh auto;
+		text-align: center;
+		font-size: 19px;
+		font-family: $ff-proxima;
+		font-weight: 600;
+		line-height: $lh;
+		color: #9fb2c9;
+		letter-spacing: 1px;
+	}
+}

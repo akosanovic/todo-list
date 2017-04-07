@@ -1,0 +1,148 @@
+.taskItem {
+	padding: $lh $lh/2;
+	background-color: $white;
+
+
+}
+
+	//  Input Group is consist of:
+	//  - Absolutly Positioned Prefix: icon or checkbox 
+	//  - Input Group Description: input text element that takes full width 
+	//  Used for:
+	//  		- Cards Header - ability to change the title of the card
+	//  		- Task Items   - User can set the description of thask and change it on double click
+
+	.inputGroup {
+		display : inline-block;
+		width: 100%;
+		padding-left: $lh+$lh/2;
+		position: relative;
+		vertical-align: middle;
+
+
+		.absolutePositionedPrefix {
+			position: absolute;
+			top : 0;
+			left: 0;
+
+			display: inline-block;
+			width : $lh;
+			height: $lh;
+			vertical-align: bottom;
+			line-height: $lh;
+			.customCheckbox {
+				display: inline-block;		
+			}
+			.iconContainer{
+				text-align: right;
+				.fa{
+					font-size: $fs;
+				}
+			}
+		}
+		
+
+		.inputGroupDescription {
+			display: inline-block;
+			width  : 100%;
+			border : 0;
+			vertical-align: bottom;		
+
+			background: transparent;
+
+			color: inherit;
+			font-size  : $fs;
+			font-family: $ff-proxima;
+			font-weight: 400;
+			text-overflow: ellipsis;
+			&:focus{
+				outline: 0;
+			}
+		}
+	}
+
+	// Custom Checkbox
+	.customCheckbox {
+
+		label {
+			width : $lh;
+			height: $lh;
+		}
+		
+
+		/* Base for label styling */
+		[type="checkbox"]:not(:checked),
+		[type="checkbox"]:checked {
+		  position: absolute;
+		  left: -9999px;
+		}
+		[type="checkbox"]:not(:checked) + label,
+		[type="checkbox"]:checked + label {
+			position: absolute;
+			top : 0;
+			left: 0;
+
+
+			display: inline-block;
+			vertical-align: bottom;
+			cursor: pointer;
+
+		}
+
+		/* checkbox aspect */
+		[type="checkbox"]:not(:checked) + label:before,
+		[type="checkbox"]:checked + label:before {
+			content: '';
+			position: absolute;
+			
+			width : $lh;
+			height: $lh;
+			border: 2px solid;
+			box-sizing: border-box;
+			background: $white;
+			border-radius: 4px;
+		}
+
+		/* checked mark aspect */
+		[type="checkbox"]:not(:checked) + label:after,
+		[type="checkbox"]:checked + label:after {
+			content: url('../images/check-icon.svg');
+			
+			position: absolute;
+			left: 5px;
+			width : $lh;
+			height: $lh;
+			
+			color: $pink;
+			@include transition( all .2s linear);
+		}
+
+		/* checked mark aspect changes */
+		[type="checkbox"]:not(:checked) + label:after {
+		  opacity: 0;
+		  transform: scale(0);
+		}
+
+		[type="checkbox"]:checked + label:after {
+		  opacity: 1;
+		  transform: scale(1);
+		}
+		/* disabled checkbox */
+		[type="checkbox"]:disabled:not(:checked) + label:before,
+		[type="checkbox"]:disabled:checked + label:before {
+		  box-shadow: none;
+		  border-color: $gray-light;
+		  background-color: #ddd;
+		}
+		[type="checkbox"]:disabled:checked + label:after {
+		  color: #999;
+		}
+		[type="checkbox"]:disabled + label {
+		  color: #aaa;
+		}
+		/* accessibility */
+		[type="checkbox"]:checked + label:before{
+		  border: 2px solid $gray-light;
+		}
+
+	}
