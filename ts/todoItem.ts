@@ -1,4 +1,4 @@
-import {DailyToDoCard} from './dailyToDoCard';
+import {todoApp} from './todoApp';
 import {ToDoItemList} from './todoItemList';
 
 
@@ -100,9 +100,5 @@ export class ToDoItem {
 	public getTaskStatus(){
 		return this.taskCompleted;
 	}
-
-
-
-
 }
 

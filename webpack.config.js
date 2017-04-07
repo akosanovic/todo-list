@@ -4,11 +4,11 @@ var webpack = require('webpack');
 module.exports = {
 	devtool: 'source-map',
 	entry  :[
-		// './ts/style.ts',
-		'./ts/dailyToDoCard.ts',
+		
+		'./ts/todoApp.ts',
+		'./ts/mainTodoCard.ts',
 		'./ts/todoItem.ts',
 		'./ts/todoItemList.ts'
-
 	],
 	output: {
 		path    : "js",
