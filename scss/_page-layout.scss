@@ -87,7 +87,7 @@
 
 
 .col-sm-1 {
-	@media screen and (max-width: 666px) {
+	@media screen and (max-width: $br-w-ms) {
 		width: 100%;
 		max-width: 100%;
 		padding: 0 1%;
@@ -95,7 +95,7 @@
 }
 
 //  Page layout for screens 950px - 666px
-@media screen and ( max-width: $br-w-md )and (min-width: 666px) {
+@media screen and ( max-width: $br-w-md )and (min-width: $br-w-ms) {
 	.pageContent {
 		position: relative;
 		margin: 0;
