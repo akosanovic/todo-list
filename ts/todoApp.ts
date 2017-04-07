@@ -1,4 +1,5 @@
 import * as $ from 'jquery';
+import {MainTodoCard} from './mainTodoCard';
 import {ToDoItem} from './todoItem';
 import {ToDoItemList} from './todoItemList';
 
@@ -11,12 +12,19 @@ import {ToDoItemList} from './todoItemList';
 */ 
 
 
-export class DailyToDoCard implements ToDoItemList{
+export class todoApp implements ToDoItemList{
 
 	// data property storing page container
 	// visible globally 
     pageContainer: JQuery = $('.page--container');
-    
+
+    // Main Todo Card 
+    mainTodoCardContainer: JQuery = this.pageContainer.find('.main--todo--card');
+    mainTodoCard: MainTodoCard;
+
+    todoCardsList: JQuery = this.pageContainer.find('.todo--card--contianer')
+
+
     // holds both list of todo tasks and list of done tasks
     cardContainer: JQuery = this.pageContainer.find('.tasks--list--container');
 
@@ -57,6 +65,8 @@ export class DailyToDoCard implements ToDoItemList{
 		// remove disabled property from todo(uncopleated cards)
 		$(document).on("dblclick", this.doubleClickHandler.bind(this));
 
+		this.mainTodoCard = new MainTodoCard ( this.mainTodoCardContainer );
+
 		this.getValueFromLocalStorage();
 	}
 
@@ -84,7 +94,7 @@ export class DailyToDoCard implements ToDoItemList{
 	}
 
 	updateLocalStorage(): void{
-		
+
 		localStorage.clear();
 		this.localStorageObject.taskArray = [];
 		this.localStorageObject.counter   = 0;
@@ -151,6 +161,7 @@ export class DailyToDoCard implements ToDoItemList{
 	keypressHandler( e ): void {
 		let target: JQuery = $(e.target);
 
+
 		// on enter submit new task
 		if(  e.charCode === 13 || e.which === 13 || e.key == 'Enter' ) {
 		
@@ -181,6 +192,14 @@ export class DailyToDoCard implements ToDoItemList{
 
 	clickHandler( e ): void{
 		let target:JQuery = $(e.target);
+
+		// if clicked on Main Todo Card pass evet to Main Cards handler
+		let clickedElement = target.closest(this.mainTodoCardContainer);
+		if (clickedElement.length > 0) {			
+			this.mainTodoCard.clickHandler( e );
+		}
+
+
 
 		// submit user input to the new card
 		let submitButton = target.closest(this.submitNewTask);
@@ -374,13 +393,13 @@ export class DailyToDoCard implements ToDoItemList{
 
 
 
-} // Class DailyToDoCard :: END
+} // Class todoApp :: END
 
 
 // loading aplication once DOM is ready using $(callback)
 $(() => {
 
-	var todoCard = new DailyToDoCard();
+	var todoCard = new todoApp();
 
 
 })

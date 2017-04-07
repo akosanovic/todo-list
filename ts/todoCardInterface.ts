@@ -1,0 +1,6 @@
+
+export interface TodoCardInterface {
+
+
+	// createNewTaskItem();
+}
