@@ -1,15 +1,157 @@
+// GENERAL SETTINGS
 
-html{
+// Style for formating properties is GROUPING BY TYPE
+/*
+.selector {
+  // Positioning 
+  float: left;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+
+  // Display & Box Model
+  display: inline-block;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  border: 10px solid #333;
+  margin: 10px;
+  vertical-align: middle;
+
+
+  // Color 
+  background: #000;
+  color: #fff
+  
+  // Text 
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: right;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  // Other 
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 1;
+  outline-width: 0px;
+  outline-color: white;
+}
+*/
+
+
+html {
 	font-size: 16px;
 }
-body{
+body {
+	padding: 0;
+	margin: 0;
+
 	font-size: $fs;
+	font-family: $ff-proxima;
 	line-height: $lh;
-	font-family: $ff;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
-h1{
-	-webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
+* {
+	@include box-sizing(border-box);
+
+
+	ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	a {
+		text-decoration: none;
+		outline-width: 0px;
+		outline-color: transparent;
+		color: inherit;
+	  }
+
+	h1, h2, h3{
+		-webkit-margin-before: 0;
+	    -webkit-margin-after: 0;
+	    -webkit-margin-start: 0px;
+	    -webkit-margin-end: 0px;
+	}
+
+	p{
+		-webkit-margin-before: 0;
+		-webkit-margin-after: 0;
+		line-height: $lh;
+	}
+	button {
+		background-color: transparent;
+		border-width: 0;
+		border-style: none;
+		border-color: transparent;
+		border-image: none;
+		outline: none;
+	}
 }
+
+
+// STANDARD TRANSITION USED
+
+// @include transition( all 0.5s linear );
+
+
+
+// HELPER CLASSES
+
+/*	SHOW / HIDE CLASSES AND DISPLAYING BASED ON SCREEN SIZE */
+
+.hide {
+	visibility: hidden !important;
+	opacity: 0 !important;
+	@include transition( all 1s linear !important ) ; 
+	
+}
+.show {
+	//display: block;
+	visibility: visible;
+	opacity: 1;
+	@include transition( all 1s linear ); 
+}
+// max-width: 920px;
+.mobileOnly {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+	@media screen and (max-width: 769px){
+		display: block;
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+.hideOnMobile {
+	display: block;
+	visibility: visible;
+	opacity: 1;
+	@media screen and (max-width: 769px){
+		display: none !important;
+		visibility: hidden !important;
+		opacity: 0 !important;	
+	}
+}
+
+
+// BREAK POINTS WIDTH
+// $br-w-lg: 1400px
+// Large devices: 
+	$br-w-lg: 1400px;
+// Medium devices: 950px
+	$br-w-md: 995px;
+// Medium-small devices: 769px 
+	$br-w-ms: 666px;
+// Small Devices: 444px
+	$br-w-s: 444px;

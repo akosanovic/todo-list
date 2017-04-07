@@ -1,33 +1,149 @@
 
 .pageContainer {
-	
-	height: 100vh;
-	width: 100vw;
-
+	width: 100%;
+	min-height: 100vh;
 	background-color: $page-bg-color;
 	.pageContent {
-		position: relative;
-		max-width: 960px;
-		margin: 0 auto;
+		padding: $lh 0 $lh $lh;
+		background-color: $page-bg-color;
+		@media screen and (max-width: $br-w-ms){
+			padding-right: $lh;
+		}
 	}
 }
+
+
+
+// GRID Setup
+// Name of classes same as with bootstrap
+.row {
+	@include clearfix;
+	width: 100%;
+
+	// style for all columns
+	[class*='col-'] {
+		float: left;
+		padding-right: $lh;
+		
+		@media screen and (min-width: $br-w-lg){
+			&:nth-child(3) {
+				padding-right: 0;
+			}
+		}
+		@media screen and (max-width: $br-w-ms){
+			padding: 0;
+		}
+	}
+
+}
+@media screen and (min-width: $br-w-lg){
+	.col-lg-3 {
+		width: 100%;
+		max-width: 25%;
+	}
+	.col-lg-4 {
+		width: 100%;
+		max-width: 33.333%;
+	}
+	.col-lg-9 {
+		width: 100%;
+		max-width: 75%;
+	}
+}
+
+
+@media screen and (max-width: $br-w-lg)and(min-width: 951px){
+	.col-md-3 {
+		width: 100%;
+		max-width: 25%;
+	}
+	.col-md-4 {
+		width: 100%;
+		max-width: 33.333%;
+	}
+	.col-md-6 {
+		width: 100%;
+		max-width: 50%;
+	}
+	.col-md-8 {
+		width: 100%;
+		max-width: 66.66%;
+		padding: 0 !important;
+	}
+}
+
+
+@media screen and (max-width: $br-w-md){
+	.col-ms-1{
+		width: 100%;
+		max-width: 100%;
+		padding-right: 0 !important;
+	}
+	.col-ms-6 {
+		width: 100%;
+		max-width: 50%;
+	}
+}
+
+
+.col-sm-1 {
+	@media screen and (max-width: 666px) {
+		width: 100%;
+		max-width: 100%;
+		padding: 0 1%;
+	}
+}
+
+//  Page layout for screens 950px - 666px
+@media screen and ( max-width: $br-w-md )and (min-width: 666px) {
+	.pageContent {
+		position: relative;
+		margin: 0;
+		// padding: 0;
+		height: 100vh;
+	}
+	.mediumWidthAbsoluteColumn {
+		position: absolute;
+		top: $lh;
+		bottom: $lh;
+		overflow: hidden;
+
+		&.mediumWidthAbsoluteColumnLeft {
+			left: 0;
+			right: 50%;
+		}
+		&.mediumWidthAbsoluteColumnRigth {
+			right: 0;
+			left: 50%;
+			.absolutePositionOverflowContent {
+				height: 100%;
+				overflow: auto;
+			}
+		}
+	}
+
+}
+
 
 .mainContainer {
-	background: $white;
-	.mainContent {
-		position: absolute;
-		left: 0;
-		right: 0;
-		overflow-y:auto;
-	}
+	display: none;
+// 	background: $white;
+// 	.mainContent {
+// 		position: absolute;
+// 		left: 0;
+// 		right: 0;
+// 		overflow-y:auto;
+// 	}
 }
 
+ .header {
 
-.header {
-	opacity: 0.65;
-	color: $header-font-color;	
-	font-size: $lh*3;
-	font-weight: 600;
-	line-height: 1.5;
+ 	display: none;
+ 	margin-top: $lh *5;
+// 	opacity: 0.65;
+// 	color: $header-font-color;	
+// 	font-size: $lh*3;
+// 	font-weight: 600;
+// 	line-height: 1.5;
 }
 

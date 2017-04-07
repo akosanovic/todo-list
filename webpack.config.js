@@ -3,23 +3,23 @@ var webpack = require('webpack');
 
 module.exports = {
 	devtool: 'source-map',
-	entry:[
+	entry  :[
 		// './ts/style.ts',
 		'./ts/dailyToDoCard.ts',
 		'./ts/todoItem.ts',
 		'./ts/todoItemList.ts'
 
 	],
-	output:{
-		path: "js",
+	output: {
+		path    : "js",
 		filename: '[name].js'
 	},
 
 	module:{
 		loaders:[{
-	       test: /\.tsx?$/, // only run on files with this extension
-	       loader: 'ts-loader', // name of loader
-	       include: path.resolve(__dirname, 'ts') //relative path
+			test   : /\.tsx?$/, // only run on files with this extension
+			loader : 'ts-loader', // name of loader
+			include: path.resolve(__dirname, 'ts') //relative path
 	     }]
 	},
 	resolve:{

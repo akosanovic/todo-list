@@ -94,7 +94,7 @@ var ToDoItem = (function () {
     };
     ToDoItem.prototype.getHtml = function () {
         var checkedAttr = this.taskCompleted ? "checked" : "";
-        var toDoCardHTML = "<li class='toDoCard to--do--card' data-task-id=\"" + this.taskId + ("\"'>\n\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t<input type='checkbox' class=\"task--done--status\" name='taskStatus' " + checkedAttr + ">\n\t\t\t\t\t</div>\n\n\n\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t<input type='text' class='taskDescriptionInput to--do--task--input' name='taskDescription' disabled value = \"") + this.taskDescription + "\">\n\t\t\t\t\t\t<div class='cardModifyBtnContainer card--modify--btn'>\n\t\t\t\t\t\t\t<i class='fa fa-times item--delete--button' aria-hidden='true' ></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</li> ";
+        var toDoCardHTML = "<li class='toDoCard to--do--card' draggable=\"true\" data-task-id=\"" + this.taskId + ("\"'>\n\t\t\t\t\t<div class='taskStatus'>\n\t\t\t\t\t\t<input type='checkbox' class=\"task--done--status\" name='taskStatus' " + checkedAttr + ">\n\t\t\t\t\t</div>\n\n\n\t\t\t\t\t<div class='taskDescription'>\n\t\t\t\t\t\t<input type='text' class='taskDescriptionInput to--do--task--input' name='taskDescription' disabled value = \"") + this.taskDescription + "\">\n\t\t\t\t\t\t<div class='cardModifyBtnContainer card--modify--btn'>\n\t\t\t\t\t\t\t<i class='fa fa-times item--delete--button' aria-hidden='true' ></i>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</li> ";
         return toDoCardHTML;
     };
     ToDoItem.prototype.onClick = function (e) {
@@ -153,7 +153,7 @@ var DailyToDoCard = (function () {
         // visible globally 
         this.pageContainer = __WEBPACK_IMPORTED_MODULE_0_jquery__('.page--container');
         // holds both list of todo tasks and list of done tasks
-        this.cardContainer = this.pageContainer.find('.card--container');
+        this.cardContainer = this.pageContainer.find('.tasks--list--container');
         // append new task cards
         this.todoTaskListContainer = this.pageContainer.find('.todo--tasks--container');
         // take user value from input field for new task cards
@@ -164,17 +164,6 @@ var DailyToDoCard = (function () {
         this.doneTasksCardContainer = this.pageContainer.find('.done--tasks--container');
         // counter
         this.taskCounter = 0;
-        // renderCurrentTasks() : void {
-        // 	for (let objectElement in this.todoTaskObject) {
-        // 		for (let task in this.todoTaskObject[objectElement]) {
-        // 			if (task.taskCompleted) {
-        // 				// task.appendTo(todo)
-        // 			} else {
-        // 				// task.appendTo(done)
-        // 			}
-        // 		}
-        // 	}
-        // }
         // object is updated: 
         // on task submit
         // on task delete
@@ -184,9 +173,10 @@ var DailyToDoCard = (function () {
             'doneTasks': []
         };
         // Local storage is consist of:
-        //  - converted from todoItem to todoJSON
-        // todo task list
-        // done task list
+        //  
+        // taskArray: 
+        //			 - holds both todoTasks and doneTasks
+        //           - converted from todoItem to todoJSON		
         // counter
         this.localStorageObject = {
             counter: 0,
@@ -205,11 +195,11 @@ var DailyToDoCard = (function () {
         localStorage.clear();
         this.localStorageObject.taskArray = [];
         this.localStorageObject.counter = 0;
-        for (var objectElement in this.todoTaskObject) {
-            var arrayOfTodoTaskObject = this.todoTaskObject[objectElement];
-            if (arrayOfTodoTaskObject.length > 0) {
-                for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
-                    var todoTaskObject = arrayOfTodoTaskObject[i];
+        for (var todoTaskObjectProperty in this.todoTaskObject) {
+            var arrayOfTaskObject = this.todoTaskObject[todoTaskObjectProperty];
+            if (arrayOfTaskObject.length > 0) {
+                for (var i = 0; i < arrayOfTaskObject.length; i++) {
+                    var todoTaskObject = arrayOfTaskObject[i];
                     var taskJSON = {
                         taskId: todoTaskObject.taskId,
                         taskDescription: todoTaskObject.taskDescription,
@@ -239,12 +229,15 @@ var DailyToDoCard = (function () {
                 taskDescription: localStorageItem.taskDescription,
                 done: localStorageItem.taskCompleted
             };
+            // adds element to todoTaskObject
+            // displays it on sceen
             this.appendNewTaskToCardContainer(newTask);
         }
     };
     // INITIALIZING HANDLERS :: BEGIN
     DailyToDoCard.prototype.keypressHandler = function (e) {
         var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
+        // on enter submit new task
         if (e.charCode === 13 || e.which === 13 || e.key == 'Enter') {
             var newTaskInputField = target.closest(this.newTaskInputField);
             if (newTaskInputField.length > 0) {
@@ -266,12 +259,18 @@ var DailyToDoCard = (function () {
     };
     DailyToDoCard.prototype.clickHandler = function (e) {
         var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
-        // find card object that was clicked 
+        // submit user input to the new card
+        var submitButton = target.closest(this.submitNewTask);
+        if (submitButton.length > 0) {
+            this.createNewTask();
+        }
+        // find card object that was clicked on in the todoTaskObject and call event for that 
+        // task card
         var element = target.closest('.to--do--card');
         if (element.length > 0) {
             var clickedTaskId = Number(element.attr('data-task-id'));
-            for (var objectElement in this.todoTaskObject) {
-                var arrayOfTodoTaskObject = this.todoTaskObject[objectElement];
+            for (var todoTaskObjectProperty in this.todoTaskObject) {
+                var arrayOfTodoTaskObject = this.todoTaskObject[todoTaskObjectProperty];
                 for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
                     if (clickedTaskId === arrayOfTodoTaskObject[i].taskId) {
                         var clickedTaskCard = arrayOfTodoTaskObject[i];
@@ -279,11 +278,6 @@ var DailyToDoCard = (function () {
                     }
                 }
             }
-        }
-        // submit user input to the new card
-        var submitButton = target.closest(this.submitNewTask);
-        if (submitButton.length > 0) {
-            this.createNewTask();
         }
     };
     DailyToDoCard.prototype.doubleClickHandler = function (e) {

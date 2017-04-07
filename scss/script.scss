@@ -3,7 +3,13 @@
 @import "compass/reset";
 
 @import "variables";
+@import "animation-mixin";
 @import "main-style";
 @import "page-layout";
-@import "list";
+@import "main-card-layout";
+@import "card-layout";
+@import "task-item";
 
+
+@import "list";
+@import "svg-checked-animation";

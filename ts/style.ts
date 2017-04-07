@@ -27,7 +27,7 @@ $(document).ready( function(){
 	myMessage.show();
 
 	var pageContainer:JQuery = $('.page--container');
-	var cardContainer:JQuery = pageContainer.find('.card--container');
+	var cardContainer:JQuery = pageContainer.find('.task--list--container');
 
 
 	// event handlers

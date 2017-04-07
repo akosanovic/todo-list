@@ -3,8 +3,6 @@
 export interface ToDoItemList{
 
 
-	taskItemDeleted( taskId         : number ) :void;
-	// moveTaskToDone(  jqueryElement  : JQuery, taskId: number);
-	// moveTaskToTodoList(jqueryElement: JQuery, taskId: number);
+	taskItemDeleted( taskId : number ) :void;
 	toggleDoneTask( jqueryElement: JQuery, taskId: number, taskCompleated: boolean )
 }

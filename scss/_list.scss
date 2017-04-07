@@ -1,13 +1,13 @@
 
 
 .toDoList{
-	@include box-shadow( 10px 10px 5px 0px rgba(232,232,232,1) );
-	&:before{
-		content: "";
-		display: block;
-		border-top: 2rem solid rgba(25, 20, 20, 0.75);
-		opacity: 0.5;
-	}
+	// @include box-shadow( 10px 10px 5px 0px rgba(232,232,232,1) );
+	// &:before{
+	// 	content: "";
+	// 	display: block;
+	// 	border-top: 2rem solid rgba(25, 20, 20, 0.75);
+	// 	opacity: 0.5;
+	// }
 }
 .toDoCard {
 	@include clearfix;
@@ -23,7 +23,7 @@
 	display: block;
 	padding: $lh/2;
 
-	.svgContainer{
+	.svgContainer {
 		position: relative;
 		box-sizing: border-box;
 		width: $lh;
@@ -34,13 +34,10 @@
 		border: 5px solid #d1d1d1;
 		border-radius: 50%;
 		overflow: visible;
-	}
-	svg{
-		position: absolute;
-		top: -10px;
-		left: -$lh/6;
-		.fill{
-			fill: $red;
+		.checkIconContainer {
+			position: absolute;
+			width: $lh;
+			height: $lh;
 		}
 	}
 }
@@ -50,11 +47,11 @@
 
 
 .taskDescription {
-	float: left;
-	position: relative;
-	display: block;
-	width: 90%;
-	border-left: 1px solid red;
+	// float: left;
+	// position: relative;
+	// display: block;
+	// width: 90%;
+	// border-left: 1px solid red;
 	
 	.taskDescriptionInput {
 		text-indent: $lh/2;

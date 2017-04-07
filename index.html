@@ -6,33 +6,422 @@
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<link rel="stylesheet" type="text/css" href="css/script.css">
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!-- typescript PROXIMA NOVA -->
+		<script src="https://use.typekit.net/nct5oef.js"></script>
+		<script>try{Typekit.load({ async: true });}catch(e){}</script>
 	<!-- FAVICON -->
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+	<!-- STYLESHEET -->
+	<link rel="stylesheet" type="text/css" href="css/script.css">
 </head>
 <body>
 
 	<div class="pageContainer page--container">
 		<div class="pageContent">
+
+
+			<div class="row">
+				<div class="mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnLeft col-sm-1 col-ms-6 col-md-4 col-lg-3">
+
+					<!-- Main Todo Card  :: Begin -->
+					<div class="mainTodoCardContainer">
+						<div class="mainTodoCard">
+
+
+							<div class="cardHeader">
+								<div class="todoLogoContainer">
+									<img class="todoLogo" src="images/todo-logo.svg">
+								</div>
+
+
+								<!-- Main Card Add New Button -->
+								<!-- On click: show floating buttons -->
+								<div class="addNewButtonContainer">
+									<div class="addNewTaskButton">
+										<img src="images/add-button.svg">
+									</div>
+									<!-- Floating Buttons position depends on position of New Task Button -->
+
+									<div class="floatingButtons showFlatingButtons addCardFloatingButton">
+										<div class="floatingButtonContent">
+											<i class="fa fa-file-text-o" aria-hidden="true"></i>
+										</div>
+										<span class="buttonDescription">
+											Card
+										</span>
+									</div>
+									<div class="floatingButtons showFlatingButtons addTaskFloatingButton ">
+										<div class="floatingButtonContent">
+											<i class="fa fa-pencil" aria-hidden="true"></i>
+										</div>
+										<span class="buttonDescription">
+											Task
+										</span>
+									</div>
+
+
+								<!-- 	<div class="floatingButtonsContainer">
+										
+									</div> -->
+								</div>
+							</div>
+
+
+							<!-- Card Body :: BEGIN -->
+							<div class="cardBodyContainer main--card--body--container">
+								<div class="cardBodyContent main--card--body--content">
+									<h2 class="mainTodoCardTitle">
+										Oldest Tasks
+									</h2>
+
+									<ul class="oldestTaskListContainer tasks--list--container oldest--task--container">	
+										
+
+										<li class="mainTodoCardTaskItem taskItem main--card--todo--task--item" draggable="true" task-id ="0">
+											<div class="inputGroup">
+												<div class="absolutePositionedPrefix">
+													<div class="customCheckbox">
+														<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status2">
+														<label class="checkbox" for="todo--card--task--status2"></label>
+													</div>
+												</div>											
+												<input type="text" class="inputGroupDescription" name="todo card description" value="SmartStubs projekat">
+											</div>
+										</li>
+
+
+										<li class="mainTodoCardTaskItem taskItem main--card--todo--task--item" draggable="true" task-id ="1">
+											<div class="inputGroup">
+												<div class="absolutePositionedPrefix">
+													<div class="customCheckbox">
+														<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status3">
+														<label class="checkbox" for="todo--card--task--status3"></label>
+													</div>
+												</div>											
+												<input type="text" class="inputGroupDescription" name="todo card description" value="Posalji mejl klijentu!!">
+											</div>
+										</li>
+										
+
+										<li class="mainTodoCardTaskItem taskItem main--card--todo--task--item" draggable="true" task-id ="1">
+											<div class="inputGroup">
+												<div class="absolutePositionedPrefix">
+													<div class="customCheckbox">
+														<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status4">
+														<label class="checkbox" for="todo--card--task--status4"></label>
+													</div>
+												</div>											
+												<input type="text" class="inputGroupDescription" name="todo card description" value="Zavrsi cover za album">
+											</div>
+										</li>
+
+									</ul>
+								</div>
+							</div><!-- Card Body :: BEGIN -->
+						</div>						
+					</div><!-- Main Todo Card :: END -->
+				</div>
+
+
+
+
+				<!-- Category Cards Section :: BEGIN -->
+				<div class="mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnRigth col-sm-1 col-ms-6 col-md-8 col-lg-9 ">
+					<div class=" absolutePositionOverflowContent row">
+						
+
+						<!-- Card Container :: BEGIN -->
+						<div class="col-sm-1 col-ms-1 col-lg-4 col-md-6">
+							<div class="todoCardContainer" data-cardId="0">
+								<div class="todoCardContent">
+
+									<!-- Todo Card Header :: BEGIN -->
+									<div class="todoCardHeader yellowCardHeader">
+
+										<!-- #1 -->
+										<div class="inputGroup">
+											<div class="absolutePositionedPrefix">
+												<div class="iconContainer">
+													<i class="fa fa-file-text-o" aria-hidden="true"></i>
+												</div>
+											</div>											
+											<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+										</div>
+
+
+										<!-- #2 -->
+										<!-- On Click display Drop Down Menu :: BEGIN  -->
+										<a href="#" class="cardMenuButton todo--card--menu--button">
+											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+										</a>
+										<div class="todoCardDropDownMenu">
+											<div class="dropDownMenuContainer todo--card--dropdown--menu">
+												<ul class="dropdownMenuList">
+													<li class="dropdownMenuItem">
+														<a href="#" class="dropdownMenuLink drop--down--menu--link">
+															Edit Card
+														</a>
+													</li>
+													<li class="dropdownMenuItem">
+														<a href="#" class="dropdownMenuLink drop--down--menu--link">
+															Delete Card
+														</a>
+													</li>
+												</ul>
+											</div>											
+										</div><!-- On Click display Drop Down Menu :: END  -->
+									
+
+									</div><!-- Todo Card Header :: END -->
+
+
+									<!-- Todo Card Body :: BEGIN -->
+									<div class="todoCardBody showCardBody show--card--body">
+
+										<!-- #3 -->
+										<div class="todoCardAddNewTaskButtonSmall todo--card--add--new--task--button" >
+											<div class="todoCardAddNewTaskButton">
+												<img class="addNewButtonImageSmall" src="images/add-button-small.svg">
+											</div>
+										</div>
+
+										<ul class="todoCardTaskList">
+
+
+
+											<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status5">
+															<label for="todo--card--task--status5"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+
+
+											<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status7">
+															<label for="todo--card--task--status7"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+												<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status7">
+															<label for="todo--card--task--status7"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+											<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status7">
+															<label for="todo--card--task--status7"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+											<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status7">
+															<label for="todo--card--task--status7"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+
+
+
+
+
+										</ul>
+									</div><!-- Todo Card Body :: END -->
+								</div>
+							</div>
+						</div><!-- Card Container :: END -->
+
+
+						<!-- Card Container :: BEGIN -->
+						<div class="col-sm-1 col-ms-1 col-lg-4 col-md-6">
+							<div class="todoCardContainer" data-cardId="0">
+								<div class="todoCardContent">
+
+									<!-- Todo Card Header :: BEGIN -->
+									<div class="todoCardHeader yellowCardHeader">
+
+										<!-- #1 -->
+										<div class="inputGroup">
+											<div class="absolutePositionedPrefix">
+												<div class="iconContainer">
+													<i class="fa fa-file-text-o" aria-hidden="true"></i>
+												</div>
+											</div>											
+											<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+										</div>
+
+
+										<!-- #2 -->
+										<!-- On Click display Drop Down Menu :: BEGIN  -->
+										<a href="#" class="cardMenuButton todo--card--menu--button">
+											<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+										</a>
+										<div class="todoCardDropDownMenu">
+											<div class="dropDownMenuContainer todo--card--dropdown--menu">
+												<ul class="dropdownMenuList">
+													<li class="dropdownMenuItem">
+														<a href="#" class="dropdownMenuLink drop--down--menu--link">
+															Edit Card
+														</a>
+													</li>
+													<li class="dropdownMenuItem">
+														<a href="#" class="dropdownMenuLink drop--down--menu--link">
+															Delete Card
+														</a>
+													</li>
+												</ul>
+											</div>											
+										</div><!-- On Click display Drop Down Menu :: END  -->
+									
+
+									</div><!-- Todo Card Header :: END -->
+
+
+									<!-- Todo Card Body :: BEGIN -->
+									<div class="todoCardBody showCardBody show--card--body">
+
+										<!-- #3 -->
+										<div class="todoCardAddNewTaskButtonSmall todo--card--add--new--task--button" >
+											<div class="todoCardAddNewTaskButton">
+												<img class="addNewButtonImageSmall" src="images/add-button-small.svg">
+											</div>
+										</div>
+
+										<ul class="todoCardTaskList">
+
+
+
+											<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status5">
+															<label for="todo--card--task--status5"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+
+
+											<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status7">
+															<label for="todo--card--task--status7"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+												<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status7">
+															<label for="todo--card--task--status7"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+											<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status7">
+															<label for="todo--card--task--status7"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+											<li class="todoCardTaskItem taskItem">
+												<div class="inputGroup">
+													<div class="absolutePositionedPrefix">
+														<div class="customCheckbox">
+															<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status7">
+															<label for="todo--card--task--status7"></label>
+														</div>
+													</div>											
+													<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
+												</div>
+											</li>
+
+
+
+
+
+										</ul>
+									</div><!-- Todo Card Body :: END -->
+								</div>
+							</div>
+						</div><!-- Card Container :: END -->
+						
+
+
+	
+
+
+					</div>						
+				</div><!-- Category Cards Section :: END -->
+
+			</div><!-- Row :: END -->
+			
+
+
+
+
+
+			<!-- To be removed :: BEGIN -->
+
 			<header class="header">
 				<h1>toDo </h1>
 			</header>
 
 			<main class="mainContainer">
 				<div class="mainContent">
-					<!-- Task List:: BEGIN -->
-					<ul class="toDoList card--container">
+					
+					<ul class="toDoList tasks--list--container">
 						
 						<li class="toDoCard addNewTasks"> 
 							<!-- Task status only for added tasks -->
 							<div class="taskStatus">
 								<!-- <input type="checkbox" name="taskStatus"> -->
 								<div class="svgContainer">
-									<svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 300 286"> <g>
-									 <path class="fill" id="check-icon"  stroke="black" stroke-width="5" d="M 176.47,114.00 C 190.51,95.29 206.65,77.69 223.17,61.17 223.17,61.17 235.00,50.00 235.00,50.00 235.00,50.00 283.00,7.28 283.00,7.28 288.20,2.82 301.26,-6.79 299.89,8.00 299.20,15.40 285.20,29.84 280.08,36.00 280.08,36.00 228.88,101.00 228.88,101.00 202.72,135.31 174.47,181.11 158.01,221.00 158.01,221.00 143.42,262.00 143.42,262.00 143.42,262.00 137.00,286.00 137.00,286.00 131.86,281.65 128.44,275.50 124.65,270.00 124.65,270.00 107.72,248.00 107.72,248.00 84.27,220.68 65.54,202.91 36.00,182.28 36.00,182.28 6.10,163.67 6.10,163.67 2.63,160.49 -0.49,154.91 0.16,150.04 0.86,144.81 4.97,145.16 9.00,146.16 9.00,146.16 34.00,155.80 34.00,155.80 58.67,165.67 83.92,176.16 105.00,192.67 115.41,200.82 117.46,204.05 126.00,213.00 138.29,176.21 153.09,145.18 176.47,114.00 Z"/> </g></svg>
+									<object class="checkIconContainer">
+										<embed src="images/checked.svg" class="checkedSVGIcon">
+									</object>
 								</div>
 							</div>	
 
@@ -47,19 +436,19 @@
 						
 						<ul class="toDoTasks todo--tasks--container"><!-- Data passed in dynamically --></ul> 
 
-						<ul class="doneTasks done--tasks--container"><!-- Data passed in dynamically --></ul>
-						
-
-					
-					<!-- Dynamically filled with JS/TS -->
-
+						<ul class="doneTasks done--tasks--container"><!-- Data passed in dynamically -->
+							<p>
+								
+							</p>
+						</ul><!-- Dynamically filled with JS/TS -->
 					</ul><!-- Task List:: END -->
 
-					<div class="listFooter">
-						
-					</div>
 				</div> <!-- Main Content:: END -->
-			</main>
+			</main><!-- To be removed :: END -->
+
+
+
+
 		</div><!-- Page Content:: END -->
 	</div><!-- Page Container:: END -->
 

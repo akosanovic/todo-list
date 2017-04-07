@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* line 5, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -63,72 +64,892 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-/* line 2, ../scss/_main-style.scss */
+@-webkit-keyframes no-anim {}
+@-moz-keyframes no-anim {}
+@-ms-keyframes no-anim {}
+@-webkit-keyframes popUp {
+  0% {
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  50% {
+    -moz-transform: translate(5.25rem, 0);
+    -ms-transform: translate(5.25rem, 0);
+    -webkit-transform: translate(5.25rem, 0);
+    transform: translate(5.25rem, 0);
+  }
+  100% {
+    -moz-transform: translate(5.25rem, -1.5rem);
+    -ms-transform: translate(5.25rem, -1.5rem);
+    -webkit-transform: translate(5.25rem, -1.5rem);
+    transform: translate(5.25rem, -1.5rem);
+  }
+}
+@-moz-keyframes popUp {
+  0% {
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  50% {
+    -moz-transform: translate(5.25rem, 0);
+    -ms-transform: translate(5.25rem, 0);
+    -webkit-transform: translate(5.25rem, 0);
+    transform: translate(5.25rem, 0);
+  }
+  100% {
+    -moz-transform: translate(5.25rem, -1.5rem);
+    -ms-transform: translate(5.25rem, -1.5rem);
+    -webkit-transform: translate(5.25rem, -1.5rem);
+    transform: translate(5.25rem, -1.5rem);
+  }
+}
+@-ms-keyframes popUp {
+  0% {
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  50% {
+    -moz-transform: translate(5.25rem, 0);
+    -ms-transform: translate(5.25rem, 0);
+    -webkit-transform: translate(5.25rem, 0);
+    transform: translate(5.25rem, 0);
+  }
+  100% {
+    -moz-transform: translate(5.25rem, -1.5rem);
+    -ms-transform: translate(5.25rem, -1.5rem);
+    -webkit-transform: translate(5.25rem, -1.5rem);
+    transform: translate(5.25rem, -1.5rem);
+  }
+}
+@keyframes popUp {
+  0% {
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  50% {
+    -moz-transform: translate(5.25rem, 0);
+    -ms-transform: translate(5.25rem, 0);
+    -webkit-transform: translate(5.25rem, 0);
+    transform: translate(5.25rem, 0);
+  }
+  100% {
+    -moz-transform: translate(5.25rem, -1.5rem);
+    -ms-transform: translate(5.25rem, -1.5rem);
+    -webkit-transform: translate(5.25rem, -1.5rem);
+    transform: translate(5.25rem, -1.5rem);
+  }
+}
+/*
+.selector {
+  // Positioning 
+  float: left;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+
+  // Display & Box Model
+  display: inline-block;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  border: 10px solid #333;
+  margin: 10px;
+  vertical-align: middle;
+
+
+  // Color 
+  background: #000;
+  color: #fff
+  
+  // Text 
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: right;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  // Other 
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 1;
+  outline-width: 0px;
+  outline-color: white;
+}
+*/
+/* line 49, ../scss/_main-style.scss */
 html {
   font-size: 16px;
 }
 
-/* line 5, ../scss/_main-style.scss */
+/* line 52, ../scss/_main-style.scss */
 body {
+  padding: 0;
+  margin: 0;
   font-size: 1rem;
+  font-family: "proxima-nova", sans-serif;
   line-height: 1.5rem;
-  font-family: "Helvetica";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 10, ../scss/_main-style.scss */
-h1 {
+/* line 62, ../scss/_main-style.scss */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 66, ../scss/_main-style.scss */
+* ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+/* line 72, ../scss/_main-style.scss */
+* a {
+  text-decoration: none;
+  outline-width: 0px;
+  outline-color: transparent;
+  color: inherit;
+}
+/* line 79, ../scss/_main-style.scss */
+* h1, * h2, * h3 {
   -webkit-margin-before: 0;
   -webkit-margin-after: 0;
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
 }
+/* line 86, ../scss/_main-style.scss */
+* p {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  line-height: 1.5rem;
+}
+/* line 91, ../scss/_main-style.scss */
+* button {
+  background-color: transparent;
+  border-width: 0;
+  border-style: none;
+  border-color: transparent;
+  border-image: none;
+  outline: none;
+}
+
+/*	SHOW / HIDE CLASSES AND DISPLAYING BASED ON SCREEN SIZE */
+/* line 112, ../scss/_main-style.scss */
+.hide {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  -moz-transition: all 1s !important;
+  -o-transition: all 1s !important;
+  -webkit-transition: all 1s !important;
+  transition: all 1s !important;
+}
+
+/* line 118, ../scss/_main-style.scss */
+.show {
+  visibility: visible;
+  opacity: 1;
+  -moz-transition: all 1s linear;
+  -o-transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+  transition: all 1s linear;
+}
+
+/* line 125, ../scss/_main-style.scss */
+.mobileOnly {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+@media screen and (max-width: 769px) {
+  /* line 125, ../scss/_main-style.scss */
+  .mobileOnly {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+/* line 136, ../scss/_main-style.scss */
+.hideOnMobile {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+@media screen and (max-width: 769px) {
+  /* line 136, ../scss/_main-style.scss */
+  .hideOnMobile {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
 
 /* line 2, ../scss/_page-layout.scss */
 .pageContainer {
-  height: 100vh;
-  width: 100vw;
-  background-color: #f1f1f1;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #e9f1ff;
 }
-/* line 8, ../scss/_page-layout.scss */
+/* line 6, ../scss/_page-layout.scss */
 .pageContainer .pageContent {
+  padding: 1.5rem 0 1.5rem 1.5rem;
+  background-color: #e9f1ff;
+}
+@media screen and (max-width: 666px) {
+  /* line 6, ../scss/_page-layout.scss */
+  .pageContainer .pageContent {
+    padding-right: 1.5rem;
+  }
+}
+
+/* line 19, ../scss/_page-layout.scss */
+.row {
+  overflow: hidden;
+  *zoom: 1;
+  width: 100%;
+}
+/* line 24, ../scss/_page-layout.scss */
+.row [class*='col-'] {
+  float: left;
+  padding-right: 1.5rem;
+}
+@media screen and (min-width: 1400px) {
+  /* line 29, ../scss/_page-layout.scss */
+  .row [class*='col-']:nth-child(3) {
+    padding-right: 0;
+  }
+}
+@media screen and (max-width: 666px) {
+  /* line 24, ../scss/_page-layout.scss */
+  .row [class*='col-'] {
+    padding: 0;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  /* line 40, ../scss/_page-layout.scss */
+  .col-lg-3 {
+    width: 100%;
+    max-width: 25%;
+  }
+
+  /* line 44, ../scss/_page-layout.scss */
+  .col-lg-4 {
+    width: 100%;
+    max-width: 33.333%;
+  }
+
+  /* line 48, ../scss/_page-layout.scss */
+  .col-lg-9 {
+    width: 100%;
+    max-width: 75%;
+  }
+}
+@media screen and (max-width: 1400px) and (min-width: 951px) {
+  /* line 56, ../scss/_page-layout.scss */
+  .col-md-3 {
+    width: 100%;
+    max-width: 25%;
+  }
+
+  /* line 60, ../scss/_page-layout.scss */
+  .col-md-4 {
+    width: 100%;
+    max-width: 33.333%;
+  }
+
+  /* line 64, ../scss/_page-layout.scss */
+  .col-md-6 {
+    width: 100%;
+    max-width: 50%;
+  }
+
+  /* line 68, ../scss/_page-layout.scss */
+  .col-md-8 {
+    width: 100%;
+    max-width: 66.66%;
+    padding: 0 !important;
+  }
+}
+@media screen and (max-width: 995px) {
+  /* line 77, ../scss/_page-layout.scss */
+  .col-ms-1 {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0 !important;
+  }
+
+  /* line 82, ../scss/_page-layout.scss */
+  .col-ms-6 {
+    width: 100%;
+    max-width: 50%;
+  }
+}
+@media screen and (max-width: 666px) {
+  /* line 89, ../scss/_page-layout.scss */
+  .col-sm-1 {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 1%;
+  }
+}
+
+@media screen and (max-width: 995px) and (min-width: 666px) {
+  /* line 99, ../scss/_page-layout.scss */
+  .pageContent {
+    position: relative;
+    margin: 0;
+    height: 100vh;
+  }
+
+  /* line 105, ../scss/_page-layout.scss */
+  .mediumWidthAbsoluteColumn {
+    position: absolute;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    overflow: hidden;
+  }
+  /* line 111, ../scss/_page-layout.scss */
+  .mediumWidthAbsoluteColumn.mediumWidthAbsoluteColumnLeft {
+    left: 0;
+    right: 50%;
+  }
+  /* line 115, ../scss/_page-layout.scss */
+  .mediumWidthAbsoluteColumn.mediumWidthAbsoluteColumnRigth {
+    right: 0;
+    left: 50%;
+  }
+  /* line 118, ../scss/_page-layout.scss */
+  .mediumWidthAbsoluteColumn.mediumWidthAbsoluteColumnRigth .absolutePositionOverflowContent {
+    height: 100%;
+    overflow: auto;
+  }
+}
+/* line 128, ../scss/_page-layout.scss */
+.mainContainer {
+  display: none;
+}
+
+/* line 139, ../scss/_page-layout.scss */
+.header {
+  display: none;
+  margin-top: 7.5rem;
+}
+
+/* line 4, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer {
   position: relative;
-  max-width: 960px;
+  min-width: 20rem;
+  height: 100%;
+  border: 5px solid #ff2929;
+  height: 28rem;
+  overflow: hidden;
+}
+@media screen and (min-height: 28rem) and (min-width: 666px) {
+  /* line 4, ../scss/_main-card-layout.scss */
+  .mainTodoCardContainer {
+    min-height: 57.5rem;
+  }
+}
+@media screen and (max-width: 666px) {
+  /* line 4, ../scss/_main-card-layout.scss */
+  .mainTodoCardContainer {
+    border: 0;
+    min-width: 100%;
+    height: 100%;
+  }
+}
+/* line 20, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard {
+  padding: 0 1.5rem;
+}
+@media screen and (max-width: 666px) {
+  /* line 20, ../scss/_main-card-layout.scss */
+  .mainTodoCardContainer .mainTodoCard {
+    padding: 0;
+  }
+}
+/* line 28, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader {
+  overflow: hidden;
+  *zoom: 1;
+  position: relative;
+  padding: 3rem 0;
+  margin: 0 auto;
+  text-align: center;
+}
+/* line 34, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .todoLogoContainer {
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  display: inline-block;
+  height: 4rem;
+  width: 4rem;
+  vertical-align: middle;
+}
+/* line 45, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer {
+  position: relative;
+  display: inline-block;
+  height: 6rem;
+  width: 6rem;
+}
+/* line 52, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .addNewTaskButton {
+  display: inline-block;
+  height: 6rem;
+  width: 6rem;
+  cursor: pointer;
+}
+/* line 59, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons {
+  position: absolute;
+  right: -5.25rem;
+  color: #ff2929;
+}
+/* line 64, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons.addCardFloatingButton {
+  top: -0.75rem;
+}
+/* line 67, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons.addTaskFloatingButton {
+  bottom: -0.75rem;
+}
+/* line 71, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .floatingButtonContent {
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  background-color: #fff;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  cursor: pointer;
+  vertical-align: middle;
+  -moz-box-shadow: 1px 3px 3px 3px rgba(206, 213, 225, 0.75);
+  -webkit-box-shadow: 1px 3px 3px 3px rgba(206, 213, 225, 0.75);
+  box-shadow: 1px 3px 3px 3px rgba(206, 213, 225, 0.75);
+}
+/* line 85, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .floatingButtonContent .fa {
+  position: absolute;
+  top: 0.75rem;
+  left: 14px;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+/* line 93, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .buttonDescription {
+  font-weight: 600;
+}
+/* line 102, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardBodyContainer {
+  padding-bottom: 1.5rem;
+}
+@media screen and (max-height: 900px) {
+  /* line 105, ../scss/_main-card-layout.scss */
+  .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent {
+    position: relative;
+    overflow: hidden;
+    height: 50vh;
+  }
+}
+@media screen and (max-width: 666px) {
+  /* line 105, ../scss/_main-card-layout.scss */
+  .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent {
+    height: 100%;
+  }
+}
+/* line 114, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .mainTodoCardTitle {
+  margin-bottom: 0.75rem;
+  color: #a8b9d0;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+/* line 121, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
+  position: absolute;
+  top: 15rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 0;
+  overflow: auto;
+  color: #e56e6e;
+}
+@media screen and (max-height: 900px) {
+  /* line 121, ../scss/_main-card-layout.scss */
+  .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
+    top: 3rem;
+    bottom: 1.5rem;
+    left: 0;
+    right: 0;
+  }
+}
+@media screen and (max-width: 666px) {
+  /* line 121, ../scss/_main-card-layout.scss */
+  .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
+    position: static;
+  }
+}
+/* line 139, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer .mainTodoCardTaskItem {
+  margin-bottom: 1.5rem;
+  border-color: #e56e6e;
+}
+
+/* line 149, ../scss/_main-card-layout.scss */
+.emptyMainTodoCardTaskList {
+  display: none;
+  position: static !important;
+  color: #5d6e7c;
+}
+/* line 155, ../scss/_main-card-layout.scss */
+.emptyMainTodoCardTaskList:before {
+  content: "";
+  background: transparent url("../images/cocktail.svg") no-repeat;
+  display: block;
+  height: 6rem;
+  width: 6rem;
   margin: 0 auto;
 }
-
-/* line 15, ../scss/_page-layout.scss */
-.mainContainer {
-  background: #fff;
-}
-/* line 17, ../scss/_page-layout.scss */
-.mainContainer .mainContent {
-  position: absolute;
-  left: 0;
-  right: 0;
-  overflow-y: auto;
-}
-
-/* line 26, ../scss/_page-layout.scss */
-.header {
-  opacity: 0.65;
-  color: rgba(168, 168, 168, 0.85);
-  font-size: 4.5rem;
+/* line 163, ../scss/_main-card-layout.scss */
+.emptyMainTodoCardTaskList:after {
+  content: "It’s time for cocktail, \a All tasks are done!";
+  white-space: pre;
+  display: block;
+  width: 20rem;
+  margin: 1.5rem auto;
+  text-align: center;
+  font-size: 19px;
+  font-family: "proxima-nova", sans-serif;
   font-weight: 600;
+  line-height: 1.5rem;
+  color: #9fb2c9;
+  letter-spacing: 1px;
+}
+
+/* line 4, ../scss/_card-layout.scss */
+.todoCardContainer {
+  margin-bottom: 1.5rem;
+  -moz-box-shadow: 0px 1px 5px 1px #d7d7d7;
+  -webkit-box-shadow: 0px 1px 5px 1px #d7d7d7;
+  box-shadow: 0px 1px 5px 1px #d7d7d7;
+}
+@media screen and (max-width: 1855px) {
+  /* line 4, ../scss/_card-layout.scss */
+  .todoCardContainer {
+    max-width: 27rem;
+  }
+}
+@media screen and (max-width: 995px) {
+  /* line 4, ../scss/_card-layout.scss */
+  .todoCardContainer {
+    max-width: 100%;
+    margin-bottom: 0;
+  }
+}
+/* line 16, ../scss/_card-layout.scss */
+.todoCardContainer .todoCardContent {
+  -moz-transition: all 0.7s linear;
+  -o-transition: all 0.7s linear;
+  -webkit-transition: all 0.7s linear;
+  transition: all 0.7s linear;
+}
+
+/* line 23, ../scss/_card-layout.scss */
+.todoCardHeader {
+  position: relative;
+  padding: 1.5rem 0.75rem;
+  color: #fff;
+  -moz-transition: all 0.75s linear;
+  -o-transition: all 0.75s linear;
+  -webkit-transition: all 0.75s linear;
+  transition: all 0.75s linear;
+}
+/* line 29, ../scss/_card-layout.scss */
+.todoCardHeader.yellowCardHeader {
+  background-color: #f9cf1e;
+}
+/* line 36, ../scss/_card-layout.scss */
+.todoCardHeader .inputGroup {
+  margin-bottom: 1.5rem;
+}
+/* line 38, ../scss/_card-layout.scss */
+.todoCardHeader .inputGroup .inputGroupDescription {
+  font-size: 19px;
+  font-weight: 500;
+  color: #fff;
+}
+/* line 47, ../scss/_card-layout.scss */
+.todoCardHeader .cardMenuButton {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  padding: 0 0.75rem;
+}
+/* line 52, ../scss/_card-layout.scss */
+.todoCardHeader .cardMenuButton .fa-ellipsis-v {
+  font-size: 19px;
+  line-height: 1.5rem;
+  vertical-align: middle;
+}
+/* line 58, ../scss/_card-layout.scss */
+.todoCardHeader .todoCardDropDownMenu {
+  position: absolute;
+  top: 3.75rem;
+  right: 1.5rem;
+  display: block;
+  z-index: 20;
+}
+/* line 66, ../scss/_card-layout.scss */
+.todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer {
+  display: none !important;
+  -moz-box-shadow: 0px 1px 5px 1px #d7d7d7;
+  -webkit-box-shadow: 0px 1px 5px 1px #d7d7d7;
+  box-shadow: 0px 1px 5px 1px #d7d7d7;
+  background-color: #fff;
+  color: #71808c;
+}
+/* line 72, ../scss/_card-layout.scss */
+.todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer .dropdownMenuList {
+  list-style-type: none;
+}
+/* line 75, ../scss/_card-layout.scss */
+.todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer .dropdownMenuList .dropdownMenuItem {
+  border-bottom: 1px solid #d9e5f9;
+}
+/* line 77, ../scss/_card-layout.scss */
+.todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer .dropdownMenuList .dropdownMenuItem:last-child {
+  border-bottom: 0;
+}
+/* line 80, ../scss/_card-layout.scss */
+.todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer .dropdownMenuList .dropdownMenuItem .dropdownMenuLink {
+  display: inline-block;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 12px;
   line-height: 1.5;
 }
 
-/* line 3, ../scss/_list.scss */
-.toDoList {
-  -moz-box-shadow: 10px 10px 5px 0px #e8e8e8;
-  -webkit-box-shadow: 10px 10px 5px 0px #e8e8e8;
-  box-shadow: 10px 10px 5px 0px #e8e8e8;
+/* line 97, ../scss/_card-layout.scss */
+.todoCardBody {
+  position: relative;
+  height: 22rem;
+  background-color: #fff;
+  overflow: hidden;
+  -moz-transition: all 0.7s linear;
+  -o-transition: all 0.7s linear;
+  -webkit-transition: all 0.7s linear;
+  transition: all 0.7s linear;
 }
-/* line 5, ../scss/_list.scss */
-.toDoList:before {
-  content: "";
-  display: block;
-  border-top: 2rem solid rgba(25, 20, 20, 0.75);
-  opacity: 0.5;
+/* line 103, ../scss/_card-layout.scss */
+.todoCardBody.showCardBody {
+  overflow: visible;
+  height: 22rem;
+}
+@media screen and (max-width: 995px) {
+  /* line 97, ../scss/_card-layout.scss */
+  .todoCardBody {
+    height: 0;
+  }
+}
+/* line 112, ../scss/_card-layout.scss */
+.todoCardBody .todoCardAddNewTaskButtonSmall {
+  position: absolute;
+  top: -1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+}
+/* line 117, ../scss/_card-layout.scss */
+.todoCardBody .todoCardAddNewTaskButtonSmall .todoCardAddNewTaskButton {
+  width: 3rem;
+  height: 3rem;
+}
+/* line 120, ../scss/_card-layout.scss */
+.todoCardBody .todoCardAddNewTaskButtonSmall .todoCardAddNewTaskButton .addNewButtonImageSmall {
+  width: 100%;
+  height: 100%;
+}
+/* line 127, ../scss/_card-layout.scss */
+.todoCardBody .todoCardTaskList {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+}
+/* line 134, ../scss/_card-layout.scss */
+.todoCardBody .todoCardTaskList .todoCardTaskItem {
+  color: #5d6e7c;
+  border-bottom: 1px solid #d9e5f9;
+}
+/* line 137, ../scss/_card-layout.scss */
+.todoCardBody .todoCardTaskList .todoCardTaskItem:last-child {
+  border-bottom: 0;
+}
+
+/* line 1, ../scss/_task-item.scss */
+.taskItem {
+  padding: 1.5rem 0.75rem;
+  background-color: #fff;
+}
+
+/* line 15, ../scss/_task-item.scss */
+.inputGroup {
+  display: inline-block;
+  width: 100%;
+  padding-left: 2.25rem;
+  position: relative;
+  vertical-align: middle;
+}
+/* line 23, ../scss/_task-item.scss */
+.inputGroup .absolutePositionedPrefix {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: bottom;
+  line-height: 1.5rem;
+}
+/* line 33, ../scss/_task-item.scss */
+.inputGroup .absolutePositionedPrefix .customCheckbox {
+  display: inline-block;
+}
+/* line 36, ../scss/_task-item.scss */
+.inputGroup .absolutePositionedPrefix .iconContainer {
+  text-align: right;
+}
+/* line 38, ../scss/_task-item.scss */
+.inputGroup .absolutePositionedPrefix .iconContainer .fa {
+  font-size: 1rem;
+}
+/* line 45, ../scss/_task-item.scss */
+.inputGroup .inputGroupDescription {
+  display: inline-block;
+  width: 100%;
+  border: 0;
+  vertical-align: bottom;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+  font-family: "proxima-nova", sans-serif;
+  font-weight: 400;
+  text-overflow: ellipsis;
+}
+/* line 58, ../scss/_task-item.scss */
+.inputGroup .inputGroupDescription:focus {
+  outline: 0;
+}
+
+/* line 65, ../scss/_task-item.scss */
+.customCheckbox {
+  /* Base for label styling */
+  /* checkbox aspect */
+  /* checked mark aspect */
+  /* checked mark aspect changes */
+  /* disabled checkbox */
+  /* accessibility */
+}
+/* line 67, ../scss/_task-item.scss */
+.customCheckbox label {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+/* line 74, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:not(:checked),
+.customCheckbox [type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+/* line 79, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:not(:checked) + label,
+.customCheckbox [type="checkbox"]:checked + label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  vertical-align: bottom;
+  cursor: pointer;
+}
+/* line 93, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:not(:checked) + label:before,
+.customCheckbox [type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 4px;
+}
+/* line 107, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:not(:checked) + label:after,
+.customCheckbox [type="checkbox"]:checked + label:after {
+  content: url("../images/check-icon.svg");
+  position: absolute;
+  left: 5px;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #ff2929;
+  -moz-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+/* line 121, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+/* line 126, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* line 131, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:disabled:not(:checked) + label:before,
+.customCheckbox [type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #9facb3;
+  background-color: #ddd;
+}
+/* line 137, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+/* line 140, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+/* line 144, ../scss/_task-item.scss */
+.customCheckbox [type="checkbox"]:checked + label:before {
+  border: 2px solid #9facb3;
 }
 
 /* line 12, ../scss/_list.scss */
@@ -162,26 +983,14 @@ h1 {
   border-radius: 50%;
   overflow: visible;
 }
-/* line 38, ../scss/_list.scss */
-.taskStatus svg {
+/* line 37, ../scss/_list.scss */
+.taskStatus .svgContainer .checkIconContainer {
   position: absolute;
-  top: -10px;
-  left: -0.25rem;
-}
-/* line 42, ../scss/_list.scss */
-.taskStatus svg .fill {
-  fill: #b71e21;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
-/* line 52, ../scss/_list.scss */
-.taskDescription {
-  float: left;
-  position: relative;
-  display: block;
-  width: 90%;
-  border-left: 1px solid red;
-}
-/* line 59, ../scss/_list.scss */
+/* line 56, ../scss/_list.scss */
 .taskDescription .taskDescriptionInput {
   text-indent: 0.75rem;
   padding: 0.75rem 0 0.75rem 0;
@@ -192,13 +1001,13 @@ h1 {
   width: 100%;
   color: #333;
 }
-/* line 69, ../scss/_list.scss */
+/* line 66, ../scss/_list.scss */
 .taskDescription .taskDescriptionInput:focus {
   border: 0;
   outline-offset: 0;
   outline: 0;
 }
-/* line 75, ../scss/_list.scss */
+/* line 72, ../scss/_list.scss */
 .taskDescription .cardModifyBtnContainer {
   position: absolute;
   right: -2.5rem;
@@ -210,22 +1019,22 @@ h1 {
   font-weight: bold;
   font-family: cursive;
 }
-/* line 86, ../scss/_list.scss */
+/* line 83, ../scss/_list.scss */
 .taskDescription .cardModifyBtnContainer:focus, .taskDescription .cardModifyBtnContainer:hover, .taskDescription .cardModifyBtnContainer:active {
   border: 0;
   outline: 0;
 }
-/* line 93, ../scss/_list.scss */
+/* line 90, ../scss/_list.scss */
 .taskDescription .cardModifyBtnContainer.showSubmitNewTaskButton:focus, .taskDescription .cardModifyBtnContainer.showSubmitNewTaskButton:hover {
   border: 0.5px solid rgba(128, 128, 128, 0.5);
   background-color: #e7e7e7;
 }
-/* line 98, ../scss/_list.scss */
+/* line 95, ../scss/_list.scss */
 .taskDescription .cardModifyBtnContainer.showSubmitNewTaskButton .fa-check {
   visibility: visible;
   opacity: 1;
 }
-/* line 103, ../scss/_list.scss */
+/* line 100, ../scss/_list.scss */
 .taskDescription .cardModifyBtnContainer .fa-check {
   display: inline-block;
   visibility: hidden;
@@ -233,13 +1042,29 @@ h1 {
   font-size: 1rem;
   text-align: center;
 }
-/* line 111, ../scss/_list.scss */
+/* line 108, ../scss/_list.scss */
 .taskDescription .cardModifyBtnContainer .fa-check:focus {
   outline: 0;
 }
 
-/* line 124, ../scss/_list.scss */
+/* line 121, ../scss/_list.scss */
 .doneTasks .toDoCard .taskDescriptionInput {
   opacity: 0.5;
   text-decoration: line-through;
+}
+
+/* line 2, ../scss/_svg-checked-animation.scss */
+.checkedSVGIcon {
+  height: 100%;
+  width: 100%;
+}
+
+/* line 6, ../scss/_svg-checked-animation.scss */
+svg {
+  border: 1px solid black;
+}
+
+/* line 9, ../scss/_svg-checked-animation.scss */
+#check-icon {
+  fill: #ff2929;
 }

@@ -44,7 +44,7 @@ export class ToDoItem {
 		var checkedAttr = this.taskCompleted ? "checked" : ""
 
 		var toDoCardHTML = 
-				`<li class='toDoCard to--do--card' data-task-id="`+ this.taskId +`"'>
+				`<li class='toDoCard to--do--card' draggable="true" data-task-id="`+ this.taskId +`"'>
 					<div class='taskStatus'>
 						<input type='checkbox' class="task--done--status" name='taskStatus' ${checkedAttr}>
 					</div>

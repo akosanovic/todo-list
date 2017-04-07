@@ -2,21 +2,32 @@
 // Font Settings
 $fs: 1rem;
 $lh: $fs*1.5;
-$ff: "Helvetica";
+$ff-proxima: "proxima-nova",sans-serif; // weights: 100, 300, 400, 500, 700
+
+// color settings\
+
+	// BASE colors 
+	$white: #fff; // main container background
+	$gray-light: #9facb3; // checkbox border
+	$gray-dark : #71808c; // todo card head font color
+	$blue-light: #d9e5f9; // todo card border
+	$blue-dark : #5d6e7c; // todo card body font color
+
+	// BRAND COLORS
+	// Other ToDo Cards Color
+	$yellow: #f9cf1e;
+
+	// Main Card colors
+	$pink      : #ff2929;     // Main Card Border
+	$pink-light: #e56e6e; 	 // Main Card Font
+	$blue-gray : #a8b9d0;   // Main Card Body Title
+
+	//page background 
+	$page-bg-color: #e9f1ff; //light blue - fallback color
+	$header-font-color: rgba(168, 168, 168, 0.85); // gray with transparency
 
 
-// color settings
-
-// BASE colors 
-$white: #fff; // main container background
-
-// Brand colors
-$red: #b71e21;
-
-//page background 
-$page-bg-color: #f1f1f1; //light gray - fallback color
-$header-font-color: rgba(168, 168, 168, 0.85); // gray with transparency
-
-
-// Background texture
-//$page-backround: background-url: "http://api.thumbr.it/whitenoise-361x370.png?background=#eaeaeaff&noise=626262&density=15&opacity=15"
+// HEIGHT SETTINGS 
+// task card height:
+$cardHeight: $lh*18.666;
+$cardWidth : $lh*17.666;
