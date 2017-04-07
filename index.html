@@ -27,7 +27,7 @@
 				<div class="mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnLeft col-sm-1 col-ms-6 col-md-4 col-lg-3">
 
 					<!-- Main Todo Card  :: Begin -->
-					<div class="mainTodoCardContainer">
+					<div class="mainTodoCardContainer main--todo--card">
 						<div class="mainTodoCard">
 
 
@@ -39,13 +39,13 @@
 
 								<!-- Main Card Add New Button -->
 								<!-- On click: show floating buttons -->
-								<div class="addNewButtonContainer">
-									<div class="addNewTaskButton">
+								<div class="addNewButtonContainer  hideFloatingButtons main--content--add--new--button--container ">
+									<div class="addNewTaskButton main--content--add--new--button">
 										<img src="images/add-button.svg">
 									</div>
-									<!-- Floating Buttons position depends on position of New Task Button -->
 
-									<div class="floatingButtons showFlatingButtons addCardFloatingButton">
+									<!-- Floating Buttons position depends on position of New Task Button -->
+									<div class="floatingButtons  addCardFloatingButton floating--button floating--button--add--card">
 										<div class="floatingButtonContent">
 											<i class="fa fa-file-text-o" aria-hidden="true"></i>
 										</div>
@@ -53,7 +53,7 @@
 											Card
 										</span>
 									</div>
-									<div class="floatingButtons showFlatingButtons addTaskFloatingButton ">
+									<div class="floatingButtons  addTaskFloatingButton floating--button floating--button--add--task">
 										<div class="floatingButtonContent">
 											<i class="fa fa-pencil" aria-hidden="true"></i>
 										</div>
@@ -61,11 +61,6 @@
 											Task
 										</span>
 									</div>
-
-
-								<!-- 	<div class="floatingButtonsContainer">
-										
-									</div> -->
 								</div>
 							</div>
 
@@ -135,7 +130,7 @@
 
 						<!-- Card Container :: BEGIN -->
 						<div class="col-sm-1 col-ms-1 col-lg-4 col-md-6">
-							<div class="todoCardContainer" data-cardId="0">
+							<div class="todoCardContainer todo--card--contianer" data-cardId="0">
 								<div class="todoCardContent">
 
 									<!-- Todo Card Header :: BEGIN -->
@@ -183,9 +178,9 @@
 
 										<!-- #3 -->
 										<div class="todoCardAddNewTaskButtonSmall todo--card--add--new--task--button" >
-											<div class="todoCardAddNewTaskButton">
+											<a href="#" class="todoCardAddNewTaskButton">
 												<img class="addNewButtonImageSmall" src="images/add-button-small.svg">
-											</div>
+											</a>
 										</div>
 
 										<ul class="todoCardTaskList">
@@ -263,7 +258,7 @@
 
 						<!-- Card Container :: BEGIN -->
 						<div class="col-sm-1 col-ms-1 col-lg-4 col-md-6">
-							<div class="todoCardContainer" data-cardId="0">
+							<div class="todoCardContainer todo--card--contianer" data-cardId="1">
 								<div class="todoCardContent">
 
 									<!-- Todo Card Header :: BEGIN -->
@@ -311,9 +306,9 @@
 
 										<!-- #3 -->
 										<div class="todoCardAddNewTaskButtonSmall todo--card--add--new--task--button" >
-											<div class="todoCardAddNewTaskButton">
+											<a href="#" class="todoCardAddNewTaskButton">
 												<img class="addNewButtonImageSmall" src="images/add-button-small.svg">
-											</div>
+											</a>
 										</div>
 
 										<ul class="todoCardTaskList">

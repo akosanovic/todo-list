@@ -493,7 +493,7 @@ body {
   margin: 0 auto;
   text-align: center;
 }
-/* line 34, ../scss/_main-card-layout.scss */
+/* line 35, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .todoLogoContainer {
   position: absolute;
   top: 4rem;
@@ -503,8 +503,12 @@ body {
   width: 4rem;
   vertical-align: middle;
 }
-/* line 45, ../scss/_main-card-layout.scss */
+/* line 46, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer {
+  -moz-transition: all 0.7s ease-in-out;
+  -o-transition: all 0.7s ease-in-out;
+  -webkit-transition: all 0.7s ease-in-out;
+  transition: all 0.7s ease-in-out;
   position: relative;
   display: inline-block;
   height: 6rem;
@@ -518,20 +522,54 @@ body {
   cursor: pointer;
 }
 /* line 59, ../scss/_main-card-layout.scss */
-.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons {
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .addCardFloatingButton {
+  -moz-transition: all 0.7s ease-in-out;
+  -o-transition: all 0.7s ease-in-out;
+  -webkit-transition: all 0.7s ease-in-out;
+  transition: all 0.7s ease-in-out;
   position: absolute;
-  right: -5.25rem;
+  top: 1.5rem;
+  right: 0;
+  z-index: -10;
   color: #ff2929;
 }
-/* line 64, ../scss/_main-card-layout.scss */
-.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons.addCardFloatingButton {
-  top: -0.75rem;
+/* line 68, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .addTaskFloatingButton {
+  -moz-transition: all 0.7s ease-in-out;
+  -o-transition: all 0.7s ease-in-out;
+  -webkit-transition: all 0.7s ease-in-out;
+  transition: all 0.7s ease-in-out;
+  position: absolute;
+  bottom: 1.5rem;
+  right: 0;
+  z-index: -10;
+  color: #ff2929;
 }
-/* line 67, ../scss/_main-card-layout.scss */
-.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons.addTaskFloatingButton {
-  bottom: -0.75rem;
+/* line 78, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.showFloatingButtons .addCardFloatingButton {
+  -moz-transition: all 0.7s ease-in-out;
+  -o-transition: all 0.7s ease-in-out;
+  -webkit-transition: all 0.7s ease-in-out;
+  transition: all 0.7s ease-in-out;
+  z-index: 10;
+  top: -0.75rem !important;
+  right: -5.25rem;
+  position: absolute;
+  color: #ff2929;
 }
-/* line 71, ../scss/_main-card-layout.scss */
+/* line 86, ../scss/_main-card-layout.scss */
+.mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.showFloatingButtons .addTaskFloatingButton {
+  -moz-transition: all 0.7s ease-in-out;
+  -o-transition: all 0.7s ease-in-out;
+  -webkit-transition: all 0.7s ease-in-out;
+  transition: all 0.7s ease-in-out;
+  z-index: 10;
+  right: -5.25rem;
+  bottom: -0.75rem !important;
+  position: absolute;
+  color: #ff2929;
+}
+/* line 101, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .floatingButtonContent {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -549,7 +587,7 @@ body {
   -webkit-box-shadow: 1px 3px 3px 3px rgba(206, 213, 225, 0.75);
   box-shadow: 1px 3px 3px 3px rgba(206, 213, 225, 0.75);
 }
-/* line 85, ../scss/_main-card-layout.scss */
+/* line 115, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .floatingButtonContent .fa {
   position: absolute;
   top: 0.75rem;
@@ -557,16 +595,16 @@ body {
   font-size: 1.5rem;
   line-height: 1.5rem;
 }
-/* line 93, ../scss/_main-card-layout.scss */
+/* line 123, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .buttonDescription {
   font-weight: 600;
 }
-/* line 102, ../scss/_main-card-layout.scss */
+/* line 132, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardBodyContainer {
   padding-bottom: 1.5rem;
 }
 @media screen and (max-height: 900px) {
-  /* line 105, ../scss/_main-card-layout.scss */
+  /* line 135, ../scss/_main-card-layout.scss */
   .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent {
     position: relative;
     overflow: hidden;
@@ -574,19 +612,19 @@ body {
   }
 }
 @media screen and (max-width: 666px) {
-  /* line 105, ../scss/_main-card-layout.scss */
+  /* line 135, ../scss/_main-card-layout.scss */
   .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent {
     height: 100%;
   }
 }
-/* line 114, ../scss/_main-card-layout.scss */
+/* line 144, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .mainTodoCardTitle {
   margin-bottom: 0.75rem;
   color: #a8b9d0;
   text-transform: uppercase;
   font-size: 0.75rem;
 }
-/* line 121, ../scss/_main-card-layout.scss */
+/* line 151, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
   position: absolute;
   top: 15rem;
@@ -597,7 +635,7 @@ body {
   color: #e56e6e;
 }
 @media screen and (max-height: 900px) {
-  /* line 121, ../scss/_main-card-layout.scss */
+  /* line 151, ../scss/_main-card-layout.scss */
   .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
     top: 3rem;
     bottom: 1.5rem;
@@ -606,24 +644,24 @@ body {
   }
 }
 @media screen and (max-width: 666px) {
-  /* line 121, ../scss/_main-card-layout.scss */
+  /* line 151, ../scss/_main-card-layout.scss */
   .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
     position: static;
   }
 }
-/* line 139, ../scss/_main-card-layout.scss */
+/* line 169, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer .mainTodoCardTaskItem {
   margin-bottom: 1.5rem;
   border-color: #e56e6e;
 }
 
-/* line 149, ../scss/_main-card-layout.scss */
+/* line 179, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList {
   display: none;
   position: static !important;
   color: #5d6e7c;
 }
-/* line 155, ../scss/_main-card-layout.scss */
+/* line 185, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList:before {
   content: "";
   background: transparent url("../images/cocktail.svg") no-repeat;
@@ -632,7 +670,7 @@ body {
   width: 6rem;
   margin: 0 auto;
 }
-/* line 163, ../scss/_main-card-layout.scss */
+/* line 193, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList:after {
   content: "It’s time for cocktail, \a All tasks are done!";
   white-space: pre;
@@ -784,15 +822,16 @@ body {
 }
 /* line 117, ../scss/_card-layout.scss */
 .todoCardBody .todoCardAddNewTaskButtonSmall .todoCardAddNewTaskButton {
+  display: inline-block;
   width: 3rem;
   height: 3rem;
 }
-/* line 120, ../scss/_card-layout.scss */
+/* line 121, ../scss/_card-layout.scss */
 .todoCardBody .todoCardAddNewTaskButtonSmall .todoCardAddNewTaskButton .addNewButtonImageSmall {
   width: 100%;
   height: 100%;
 }
-/* line 127, ../scss/_card-layout.scss */
+/* line 128, ../scss/_card-layout.scss */
 .todoCardBody .todoCardTaskList {
   position: absolute;
   top: 0;
@@ -801,12 +840,12 @@ body {
   bottom: 0;
   overflow: auto;
 }
-/* line 134, ../scss/_card-layout.scss */
+/* line 135, ../scss/_card-layout.scss */
 .todoCardBody .todoCardTaskList .todoCardTaskItem {
   color: #5d6e7c;
   border-bottom: 1px solid #d9e5f9;
 }
-/* line 137, ../scss/_card-layout.scss */
+/* line 138, ../scss/_card-layout.scss */
 .todoCardBody .todoCardTaskList .todoCardTaskItem:last-child {
   border-bottom: 0;
 }
