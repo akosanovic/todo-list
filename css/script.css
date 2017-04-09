@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* line 5, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,45 +21,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -328,58 +328,66 @@ body {
   float: left;
   padding-right: 1.5rem;
 }
-@media screen and (min-width: 1400px) {
-  /* line 29, ../scss/_page-layout.scss */
-  .row [class*='col-']:nth-child(3) {
-    padding-right: 0;
-  }
+/* line 28, ../scss/_page-layout.scss */
+.row [class*='col-']:last-child {
+  padding-right: 0;
 }
 @media screen and (max-width: 666px) {
   /* line 24, ../scss/_page-layout.scss */
   .row [class*='col-'] {
-    padding: 0;
+    padding-right: 0;
+  }
+}
+/* line 35, ../scss/_page-layout.scss */
+.row [class*='col-'] [class*='col-']:last-child {
+  padding-right: 1.5rem;
+}
+@media screen and (max-width: 666px) {
+  /* line 35, ../scss/_page-layout.scss */
+  .row [class*='col-'] [class*='col-']:last-child {
+    padding-right: 0;
   }
 }
 
 @media screen and (min-width: 1400px) {
-  /* line 40, ../scss/_page-layout.scss */
+  /* line 45, ../scss/_page-layout.scss */
   .col-lg-3 {
     width: 100%;
     max-width: 25%;
   }
 
-  /* line 44, ../scss/_page-layout.scss */
+  /* line 49, ../scss/_page-layout.scss */
   .col-lg-4 {
     width: 100%;
     max-width: 33.333%;
   }
 
-  /* line 48, ../scss/_page-layout.scss */
+  /* line 53, ../scss/_page-layout.scss */
   .col-lg-9 {
     width: 100%;
     max-width: 75%;
   }
 }
 @media screen and (max-width: 1400px) and (min-width: 951px) {
-  /* line 56, ../scss/_page-layout.scss */
+  /* line 61, ../scss/_page-layout.scss */
   .col-md-3 {
     width: 100%;
     max-width: 25%;
   }
 
-  /* line 60, ../scss/_page-layout.scss */
+  /* line 65, ../scss/_page-layout.scss */
   .col-md-4 {
     width: 100%;
     max-width: 33.333%;
   }
 
-  /* line 64, ../scss/_page-layout.scss */
+  /* line 69, ../scss/_page-layout.scss */
   .col-md-6 {
     width: 100%;
     max-width: 50%;
   }
 
-  /* line 68, ../scss/_page-layout.scss */
+  /* line 73, ../scss/_page-layout.scss */
   .col-md-8 {
     width: 100%;
     max-width: 66.66%;
@@ -387,65 +395,67 @@ body {
   }
 }
 @media screen and (max-width: 995px) {
-  /* line 77, ../scss/_page-layout.scss */
+  /* line 82, ../scss/_page-layout.scss */
   .col-ms-1 {
     width: 100%;
     max-width: 100%;
-    padding-right: 0 !important;
   }
 
-  /* line 82, ../scss/_page-layout.scss */
+  /* line 87, ../scss/_page-layout.scss */
   .col-ms-6 {
     width: 100%;
     max-width: 50%;
   }
 }
 @media screen and (max-width: 666px) {
-  /* line 89, ../scss/_page-layout.scss */
+  /* line 94, ../scss/_page-layout.scss */
   .col-sm-1 {
     width: 100%;
     max-width: 100%;
-    padding: 0 1%;
   }
 }
 
 @media screen and (max-width: 995px) and (min-width: 666px) {
-  /* line 99, ../scss/_page-layout.scss */
+  /* line 103, ../scss/_page-layout.scss */
   .pageContent {
     position: relative;
     margin: 0;
     height: 100vh;
   }
 
-  /* line 105, ../scss/_page-layout.scss */
+  /* line 109, ../scss/_page-layout.scss */
   .mediumWidthAbsoluteColumn {
     position: absolute;
     top: 1.5rem;
     bottom: 1.5rem;
     overflow: hidden;
   }
-  /* line 111, ../scss/_page-layout.scss */
+  /* line 115, ../scss/_page-layout.scss */
   .mediumWidthAbsoluteColumn.mediumWidthAbsoluteColumnLeft {
     left: 0;
     right: 50%;
   }
-  /* line 115, ../scss/_page-layout.scss */
+  /* line 118, ../scss/_page-layout.scss */
+  .mediumWidthAbsoluteColumn.mediumWidthAbsoluteColumnLeft .absolutePostionedMainCard {
+    margin-left: 1.5rem;
+  }
+  /* line 122, ../scss/_page-layout.scss */
   .mediumWidthAbsoluteColumn.mediumWidthAbsoluteColumnRigth {
     right: 0;
     left: 50%;
   }
-  /* line 118, ../scss/_page-layout.scss */
+  /* line 125, ../scss/_page-layout.scss */
   .mediumWidthAbsoluteColumn.mediumWidthAbsoluteColumnRigth .absolutePositionOverflowContent {
     height: 100%;
     overflow: auto;
   }
 }
-/* line 128, ../scss/_page-layout.scss */
+/* line 135, ../scss/_page-layout.scss */
 .mainContainer {
   display: none;
 }
 
-/* line 139, ../scss/_page-layout.scss */
+/* line 146, ../scss/_page-layout.scss */
 .header {
   display: none;
   margin-top: 7.5rem;
@@ -672,7 +682,7 @@ body {
 }
 /* line 193, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList:after {
-  content: "It’s time for cocktail, \a All tasks are done!";
+  content: "ItΓÇÖs time for cocktail, \a All tasks are done!";
   white-space: pre;
   display: block;
   width: 20rem;

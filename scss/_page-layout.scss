@@ -24,17 +24,22 @@
 	[class*='col-'] {
 		float: left;
 		padding-right: $lh;
-		
-		@media screen and (min-width: $br-w-lg){
-			&:nth-child(3) {
-				padding-right: 0;
-			}
+
+		&:last-child{
+			padding-right: 0;
 		}
 		@media screen and (max-width: $br-w-ms){
-			padding: 0;
+			padding-right: 0;
+		}
+		[class*='col-'] {
+			&:last-child{
+				padding-right: $lh;
+				@media screen and (max-width: $br-w-ms){
+					padding-right: 0;
+				}
+			}
 		}
 	}
-
 }
 @media screen and (min-width: $br-w-lg){
 	.col-lg-3 {
@@ -77,7 +82,7 @@
 	.col-ms-1{
 		width: 100%;
 		max-width: 100%;
-		padding-right: 0 !important;
+		
 	}
 	.col-ms-6 {
 		width: 100%;
@@ -90,7 +95,6 @@
 	@media screen and (max-width: $br-w-ms) {
 		width: 100%;
 		max-width: 100%;
-		padding: 0 1%;
 	}
 }
 
@@ -111,6 +115,9 @@
 		&.mediumWidthAbsoluteColumnLeft {
 			left: 0;
 			right: 50%;
+			.absolutePostionedMainCard {
+				margin-left: $lh;
+			}
 		}
 		&.mediumWidthAbsoluteColumnRigth {
 			right: 0;
