@@ -1,5 +1,6 @@
 
 import {TodoCardInterface} from './todoCardInterface';
+import {TodoTask} from './todoTask';
 
 
 
@@ -19,12 +20,13 @@ export class TodoCard implements TodoCardInterface {
 	private cardMenuEditButton: JQuery;
 	private cardMenuDeleteButton: JQuery;
 	private cardTitleInput : JQuery;
-
+	private addNewTaskButton: JQuery;
+	private todoTasksListContainer: JQuery;
 	public todoTask           : JQuery;
 
 
 	constructor( cardObject, parentContext ) {	
-
+		console.log('hello world');
 		this.parentContext = parentContext;		
 		this.cardID = cardObject.cardID;
 		this.cardTitle = cardObject.cardTitle ? cardObject.cardTitle : "Undefined";
@@ -37,9 +39,11 @@ export class TodoCard implements TodoCardInterface {
 		this.cardMenuEditButton   = this.cardJQueryElement.find('.card--menu--edit--button');
 		this.cardTitleInput       = this.cardJQueryElement.find('.todo--card--title--input');
 		this.cardMenuDeleteButton = this.cardJQueryElement.find('.card--menu--delete--button');
+		this.addNewTaskButton = this.cardJQueryElement.find('.todo--card--add--new--task--button');
+		this.todoTasksListContainer = this.cardJQueryElement.find('.todo--task--list--container');
+		
 
-		this.cardTitleInput.on("blur", this.chageCardTitle.bind(this));
-
+		this.cardJQueryElement.on("blur", this.focusOutHandler.bind(this));
 	}
 
 
@@ -52,7 +56,7 @@ export class TodoCard implements TodoCardInterface {
 	}
 
 
-	createTodoTask(){}
+	
 	appendTodoTaskToCardContainer(){}
 	createTodoCard(){}
 	deleteTodoCard(){}
@@ -68,7 +72,6 @@ export class TodoCard implements TodoCardInterface {
 	clickHandler( e ): void {
 		let target = $(e.target);
 
-		
 		let cardMenuButtonClicked = target.closest(this.cardShowMenuButton);
 		if (cardMenuButtonClicked.length > 0) {
 			this.showCardMenu();
@@ -90,8 +93,16 @@ export class TodoCard implements TodoCardInterface {
 			e.preventDefault();
 			this.parentContext.deleteTodoCard( this.cardID );
 		}
-	}
 
+		let addNewTaskClicked = target.closest(this.addNewTaskButton);
+		if (addNewTaskClicked.length > 0) {
+			e.preventDefault();
+			this.addNewTodoTask();
+		}
+	}
+	focusOutHandler(e): void{
+		// this.chageCardTitle.bind(this)
+	}
 
 
 	private showCardMenu(): void {
@@ -119,10 +130,11 @@ export class TodoCard implements TodoCardInterface {
 		headerColor = cardHeaderColorArray[currentIndex] + "CardHeader";
 		return headerColor;
 	}
+
+
 	// remove readonly property, enable user to change value of card title 
 	editTodoCard(): void {
 		this.cardTitleInput.removeAttr('readonly').select();
-
 
 		this.parentContext.editTodoCard( this.cardID );
 	}
@@ -135,7 +147,10 @@ export class TodoCard implements TodoCardInterface {
 			this.cardTitle = this.cardTitleInput.val();
 		}
 	}
+	addNewTodoTask(): void {
 
+
+	}
 
 
 	private getHTML(): string{
@@ -197,7 +212,7 @@ export class TodoCard implements TodoCardInterface {
 								</a>
 							</div>
 							<!-- Todo Card Task List:: BEGIN -->
-							<ul class="todoCardTaskList">
+							<ul class="todoCardTaskList todo--task--list--container">
 
 
 

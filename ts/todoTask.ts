@@ -1,14 +1,17 @@
-import {TodoCardInterface} from './todoCardInterface';
+
 import {TodoCard} from './todoCard';
 
 
 
 export class TodoTask {
 
-	private taskItemDescription: string;
-	constructor( taskItemObject, parentConstext ) {
+	private todoTaskDescripion: string;
+	private todoTaskHTML: string;
 
-		this.taskItemDescription = taskItemObject.taskDescription;
+	constructor( todoTaskObject, parentConstext ) {
+
+		this.todoTaskHTML = this.taskItemHTML();
+		this.todoTaskDescripion = todoTaskObject.taskDescription;
 	}
 
 
@@ -16,10 +19,13 @@ export class TodoTask {
 		let target = $(e.target);
 
 	}
+	renderTodoTask(){
+		
+	}
 
-	get taskItemHTML(){
+	get taskItemHTML(): string{
 
-		var taskItemHTML = 
+		var taskItemHTML: string = 
 				`<li class="todoTaskItem taskItemContainer todo--task--item">
 					<div class="inputGroup">
 						<div class="absolutePositionedPrefix">
@@ -31,7 +37,6 @@ export class TodoTask {
 						<input type="text" class="inputGroupDescription" name="todo card description" value="Danasnji Taskovi">
 					</div>
 				</li>`;
-
 		
 
 		return taskItemHTML;

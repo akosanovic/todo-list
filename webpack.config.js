@@ -1,4 +1,4 @@
-var path = require('path');
+//var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
 		'./ts/todoItemList.ts'
 	],
 	output: {
-		path    : "js",
+		path    : "./js",
 		filename: '[name].js'
 	},
 

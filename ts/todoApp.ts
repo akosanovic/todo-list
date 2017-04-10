@@ -30,6 +30,9 @@ export class todoApp implements ToDoItemList{
     todoCardCounter: number = 0;
     todoCardItem: JQuery;
 
+    // Todo Task List Container
+    todoTask: JQuery = this.pageContainer.find('.todo--task--item');
+
      
     // append new task cards
     todoTaskListContainer: JQuery = this.pageContainer.find('.todo--tasks--container');
@@ -169,8 +172,6 @@ export class todoApp implements ToDoItemList{
 			}
 			this.appendTodoCard(newCard);
 		}
-
-
 		// reseting counter
 		this.taskCounter = localStorageObject.taskArray.length;
 		let localStorageItem;
@@ -256,6 +257,7 @@ export class todoApp implements ToDoItemList{
 			}
 		}
 
+
 		
 		// submit user input to the new card
 		let submitButton = target.closest(this.submitNewTask);
@@ -265,7 +267,6 @@ export class todoApp implements ToDoItemList{
 
 		// find card object that was clicked on in the todoTaskObject and call event for that 
 		// task card
-
 		let element = target.closest('.to--do--card')
 		if (element.length > 0 ){
 			let clickedTaskId: number = Number(element.attr('data-task-id'));

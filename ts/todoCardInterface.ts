@@ -1,7 +1,7 @@
 
 export interface TodoCardInterface{
 
-	createTodoTask();
+	addNewTodoTask();
 	appendTodoTaskToCardContainer();
 	createTodoCard( e ):void;
 	editTodoCard( cardId:number ): void;
