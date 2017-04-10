@@ -21,8 +21,7 @@ export class ToDoItem {
 		
 		
 		this.htmlContent     = this.getHtml();
-		this.jqueryElement   = $(this.htmlContent)
-
+		this.jqueryElement   = $(this.htmlContent);
 	}
 
 	destroy() {
