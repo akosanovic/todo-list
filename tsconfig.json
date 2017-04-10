@@ -7,9 +7,6 @@
         "sourceMap": true
 
     },
-    // "include": [
-    // 	"ts/*"
-    // ],
     "exclude": [
         "node_modules",
         "**/*.spec.ts"
