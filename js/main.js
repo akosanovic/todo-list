@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -72,9 +72,7 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoCard__ = __webpack_require__(6);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainTodoCard", function() { return MainTodoCard; });
-
 var MainTodoCard = (function () {
     function MainTodoCard(mainTodoCard) {
         this.mainTodoCardContainer = mainTodoCard;
@@ -100,7 +98,7 @@ var MainTodoCard = (function () {
         if (floatingButtonClicked.length > 0) {
             e.stopPropagation();
             if (floatingButtonClicked.hasClass('floating--button--add--card')) {
-                this.createNewCard(e);
+                // this.createTodoCard( e );
             }
             else if (floatingButtonClicked.hasClass('floating--button--add--task')) {
                 console.log("add task clicked");
@@ -117,11 +115,15 @@ var MainTodoCard = (function () {
             this.addNewButtonContainer.removeClass('hideFloatingButtons').addClass('showFloatingButtons');
         }
     };
-    MainTodoCard.prototype.createNewCard = function (e) {
-        e.stopPropagation();
-        console.log('connect with Task Card and Task Item');
-        var newTodoCard = new __WEBPACK_IMPORTED_MODULE_0__todoCard__["a" /* TodoCard */]();
-    };
+    MainTodoCard.prototype.createTodoTask = function () { };
+    // createTodoCard( e ): void {
+    // 	e.stopPropagation();
+    // 	console.log('connect with Task Card and Task Item');
+    // 	let newTodoCard: TodoCard = new TodoCard( this.todoCardCounter  );
+    // 	console.log(newTodoCard.getHTML());
+    // 	$('.todo--cards--row').append(newTodoCard.getHTML());
+    // 	this.todoCardCounter++;
+    // }
     MainTodoCard.prototype.createNewCardWithTask = function (e) {
         e.stopPropagation();
         console.log('connect with Task Card and Task Item');
@@ -129,6 +131,8 @@ var MainTodoCard = (function () {
     MainTodoCard.prototype.fillOldestTaskListContainer = function () {
         console.log("Fill Oldest Task List Container on load");
     };
+    MainTodoCard.prototype.appendTodoTaskToCardContainer = function () { };
+    MainTodoCard.prototype.deleteTodoCard = function () { };
     return MainTodoCard;
 }());
 
@@ -203,11 +207,13 @@ var ToDoItem = (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__todoItem__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__todoCard__ = __webpack_require__(6);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "todoApp", function() { return todoApp; });
+
 
 
 
@@ -224,9 +230,10 @@ var todoApp = (function () {
         this.pageContainer = __WEBPACK_IMPORTED_MODULE_0_jquery__('.page--container');
         // Main Todo Card 
         this.mainTodoCardContainer = this.pageContainer.find('.main--todo--card');
-        this.todoCardsList = this.pageContainer.find('.todo--card--contianer');
-        // holds both list of todo tasks and list of done tasks
-        this.cardContainer = this.pageContainer.find('.tasks--list--container');
+        // add new Todo Card to row 
+        this.mainTodoCardAddCardButton = this.pageContainer.find('.floating--button--add--card');
+        this.todoCardsContainer = this.pageContainer.find('.todo--cards--row');
+        this.todoCardCounter = 0;
         // append new task cards
         this.todoTaskListContainer = this.pageContainer.find('.todo--tasks--container');
         // take user value from input field for new task cards
@@ -245,13 +252,17 @@ var todoApp = (function () {
             'todoTasks': [],
             'doneTasks': []
         };
-        // Local storage is consist of:
-        //  
-        // taskArray: 
-        //			 - holds both todoTasks and doneTasks
-        //           - converted from todoItem to todoJSON		
-        // counter
+        // Todo Card Object is updated: 
+        //  when new is created
+        //  when one is deleted
+        // 	when one is edited
+        this.todoCardsObject = {
+            'todoCardList': []
+        };
+        this.todoCardObjectsList = this.todoCardsObject.todoCardList;
         this.localStorageObject = {
+            cardCounter: 0,
+            cardArray: [],
             counter: 0,
             taskArray: []
         };
@@ -267,32 +278,53 @@ var todoApp = (function () {
     }
     todoApp.prototype.updateLocalStorage = function () {
         localStorage.clear();
+        this.localStorageObject.cardCounter = 0;
+        this.localStorageObject.cardArray = [];
         this.localStorageObject.taskArray = [];
         this.localStorageObject.counter = 0;
-        for (var todoTaskObjectProperty in this.todoTaskObject) {
-            var arrayOfTaskObject = this.todoTaskObject[todoTaskObjectProperty];
-            if (arrayOfTaskObject.length > 0) {
-                for (var i = 0; i < arrayOfTaskObject.length; i++) {
-                    var todoTaskObject = arrayOfTaskObject[i];
-                    var taskJSON = {
-                        taskId: todoTaskObject.taskId,
-                        taskDescription: todoTaskObject.taskDescription,
-                        taskCompleted: todoTaskObject.taskCompleted
-                    };
-                    this.localStorageObject.taskArray.push(taskJSON);
-                }
-            }
+        this.localStorageObject.cardCounter = this.todoCardCounter;
+        for (var i = 0; i < this.todoCardObjectsList.length; i++) {
+            var todoCardItem = this.todoCardObjectsList[i];
+            var todoCardObject = {
+                'cardID': todoCardItem.cardID,
+                'cardTitle': todoCardItem.cardTitle
+            };
+            this.localStorageObject.cardArray.push(todoCardObject);
         }
-        this.localStorageObject.counter = this.taskCounter;
+        // for(let todoTaskObjectProperty in this.todoTaskObject) {
+        // 	let arrayOfTaskObject = this.todoTaskObject[ todoTaskObjectProperty ]
+        // 	if( arrayOfTaskObject.length > 0 ) {
+        // 		for( let i = 0; i < arrayOfTaskObject.length; i++ ) {
+        // 			var todoTaskObject  = arrayOfTaskObject[i];
+        // 			var taskJSON = {
+        // 				taskId         : todoTaskObject.taskId,
+        // 				taskDescription: todoTaskObject.taskDescription,
+        // 				taskCompleted  : todoTaskObject.taskCompleted
+        // 			}
+        // 			this.localStorageObject.taskArray.push(taskJSON);
+        // 		}
+        // 	}			
+        // }
+        // this.localStorageObject.counter = this.taskCounter;
         localStorage.setItem('localStorageObject', JSON.stringify(this.localStorageObject));
     };
     todoApp.prototype.getValueFromLocalStorage = function () {
         if (localStorage.length > 0) {
             var localStorageObject = JSON.parse(localStorage.getItem('localStorageObject'));
-            this.renderTasksFromLocalStorage(localStorageObject);
+            this.renderValueFromLocalStorage(localStorageObject);
         }
     };
-    todoApp.prototype.renderTasksFromLocalStorage = function (localStorageObject) {
+    todoApp.prototype.renderValueFromLocalStorage = function (localStorageObject) {
+        // reset counters
+        this.todoCardCounter = localStorageObject.cardArray.length;
+        for (var i = 0; i < localStorageObject.cardArray.length; i++) {
+            var cardItem = localStorageObject.cardArray[i];
+            var newCard = {
+                cardID: i,
+                cardTitle: cardItem[i],
+            };
+            this.appendTodoCard(newCard);
+        }
         // reseting counter
         this.taskCounter = localStorageObject.taskArray.length;
         var localStorageItem;
@@ -337,6 +369,25 @@ var todoApp = (function () {
         var clickedElement = target.closest(this.mainTodoCardContainer);
         if (clickedElement.length > 0) {
             this.mainTodoCard.clickHandler(e);
+        }
+        // click on Main Card Add New Card button - creates new Todo Card Object
+        var mainTodoCardAddCardButton = this.pageContainer.find('.floating--button--add--card');
+        var createNewTodoCardButtonClicked = target.closest(mainTodoCardAddCardButton);
+        if (createNewTodoCardButtonClicked.length > 0) {
+            this.createTodoCard(e);
+        }
+        // if clicked on Todo Card pass click event to TodoCard click handler
+        this.todoCardItem = this.pageContainer.find('.todo--card--contianer');
+        var clickedTodoCard = target.closest(this.todoCardItem);
+        var todoCardsListLength = this.todoCardObjectsList.length;
+        if (clickedTodoCard.length > 0) {
+            var clickedCardID = Number(clickedTodoCard.attr('data-card-id'));
+            for (var i = 0; i < todoCardsListLength; i++) {
+                if (clickedCardID === this.todoCardObjectsList[i].cardID) {
+                    var clickedTodoCardItem = this.todoCardObjectsList[i];
+                    clickedTodoCardItem.clickHandler(e);
+                }
+            }
         }
         // submit user input to the new card
         var submitButton = target.closest(this.submitNewTask);
@@ -400,6 +451,52 @@ var todoApp = (function () {
         }
         this.updateLocalStorage();
     };
+    // Todo Card :: BEGIN
+    todoApp.prototype.createTodoCard = function (e) {
+        e.stopPropagation();
+        var newCard = {
+            cardID: this.todoCardCounter++,
+            cardTitle: ""
+        };
+        this.appendTodoCard(newCard);
+    };
+    todoApp.prototype.appendTodoCard = function (cardObject) {
+        var newTodoCard = new __WEBPACK_IMPORTED_MODULE_3__todoCard__["a" /* TodoCard */](cardObject, this);
+        this.todoCardsObject['todoCardList'].push(newTodoCard);
+        newTodoCard.appendCard(this.todoCardsContainer);
+        this.updateLocalStorage();
+    };
+    todoApp.prototype.editTodoCard = function (todoCardID, todoCardTitle) {
+        for (var i = 0; i < this.todoCardObjectsList.length; i++) {
+            var todoCardItem = this.todoCardObjectsList[i];
+            if (todoCardID === todoCardItem.cardID) {
+                console.log(todoCardItem);
+            }
+        }
+        this.updateLocalStorage();
+    };
+    // remove deleted Card From Card Object list, update local storage
+    todoApp.prototype.deleteTodoCard = function (todoCardID) {
+        for (var i = 0; i < this.todoCardObjectsList.length; i++) {
+            var todoCardItem = this.todoCardObjectsList[i];
+            if (todoCardID === todoCardItem.cardID) {
+                console.log(todoCardItem);
+                todoCardItem.destroy();
+                this.todoCardObjectsList.splice(i, 1);
+            }
+        }
+        this.updateLocalStorage();
+    };
+    // findTodoCardObjectByID( todoCardID: number ): TodoCard {
+    // 	let todoCardObject: TodoCard;
+    // 	for( let i = 0; i < this.todoCardObjectsList.length; i++ ){
+    // 		let todoCardObject: TodoCard = this.todoCardObjectsList[i]
+    // 		if ( todoCardID === todoCardObject.cardID ){
+    // 			return todoCardObject;
+    // 		}
+    // 	}
+    // }
+    // Todo Card :: END
     // show/hide buton if New Task input has value
     todoApp.prototype.toggleSubmitButton = function () {
         var inputValue = this.newTaskInputField.val();
@@ -467,6 +564,35 @@ __WEBPACK_IMPORTED_MODULE_0_jquery__(function () {
 
 /***/ }),
 /* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoTask", function() { return TodoTask; });
+var TodoTask = (function () {
+    function TodoTask(taskItemObject, parentConstext) {
+        this.taskItemDescription = taskItemObject.taskDescription;
+    }
+    TodoTask.prototype.clickHandler = function (e) {
+        var target = $(e.target);
+    };
+    Object.defineProperty(TodoTask.prototype, "taskItemHTML", {
+        get: function () {
+            var taskItemHTML = "<li class=\"todoTaskItem taskItemContainer todo--task--item\">\n\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t</div>\n\t\t\t\t</li>";
+            return taskItemHTML;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TodoTask.prototype.compleateTodTask = function () { };
+    TodoTask.prototype.deleteTodoTask = function () { };
+    return TodoTask;
+}());
+
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10717,34 +10843,114 @@ return jQuery;
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(2);
-__webpack_require__(0);
-__webpack_require__(1);
-module.exports = __webpack_require__(3);
-
-
-/***/ }),
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TodoCard; });
 var TodoCard = (function () {
-    function TodoCard() {
+    function TodoCard(cardObject, parentContext) {
+        this.parentContext = parentContext;
+        this.cardID = cardObject.cardID;
+        this.cardTitle = cardObject.cardTitle ? cardObject.cardTitle : "Undefined";
+        this.cardHeaderColor = this.setCardHeaderColor();
+        this.cardHTMLContent = this.getHTML();
+        this.cardJQueryElement = $(this.cardHTMLContent);
+        this.cardDropDownMenu = this.cardJQueryElement.find('.todo--card--dropdown--menu');
+        this.cardShowMenuButton = this.cardJQueryElement.find('.todo--card--menu--button');
+        this.cardMenuEditButton = this.cardJQueryElement.find('.card--menu--edit--button');
+        this.cardTitleInput = this.cardJQueryElement.find('.todo--card--title--input');
+        this.cardMenuDeleteButton = this.cardJQueryElement.find('.card--menu--delete--button');
+        this.cardTitleInput.on("blur", this.chageCardTitle.bind(this));
     }
-    TodoCard.prototype.clickHandler = function (e) {
+    TodoCard.prototype.destroy = function () {
+        this.cardID = null;
+        this.cardTitle = null;
+        this.cardHTMLContent = null;
+        this.cardJQueryElement.remove();
+        this.cardJQueryElement = null;
     };
-    TodoCard.prototype.getHeaderColor = function () { };
+    TodoCard.prototype.createTodoTask = function () { };
+    TodoCard.prototype.appendTodoTaskToCardContainer = function () { };
+    TodoCard.prototype.createTodoCard = function () { };
+    TodoCard.prototype.deleteTodoCard = function () { };
     TodoCard.prototype.getCardTitle = function () { };
+    TodoCard.prototype.appendCard = function (parentContext) {
+        parentContext.append(this.cardJQueryElement);
+    };
+    TodoCard.prototype.clickHandler = function (e) {
+        var target = $(e.target);
+        var cardMenuButtonClicked = target.closest(this.cardShowMenuButton);
+        if (cardMenuButtonClicked.length > 0) {
+            this.showCardMenu();
+        }
+        else {
+            this.hideCardMenu();
+        }
+        // Edit Todo Card
+        var editCardButtonClicked = target.closest(this.cardMenuEditButton);
+        if (editCardButtonClicked.length > 0) {
+            e.preventDefault();
+            this.editTodoCard();
+        }
+        // Delete Todo Card 
+        var deleteCardButtonClicked = target.closest(this.cardMenuDeleteButton);
+        if (deleteCardButtonClicked.length > 0) {
+            e.preventDefault();
+            this.parentContext.deleteTodoCard(this.cardID);
+        }
+    };
+    TodoCard.prototype.showCardMenu = function () {
+        this.cardDropDownMenu.toggleClass('showTodoCardDropDownMenu');
+    };
+    TodoCard.prototype.hideCardMenu = function () {
+        if (this.cardDropDownMenu.hasClass('showTodoCardDropDownMenu')) {
+            this.cardDropDownMenu.removeClass('showTodoCardDropDownMenu');
+        }
+    };
+    TodoCard.prototype.setCardHeaderColor = function () {
+        var cardHeaderColorArray = ["yellow", "turquoise", "purple", "blue", "orange"];
+        var headerColor = '';
+        var currentIndex = this.cardID;
+        var maxNum = cardHeaderColorArray.length;
+        var returnNum = 0;
+        // Color is choosen based on current CardID
+        while (currentIndex > maxNum - 1) {
+            currentIndex = currentIndex % maxNum;
+        }
+        headerColor = cardHeaderColorArray[currentIndex] + "CardHeader";
+        return headerColor;
+    };
+    // remove readonly property, enable user to change value of card title 
+    TodoCard.prototype.editTodoCard = function () {
+        this.cardTitleInput.removeAttr('readonly').select();
+        this.parentContext.editTodoCard(this.cardID);
+    };
+    TodoCard.prototype.chageCardTitle = function () {
+        if (this.cardTitleInput.val() && (this.cardTitleInput.val() !== this.cardTitle)) {
+            this.cardTitleInput.attr('readonly');
+            console.log(this.cardTitleInput.val());
+            this.cardTitle = this.cardTitleInput.val();
+        }
+    };
     TodoCard.prototype.getHTML = function () {
-        var todoCardHTML = "\n\t\t\t\t<div class=\"col-sm-1 col-ms-1 col-lg-4 col-md-6\">\n\t\t\t\t\t<div class=\"todoCardContainer todo--card--contianer\" data-cardId=\"counter\">\n\t\t\t\t\t\t<div class=\"todoCardContent\">\n\n\n\t\t\t\t\t\t\t<div class=\"todoCardHeader cardHeaderColor\">\n\n\t\t\t\t\t\t\t\t<!-- #1 -->\n\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"iconContainer\">\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-file-text-o\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t<!-- #2 -->\n\t\t\t\t\t\t\t\t<!-- On Click display Drop Down Menu :: BEGIN  -->\n\t\t\t\t\t\t\t\t<a href=\"#\" class=\"cardMenuButton todo--card--menu--button\">\n\t\t\t\t\t\t\t\t\t<i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t<div class=\"todoCardDropDownMenu\">\n\t\t\t\t\t\t\t\t\t<div class=\"dropDownMenuContainer todo--card--dropdown--menu\">\n\t\t\t\t\t\t\t\t\t\t<ul class=\"dropdownMenuList\">\n\t\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink drop--down--menu--link\">\n\t\t\t\t\t\t\t\t\t\t\t\t\tEdit Card\n\t\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink drop--down--menu--link\">\n\t\t\t\t\t\t\t\t\t\t\t\t\tDelete Card\n\t\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div><!-- On Click display Drop Down Menu :: END  -->\n\t\t\t\t\t\t\t\n\n\t\t\t\t\t\t\t</div><!-- Todo Card Header :: END -->\n\n\n\t\t\t\t\t\t\t<!-- Todo Card Body :: BEGIN -->\n\t\t\t\t\t\t\t<div class=\"todoCardBody showCardBody show--card--body\">\n\n\t\t\t\t\t\t\t\t<!-- #3 -->\n\t\t\t\t\t\t\t\t<div class=\"todoCardAddNewTaskButtonSmall todo--card--add--new--task--button\" >\n\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"todoCardAddNewTaskButton\">\n\t\t\t\t\t\t\t\t\t\t<img class=\"addNewButtonImageSmall\" src=\"images/add-button-small.svg\">\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t\t<ul class=\"todoCardTaskList\">\n\n\n\n\t\t\t\t\t\t\t\t\t<li class=\"todoCardTaskItem taskItem\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status5\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status5\"></label>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</li>\n\n\n\t\t\t\t\t\t\t\t\t<li class=\"todoCardTaskItem taskItem\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li class=\"todoCardTaskItem taskItem\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t<li class=\"todoCardTaskItem taskItem\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t<li class=\"todoCardTaskItem taskItem\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</li>\n\n\n\n\n\n\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t</div><!-- Todo Card Body :: END -->\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div><!-- Card Container :: END -->\n\t\t\t";
+        var todoCardHTML = "<div class=\"col-sm-1 col-ms-1 col-lg-4 col-md-6\" \n\t\t\t draggable=\"true\">\n\t\t\t\t<div class=\"todoCardContainer todo--card--contianer\" data-card-id = " + this.cardID + ">\n\t\t\t\t\t<div class=\"todoCardContent\">\n\n\t\t\t\t\t\t<!-- Todo Card Header :: BEGIN -->\n\t\t\t\t\t\t<div class=\"todoCardHeader " + this.cardHeaderColor + "\">\n\n\t\t\t\t\t\t\t<!-- #1 -->\n\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t<div class=\"iconContainer\">\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-file-text-o\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription todo--card--title--input\"  readonly=\"readonly\"\n\t\t\t\t\t\t\t\t  name=\"todo card description\" value=\"" + this.cardTitle + "\">\n\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t<!-- #2 -->\n\t\t\t\t\t\t\t<!-- On Click display Drop Down Menu :: BEGIN  -->\n\t\t\t\t\t\t\t<a href=\"#\" class=\"cardMenuButton todo--card--menu--button\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t<div class=\"todoCardDropDownMenu todo--card--dropdown--menu\">\n\t\t\t\t\t\t\t\t<div class=\"dropDownMenuContainer\">\n\t\t\t\t\t\t\t\t\t<ul class=\"dropdownMenuList\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink card--menu--edit--button\">\n\t\t\t\t\t\t\t\t\t\t\t\tEdit Card\n\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink card--menu--delete--button\">\n\t\t\t\t\t\t\t\t\t\t\t\tDelete Card\n\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div><!-- On Click display Drop Down Menu :: END  -->\n\t\t\t\t\t\t\n\n\t\t\t\t\t\t</div><!-- Todo Card Header :: END -->\n\n\n\t\t\t\t\t\t<!-- Todo Card Body :: BEGIN -->\n\t\t\t\t\t\t<div class=\"todoCardBody showCardBody show--card--body\">\n\n\t\t\t\t\t\t\t<!-- #3 -->\n\t\t\t\t\t\t\t<div class=\"todoCardAddNewTaskButtonSmall todo--card--add--new--task--button\" >\n\t\t\t\t\t\t\t\t<a href=\"#\" class=\"todoCardAddNewTaskButton\">\n\t\t\t\t\t\t\t\t\t<img class=\"addNewButtonImageSmall\" src=\"images/add-button-small.svg\">\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<!-- Todo Card Task List:: BEGIN -->\n\t\t\t\t\t\t\t<ul class=\"todoCardTaskList\">\n\n\n\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status5\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status5\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\n\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\n\n\t\t\t\t\t\t\t</ul><!-- Todo Card Task List:: END -->\n\t\t\t\t\t\t</div><!-- Todo Card Body :: END -->\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div><!-- Card Container :: END -->";
+        return todoCardHTML;
     };
     return TodoCard;
 }());
 
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(4);
+__webpack_require__(2);
+__webpack_require__(0);
+__webpack_require__(1);
+module.exports = __webpack_require__(3);
 
 
 /***/ })

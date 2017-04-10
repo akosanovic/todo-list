@@ -24,10 +24,22 @@
 	position: relative;
 	padding: $lh $lh/2;
 	color  : $white;	
-	@include transition(all 0.75s linear);
+	@include transition(all 0.5s linear);
 
 	&.yellowCardHeader {
 		background-color: $yellow;
+	}
+	&.turquoiseCardHeader {
+		background-color: $turquoise;
+	}
+	&.purpleCardHeader {
+		background-color: $purple;
+	}
+	&.blueCardHeader {
+		background-color: $blue;
+	}
+	&.orangeCardHeader {
+		background-color: $orange;
 	}
 
 
@@ -56,15 +68,23 @@
 		}
 	}
 	.todoCardDropDownMenu {
+		@include transition(all 0.5s ease-in-out);
 		position: absolute;
 		top  : $lh*2.5;
 		right: $lh;
 		display: block;
+
+		height: 0;
 		z-index: 20;
+		overflow: hidden;
+		&.showTodoCardDropDownMenu {
+			@include transition(all 0.5s ease-in-out);
+			overflow: visible;
+			height: 100%;
+		}
 
 
 		.dropDownMenuContainer {
-			display: none !important;
 			@include box-shadow( 0px 1px 5px 1px rgba(215,215,215,1) );
 			background-color: $white;
 			color: $gray-dark;
@@ -132,7 +152,7 @@
 		right : 0;
 		bottom: 0;
 		overflow: auto;
-		.todoCardTaskItem {
+		.todoTaskItem {
 			color: $blue-dark;
 			border-bottom: 1px solid $blue-light;
 			&:last-child {

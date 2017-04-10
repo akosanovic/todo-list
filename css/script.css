@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* line 5, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,45 +21,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -660,7 +660,7 @@ body {
   }
 }
 /* line 169, ../scss/_main-card-layout.scss */
-.mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer .mainTodoCardTaskItem {
+.mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer .todoTaskItem {
   margin-bottom: 1.5rem;
   border-color: #e56e6e;
 }
@@ -682,7 +682,7 @@ body {
 }
 /* line 193, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList:after {
-  content: "ItΓÇÖs time for cocktail, \a All tasks are done!";
+  content: "It’s time for cocktail, \a All tasks are done!";
   white-space: pre;
   display: block;
   width: 20rem;
@@ -729,68 +729,98 @@ body {
   position: relative;
   padding: 1.5rem 0.75rem;
   color: #fff;
-  -moz-transition: all 0.75s linear;
-  -o-transition: all 0.75s linear;
-  -webkit-transition: all 0.75s linear;
-  transition: all 0.75s linear;
+  -moz-transition: all 0.5s linear;
+  -o-transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
 }
 /* line 29, ../scss/_card-layout.scss */
 .todoCardHeader.yellowCardHeader {
   background-color: #f9cf1e;
 }
-/* line 36, ../scss/_card-layout.scss */
+/* line 32, ../scss/_card-layout.scss */
+.todoCardHeader.turquoiseCardHeader {
+  background-color: #59d1ba;
+}
+/* line 35, ../scss/_card-layout.scss */
+.todoCardHeader.purpleCardHeader {
+  background-color: #996cbc;
+}
+/* line 38, ../scss/_card-layout.scss */
+.todoCardHeader.blueCardHeader {
+  background-color: #496cc4;
+}
+/* line 41, ../scss/_card-layout.scss */
+.todoCardHeader.orangeCardHeader {
+  background-color: #f89b21;
+}
+/* line 48, ../scss/_card-layout.scss */
 .todoCardHeader .inputGroup {
   margin-bottom: 1.5rem;
 }
-/* line 38, ../scss/_card-layout.scss */
+/* line 50, ../scss/_card-layout.scss */
 .todoCardHeader .inputGroup .inputGroupDescription {
   font-size: 19px;
   font-weight: 500;
   color: #fff;
 }
-/* line 47, ../scss/_card-layout.scss */
+/* line 59, ../scss/_card-layout.scss */
 .todoCardHeader .cardMenuButton {
   position: absolute;
   top: 1.5rem;
   right: 1rem;
   padding: 0 0.75rem;
 }
-/* line 52, ../scss/_card-layout.scss */
+/* line 64, ../scss/_card-layout.scss */
 .todoCardHeader .cardMenuButton .fa-ellipsis-v {
   font-size: 19px;
   line-height: 1.5rem;
   vertical-align: middle;
 }
-/* line 58, ../scss/_card-layout.scss */
+/* line 70, ../scss/_card-layout.scss */
 .todoCardHeader .todoCardDropDownMenu {
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   position: absolute;
   top: 3.75rem;
   right: 1.5rem;
   display: block;
+  height: 0;
   z-index: 20;
+  overflow: hidden;
 }
-/* line 66, ../scss/_card-layout.scss */
+/* line 80, ../scss/_card-layout.scss */
+.todoCardHeader .todoCardDropDownMenu.showTodoCardDropDownMenu {
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  overflow: visible;
+  height: 100%;
+}
+/* line 87, ../scss/_card-layout.scss */
 .todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer {
-  display: none !important;
   -moz-box-shadow: 0px 1px 5px 1px #d7d7d7;
   -webkit-box-shadow: 0px 1px 5px 1px #d7d7d7;
   box-shadow: 0px 1px 5px 1px #d7d7d7;
   background-color: #fff;
   color: #71808c;
 }
-/* line 72, ../scss/_card-layout.scss */
+/* line 92, ../scss/_card-layout.scss */
 .todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer .dropdownMenuList {
   list-style-type: none;
 }
-/* line 75, ../scss/_card-layout.scss */
+/* line 95, ../scss/_card-layout.scss */
 .todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer .dropdownMenuList .dropdownMenuItem {
   border-bottom: 1px solid #d9e5f9;
 }
-/* line 77, ../scss/_card-layout.scss */
+/* line 97, ../scss/_card-layout.scss */
 .todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer .dropdownMenuList .dropdownMenuItem:last-child {
   border-bottom: 0;
 }
-/* line 80, ../scss/_card-layout.scss */
+/* line 100, ../scss/_card-layout.scss */
 .todoCardHeader .todoCardDropDownMenu .dropDownMenuContainer .dropdownMenuList .dropdownMenuItem .dropdownMenuLink {
   display: inline-block;
   width: 100%;
@@ -801,7 +831,7 @@ body {
   line-height: 1.5;
 }
 
-/* line 97, ../scss/_card-layout.scss */
+/* line 117, ../scss/_card-layout.scss */
 .todoCardBody {
   position: relative;
   height: 22rem;
@@ -812,36 +842,36 @@ body {
   -webkit-transition: all 0.7s linear;
   transition: all 0.7s linear;
 }
-/* line 103, ../scss/_card-layout.scss */
+/* line 123, ../scss/_card-layout.scss */
 .todoCardBody.showCardBody {
   overflow: visible;
   height: 22rem;
 }
 @media screen and (max-width: 995px) {
-  /* line 97, ../scss/_card-layout.scss */
+  /* line 117, ../scss/_card-layout.scss */
   .todoCardBody {
     height: 0;
   }
 }
-/* line 112, ../scss/_card-layout.scss */
+/* line 132, ../scss/_card-layout.scss */
 .todoCardBody .todoCardAddNewTaskButtonSmall {
   position: absolute;
   top: -1.5rem;
   right: 1.5rem;
   z-index: 10;
 }
-/* line 117, ../scss/_card-layout.scss */
+/* line 137, ../scss/_card-layout.scss */
 .todoCardBody .todoCardAddNewTaskButtonSmall .todoCardAddNewTaskButton {
   display: inline-block;
   width: 3rem;
   height: 3rem;
 }
-/* line 121, ../scss/_card-layout.scss */
+/* line 141, ../scss/_card-layout.scss */
 .todoCardBody .todoCardAddNewTaskButtonSmall .todoCardAddNewTaskButton .addNewButtonImageSmall {
   width: 100%;
   height: 100%;
 }
-/* line 128, ../scss/_card-layout.scss */
+/* line 148, ../scss/_card-layout.scss */
 .todoCardBody .todoCardTaskList {
   position: absolute;
   top: 0;
@@ -850,18 +880,18 @@ body {
   bottom: 0;
   overflow: auto;
 }
-/* line 135, ../scss/_card-layout.scss */
-.todoCardBody .todoCardTaskList .todoCardTaskItem {
+/* line 155, ../scss/_card-layout.scss */
+.todoCardBody .todoCardTaskList .todoTaskItem {
   color: #5d6e7c;
   border-bottom: 1px solid #d9e5f9;
 }
-/* line 138, ../scss/_card-layout.scss */
-.todoCardBody .todoCardTaskList .todoCardTaskItem:last-child {
+/* line 158, ../scss/_card-layout.scss */
+.todoCardBody .todoCardTaskList .todoTaskItem:last-child {
   border-bottom: 0;
 }
 
 /* line 1, ../scss/_task-item.scss */
-.taskItem {
+.taskItemContainer {
   padding: 1.5rem 0.75rem;
   background-color: #fff;
 }

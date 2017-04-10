@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
 	devtool: 'source-map',
 	entry  :[
-		
+		'./ts/todoTask.ts',
 		'./ts/todoApp.ts',
 		'./ts/mainTodoCard.ts',
 		'./ts/todoItem.ts',
