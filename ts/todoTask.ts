@@ -5,13 +5,12 @@ import {Persistable} from './persistable';
 
 export class TodoTask implements Persistable {
 	private parentContext: todoTaskInteface;
-
-
-	public todoTaskID: number;
-	public todoTaskJQuery: JQuery;
-	private todoTaskHTML: string;
+	private todoTaskHTML : string;
+	
+	public todoTaskID        : number;
+	private todoTaskJQuery   : JQuery;
 	public todoTaskDescripion: string;
-	public todoTaskStatus: boolean;
+	public todoTaskStatus    : boolean;
 	
 	public todoDate: Date;
 	public parentID: number;
@@ -21,13 +20,13 @@ export class TodoTask implements Persistable {
 		this.parentContext      = parentContext;
 		
 		this.todoTaskID         = todoTaskObject.todoTaskID;
-		this.todoTaskDescripion = todoTaskObject.taskDescription;
+		this.todoTaskDescripion = todoTaskObject.todoTaskDescripion;
 		this.todoTaskStatus     = todoTaskObject.todoTaskStatus;
 		this.parentID           = todoTaskObject.parentID;
 		
 		this.todoTaskHTML   = this.getTodoTaskHTML();
 		this.todoTaskJQuery = $(this.todoTaskHTML);
-		this.todoDate       = new Date();
+		// this.todoDate       = new Date();
 	}
 
 
@@ -39,8 +38,15 @@ export class TodoTask implements Persistable {
 		this.todoTaskJQuery     = null;
 	}
 
-	getLocalStorageRepresentation() {
-		
+	getLocalStorageRepresentation(): any{
+
+		let json = {
+			todoTaskID        : this.todoTaskID,
+			todoTaskDescripion: this.todoTaskDescripion,
+			todoTaskStatus    : this.todoTaskStatus,
+			todoDate          : this.todoDate
+		}
+		return json;
 	}
 
 	public prependTo( parent: JQuery ): void {

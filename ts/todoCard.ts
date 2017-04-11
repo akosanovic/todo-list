@@ -23,7 +23,7 @@ export class TodoCard implements Persistable  {
 	private todoTaskInputContainer : JQuery;
 	public  todoTasksListContainer : JQuery;
 	private newTodoTaskDescriptionInput: JQuery;
-	private newTodoTaskDescription: string;
+	private todoTaskDescripion: string;
 
 
 	private todoTaskCounter: number = 0;
@@ -69,7 +69,7 @@ export class TodoCard implements Persistable  {
 	}
 
 
-	getLocalStorageRepresentation() {
+	public getLocalStorageRepresentation() {
 
 		let todoTasksJsons = []
 
@@ -87,7 +87,6 @@ export class TodoCard implements Persistable  {
 			cardHeaderColor  : this.cardHeaderColor,
 			todoTasksJsons   : todoTasksJsons
 		}
-
 		return json;
 	}
 
@@ -131,6 +130,7 @@ export class TodoCard implements Persistable  {
 		let deleteCardButtonClicked = target.closest(this.cardMenuDeleteButton);
 		if (deleteCardButtonClicked.length > 0 ){
 			e.preventDefault();
+			e.stopPropagation();
 			this.parentContext.deleteTodoCard( this.cardID );
 		}
 
@@ -138,6 +138,7 @@ export class TodoCard implements Persistable  {
 		let addNewTaskClicked = target.closest(addNewTaskButton);
 		if (addNewTaskClicked.length > 0) {
 			e.preventDefault();
+			e.stopPropagation();
 			this.showNewTaskInputContainer();
 		}
 	}
@@ -163,16 +164,15 @@ export class TodoCard implements Persistable  {
 		 		if (newTitle){
 
 				
-				console.log("new value for the header", newTitle);
+				
 				this.parentContext.editTodoCard( this.cardID, this.cardJQueryElement, newTitle )
 				}
 		 	}
 
-
 		 	// Check for Users New Task Input 
 		 	if(this.newTodoTaskDescriptionInput.val()){
 		 		
-		 		this.newTodoTaskDescription = this.newTodoTaskDescriptionInput.val();
+		 		this.todoTaskDescripion = this.newTodoTaskDescriptionInput.val();
 		 		this.hideNewTaskInputContainer();
 		 		this.createNewTodoTask();
 		 	}
@@ -247,9 +247,12 @@ export class TodoCard implements Persistable  {
 	createNewTodoTask(): void {
 
 		var newTaskObject = {
-			"taskID": this.todoTaskCounter++,
-			"taskDescription": this.newTodoTaskDescription
+			"todoTaskID": this.todoTaskCounter++,
+			"todoTaskDescripion": this.todoTaskDescripion,
+			"todoTaskStatus": false,
+			"parentID": this.cardID
 		}
+
 		this.prependNewTask( newTaskObject );
 	}
 
@@ -258,7 +261,9 @@ export class TodoCard implements Persistable  {
 
 		let newTodoTask: TodoTask = new TodoTask( newTaskObject, this );
 		newTodoTask.prependTo(this.todoTasksListContainer);
-		this.todoTasksArray.push(newTodoTask);
+		console.log(newTodoTask)
+		// this.todoTasksArray.push(newTodoTask);
+		console.log(this.getLocalStorageRepresentation());
 	}
 
 
