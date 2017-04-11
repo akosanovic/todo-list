@@ -29,7 +29,7 @@ export class TodoCard implements Persistable  {
 	private todoTaskCounter: number = 0;
 	public todoTask    : JQuery;
 
-	public todoTasksArray : TodoTask[];
+	public todoTasksArray = [];
 
 	private headerColor: string = '';
 

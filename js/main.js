@@ -10759,6 +10759,7 @@ return jQuery;
 var TodoCard = (function () {
     function TodoCard(cardObject, parentContext) {
         this.todoTaskCounter = 0;
+        this.todoTasksArray = [];
         this.headerColor = '';
         this.parentContext = parentContext;
         this.cardID = cardObject.cardID;
