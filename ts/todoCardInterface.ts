@@ -3,8 +3,8 @@ export interface TodoCardInterface{
 
 	addNewTodoTask();
 	appendTodoTaskToCardContainer();
-	createTodoCard( e ):void;
-	editTodoCard( cardId:number ): void;
+	
+	editTodoCard( cardId:number, jqueryElement: JQuery, newTitle: string ): void;
 	deleteTodoCard( cardID: number ): void;
 
 }

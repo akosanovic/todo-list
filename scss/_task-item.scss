@@ -2,7 +2,9 @@
 	padding: $lh $lh/2;
 	background-color: $white;
 
-
+	&.taskChecked {
+		background-color: #f6f9ff;
+	}
 }
 
 	//  Input Group is consist of:

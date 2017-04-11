@@ -1,26 +1,33 @@
 
 import {TodoCard} from './todoCard';
+import {todoTaskInteface} from './todoTaskInterface';
+import {Persistable} from './persistable';
+
+export class TodoTask implements Persistable {
+	private parentContext: todoTaskInteface;
 
 
-
-export class TodoTask {
 	public todoTaskID: number;
 	public todoTaskJQuery: JQuery;
 	private todoTaskHTML: string;
 	public todoTaskDescripion: string;
 	public todoTaskStatus: boolean;
-	public parentContext: JQuery;
+	
 	public todoDate: Date;
 	public parentID: number;
-	constructor( todoTaskObject ) {
-		this.todoTaskID = todoTaskObject.todoTaskID;
+
+
+	constructor( todoTaskObject, parentContext ) {
+		this.parentContext      = parentContext;
+		
+		this.todoTaskID         = todoTaskObject.todoTaskID;
 		this.todoTaskDescripion = todoTaskObject.taskDescription;
-		this.todoTaskStatus = todoTaskObject.todoTaskStatus;
-		this.parentID = todoTaskObject.parentID;
-		// this.parentContext = todoTaskObject.parentContainer;
-		this.todoTaskHTML = this.getTodoTaskHTML();
+		this.todoTaskStatus     = todoTaskObject.todoTaskStatus;
+		this.parentID           = todoTaskObject.parentID;
+		
+		this.todoTaskHTML   = this.getTodoTaskHTML();
 		this.todoTaskJQuery = $(this.todoTaskHTML);
-		this.todoDate = new Date();
+		this.todoDate       = new Date();
 	}
 
 
@@ -32,21 +39,31 @@ export class TodoTask {
 		this.todoTaskJQuery     = null;
 	}
 
-
-
-	public appendToCardContainer() {
-	
-		this.parentContext.prepend(this.todoTaskJQuery);
+	getLocalStorageRepresentation() {
+		
 	}
+
+	public prependTo( parent: JQuery ): void {
+		parent.prepend(this.todoTaskJQuery);
+	}
+
+	
 
 	clickHandler( e ) {
 		let target = $(e.target);
+		
 
+		let checkBocks = this.todoTaskJQuery.find('.task--done--status');
+		let checkBocksChecked = target.closest(checkBocks);
+		if(checkBocksChecked.length > 0) {
+			this.changeTaskStatus();
+		}
 	}
 
 
 	private getTodoTaskHTML(): string{
-		let taskChecked = this.todoTaskStatus ? this.todoTaskStatus : '';
+		
+		let taskChecked = this.todoTaskStatus ? 'checked' : '';
 
 		var taskItemHTML: string = 
 				`<li class="todoTaskItem taskItemContainer todo--task--item" data-task-id="${this.todoTaskID}">
@@ -67,6 +84,10 @@ export class TodoTask {
 		return taskItemHTML;
 	}
 
+	changeTaskStatus( ){
+		let todoTaskContainer: JQuery = this.todoTaskJQuery.find('.todo--task--item');
+		todoTaskContainer.addClass('taskChecked');
+	}
 
 
 
@@ -75,6 +96,6 @@ export class TodoTask {
 		return this.todoTaskStatus;
 	}
 
-	deleteTodoTask(){}
+	
 
 }

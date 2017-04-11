@@ -44,7 +44,7 @@
 			}
 
 			.addNewButtonContainer {
-				@include transition(all 0.7s ease-in-out);
+				@include transition(all 0.5s ease-in-out);
 				position: relative;
 				display: inline-block;
 				height: $lh*4;
@@ -59,7 +59,7 @@
 				}
 				&.hideFloatingButtons {
 					.addCardFloatingButton {
-						@include transition(all 0.7s ease-in-out);
+						@include transition(all 0.5s ease-in-out);
 						position: absolute;
 						top: $lh;
 						right: 0;
@@ -69,7 +69,7 @@
 
 					}
 					.addTaskFloatingButton {
-						@include transition(all 0.7s ease-in-out);
+						@include transition(all 0.5s ease-in-out);
 						position: absolute;
 						bottom: $lh;
 						right: 0;
@@ -80,7 +80,7 @@
 				}
 				&.showFloatingButtons {
 					.addCardFloatingButton{
-						@include transition(all 0.7s ease-in-out);
+						@include transition(all 0.5s ease-in-out);
 						position: absolute;
 						top: -($lh/2) !important;
 						right: -($lh*3.5);
@@ -88,7 +88,7 @@
 
 					}
 					.addTaskFloatingButton {
-						@include transition(all 0.7s ease-in-out);
+						@include transition(all 0.5s ease-in-out);
 						position: absolute;
 						right  : -($lh*3.5);
 						bottom  : -($lh/2) !important;

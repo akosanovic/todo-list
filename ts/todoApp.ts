@@ -4,6 +4,7 @@ import {ToDoItem} from './todoItem';
 import {ToDoItemList} from './todoItemList';
 import {TodoCard} from './todoCard';
 import {TodoTask} from './todoTask';
+import {TodoCardInterface} from './todoCardInterface';
 /*
 	Adding new task card can be done on enter, clicking on submit button
 	Every task is submitted:
@@ -12,7 +13,7 @@ import {TodoTask} from './todoTask';
 */ 
 
 
-export class todoApp implements ToDoItemList{
+export class todoApp implements TodoCardInterface {
 
 	// data property storing page container
 	// visible globally 
@@ -33,7 +34,7 @@ export class todoApp implements ToDoItemList{
     todoCardTitle: JQuery;
 
     // Todo Task List Container
-    todoTask: JQuery = this.pageContainer.find('.todo--task--item');
+    todoTask: JQuery;
 
      
     // append new task cards
@@ -62,11 +63,8 @@ export class todoApp implements ToDoItemList{
 	constructor() {
 
 		// initializing event handlers on document 
-		$(document).on( "keypress", this.keypressHandler.bind(this) );
 		
 		$(document).on("click", this.clickHandler.bind(this));
-
-		$(document).on('focusout', this.focusOutHandler.bind(this))
 
 		this.mainTodoCard = new MainTodoCard ( this.mainTodoCardContainer );
 		this.getValueFromLocalStorage();
@@ -74,31 +72,7 @@ export class todoApp implements ToDoItemList{
 
 
 	// INITIALIZING HANDLERS :: BEGIN
-	keypressHandler( e ): void {
-		let target: JQuery = $(e.target);
-
-		this.newTaskInputField = this.pageContainer.find('.new--todo--task--description');
-		// on enter submit new task
-		if(  e.charCode === 13 || e.which === 13 || e.key == 'Enter' ) {
-		
-			let newTaskInputField:JQuery = target.closest(this.newTaskInputField);	
-			if( newTaskInputField.length > 0 ) {
-				let todoCardParentContainerID = newTaskInputField.closest('.todo--card--contianer').data('card-id');
-				this.newTask( todoCardParentContainerID );
-			}
-		}
-		this.todoCardTitle = this.pageContainer.find('.todo--card--title--input');
-		let todoCardTitleFocusOut: JQuery = target.closest(this.todoCardTitle);
-		if (todoCardTitleFocusOut.length > 0) {
-			let todoCardID: number = todoCardTitleFocusOut.closest('. todo--card--contianer').data('card-id');
-			if(todoCardTitleFocusOut.val()){
-				let newTitle = todoCardTitleFocusOut.val();
-				this.editTodoCard(todoCardID, newTitle);
-			}
-		}
-	}
-
-	clickHandler( e ): void{
+	clickHandler( e ): void {
 		let target:JQuery = $(e.target);
 
 		// if clicked on Main Todo Card pass evet to Main Cards handler
@@ -122,7 +96,7 @@ export class todoApp implements ToDoItemList{
 		if (clickedTodoCard.length > 0){
 			let clickedCardID: number = Number(clickedTodoCard.attr('data-card-id'));
 			
-			for (let i = 0; i < todoCardsListLength; i++){				
+			for (let i = 0; i < this.todoCardObjectList.length; i++){				
 				if (clickedCardID === this.todoCardObjectList[i].cardID){
 					let clickedTodoCardItem: TodoCard = this.todoCardObjectList[i];
 					clickedTodoCardItem.clickHandler( e );
@@ -130,54 +104,59 @@ export class todoApp implements ToDoItemList{
 			}
 		}
 
-		// find card object that was clicked on in the todoTaskObject and call event for that 
-		// task card
-		let element = target.closest('.to--do--card')
-		if (element.length > 0 ){
-			let clickedTaskId: number = Number(element.attr('data-task-id'));
+
+
+		// // find card object that was clicked on in the todoTaskObject and call event for that 
+		// // task card
+		// let element = target.closest('.to--do--card')
+		// if (element.length > 0 ){
+		// 	let clickedTaskId: number = Number(element.attr('data-task-id'));
 			
-			for ( let todoTaskObjectProperty in this.todoTaskObject ) {
-				let arrayOfTodoTaskObject = this.todoTaskObject[todoTaskObjectProperty]
+		// 	for ( let todoTaskObjectProperty in this.todoTaskObject ) {
+		// 		let arrayOfTodoTaskObject = this.todoTaskObject[todoTaskObjectProperty]
 				
-				for ( let i = 0; i < arrayOfTodoTaskObject.length; i++ ) {
-					if ( clickedTaskId === arrayOfTodoTaskObject[i].taskId ) {						
+		// 		for ( let i = 0; i < arrayOfTodoTaskObject.length; i++ ) {
+		// 			if ( clickedTaskId === arrayOfTodoTaskObject[i].taskId ) {						
 						
-						let clickedTaskCard: ToDoItem = arrayOfTodoTaskObject[i]
-						clickedTaskCard.onClick( e );
-					}
+		// 				let clickedTaskCard: ToDoItem = arrayOfTodoTaskObject[i]
+		// 				clickedTaskCard.onClick( e );
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+
+
+		// If clicked on todo task pass click event to TodoTask Card
+		this.todoTask = this.pageContainer.find('.todo--task--item');
+		let todoTaskClicked: JQuery = target.closest(this.todoTask);
+		if (todoTaskClicked.length > 0) {
+			let todoTaskID: number = Number(todoTaskClicked.attr('data-task-id'));
+			for(let i = 0; i < this.todoTaskObjectsList.length;  i++){
+				
+
+				let todoTaskItem: TodoTask = this.todoTaskObjectsList[i];
+				if(todoTaskID === todoTaskItem.todoTaskID) {
+					this.todoTaskObjectsList[i].clickHandler( e );
+					console.log(todoTaskItem);
 				}
 			}
 		}
 	}
 
-	focusOutHandler(e) {
-		let target = $(e.target);
-
-		
-	}
-
-
-	// object is updated: 
-		// on task submit
-		// on task delete
-		// when task is changed(text and status)
-	todoTaskObject = {
-		'todoTasks': [],
-		'doneTasks': []
-	}
 
 	// Todo Card Object is updated: 
 	//  when new is created
 	//  when one is deleted
 	// 	when one is edited
-	todoCardsObject = {
-		'todoCardList': []
-	}
-	todoCardObjectsList = this.todoCardsObject.todoCardList;
+
+	
 	todoObject = {
 		'todoCardList': [],
 		'todoTaskList': []
 	}
+
+
 	todoCardObjectList = this.todoObject.todoCardList;
 	todoTaskObjectsList = this.todoObject.todoTaskList;
 
@@ -207,8 +186,10 @@ export class todoApp implements ToDoItemList{
 			let todoCardItem: TodoCard = this.todoCardObjectList[i];
 			let todoCardObject = {
 				'cardID': todoCardItem.cardID,
-				'cardTitle': todoCardItem.cardTitle
+				'cardTitle': todoCardItem.cardTitle,
+				'cardHeaderColor': todoCardItem.cardHeaderColor
 			}
+
 			this.localStorageObject.cardArray.push(todoCardObject);
 		}
 
@@ -216,13 +197,17 @@ export class todoApp implements ToDoItemList{
 		this.localStorageObject.taskCounter = this.taskCounter;
 		for( let i = 0; i < this.todoTaskObjectsList.length; i++ ){
 
+			
 			let todoTaskItem: TodoTask = this.todoTaskObjectsList[i];
 			if( !todoTaskItem.todoTaskStatus) {
+				
+
 				let todoTaskObject = {
 					'todoTaskID': todoTaskItem.todoTaskID,
 					'todoTaskDescripion': todoTaskItem.todoTaskDescripion,
 					'todoTaskStatus': false,
-					'parentID': todoTaskItem.parentID
+					'parentID': todoTaskItem.parentID,
+					'todoDate': todoTaskItem.todoDate
 				}
 			}
 			this.localStorageObject.taskArray.push(todoTaskItem);
@@ -241,15 +226,21 @@ export class todoApp implements ToDoItemList{
 			this.renderValueFromLocalStorage(localStorageObject);
 		}
 	}
+	
+
 	renderValueFromLocalStorage(localStorageObject): any {
 		// reset counters
 		this.todoCardCounter = localStorageObject.cardArray.length;
 		for(let i = 0; i < localStorageObject.cardArray.length; i++) {
 			let cardItem = localStorageObject.cardArray[i];
+			
+
 			let newCard = {
 				cardID: i,
-				cardTitle: cardItem[i],
+				cardTitle: cardItem.cardTitle,
+				cardHeaderColor: cardItem.cardHeaderColor
 			}
+
 			this.appendTodoCard(newCard);
 		}
 		// reseting counter
@@ -263,7 +254,7 @@ export class todoApp implements ToDoItemList{
 				'parentID': taskItem.parentID
 			}
 
-			this.newTask(taskObject.parentID)
+			this.prependTodoTask(taskObject);
 		}
 	}
 	
@@ -276,13 +267,15 @@ export class todoApp implements ToDoItemList{
 
 		var newCard = {
 			cardID: this.todoCardCounter++,
-			cardTitle: ""
+			cardTitle: "",
+			cardHeaderColor: ''
 		}	
 		this.appendTodoCard( newCard );
 	}
 
 
 	appendTodoCard( cardObject ):void {
+		console.log(cardObject);
 		let newTodoCard: TodoCard = new TodoCard( cardObject, this );
 
 		this.todoCardObjectList.push(newTodoCard);
@@ -290,17 +283,20 @@ export class todoApp implements ToDoItemList{
 		this.updateLocalStorage();
 	}
 
-	editTodoCard( todoCardID: number, todoCardTitle: string ): void {
+	editTodoCard( todoCardID: number, todoCardJQuery: JQuery, todoCardTitle: string ): void {
+		console.log("Gode are you there");
 		for( let i = 0; i < this.todoCardObjectList.length; i++ ){
 			
 			let todoCardItem: TodoCard = this.todoCardObjectList[i]
 			if ( todoCardID === todoCardItem.cardID ){
 
 				todoCardItem.cardTitle = todoCardTitle;
-				debugger
+				console.log("passed value", todoCardItem.cardTitle);
 			}
 		}
+		
 		this.updateLocalStorage();
+		console.log(localStorage);
 	}
 
 
@@ -316,85 +312,105 @@ export class todoApp implements ToDoItemList{
 			}
 		}
 		this.updateLocalStorage();
+
 	}
+
+
 
 
 
 
 	// CREATE NEW TASK OBJECT
-	newTask( parentID ) {
-		let newTaskDescription: string = this.newTaskInputField.val();
+	// newTask() {
+	// 	let newTaskDescription: string = this.newTaskInputField.val();
 		
-		if (newTaskDescription) {
-			this.newTaskInputField.val('');
+	// 	if (newTaskDescription) {
+	// 		this.newTaskInputField.val('');
 
-			var newTask = {
-				todoTaskID     : this.taskCounter++,
-				todoTaskStatus : false,
-				taskDescription: newTaskDescription,
-				taskParentID   : parentID
-			}	
-		}
+	// 		var newTask = {
+	// 			todoTaskID     : this.taskCounter++,
+	// 			todoTaskStatus : false,
+	// 			taskDescription: newTaskDescription,
+	// 			taskParentID   : parentID
+	// 		}	
+	// 	}
 
-		var taskObject: TodoTask = new TodoTask(newTask)
-		let cardContainer = this.fetchParentContainer(parentID);
-		cardContainer.prependNewTodoTask(taskObject);
-
-
-		this.todoTaskObjectsList.push(taskObject);
-		console.log(taskObject);
-	}
+	// 	var taskObject: TodoTask = new TodoTask(newTask, this);
+	// 	let cardContainer = this.fetchParentContainer(parentID);
+	// 	//taskObject.prependTo(cardContainer.todoTasksListContainer);
 
 
-	fetchUserInput(): string{		
+	// 	cardContainer.prependNewTodoTask(taskObject);
 
-		let newTaskData: string = this.newTaskInputField.val();
+
+	// 	this.todoTaskObjectsList.push(taskObject);
+	// 	console.log(taskObject);
+	// }
+	// prependTodoTask( taskObject ){
+
+	// }
+
+
+	// fetchUserInput(): string{		
+
+	// 	let newTaskData: string = this.newTaskInputField.val();
 		
-		if (newTaskData){
-			this.newTaskInputField.val('');
-			return newTaskData;
-		}
+	// 	if (newTaskData){
+	// 		this.newTaskInputField.val('');
+	// 		return newTaskData;
+	// 	}
+	// }
+
+
+	// fetchParentContainer( todoCardID: number ): TodoCard {
+	// 	for( let i = 0; i < this.todoCardObjectList.length; i++ ){
+			
+	// 		let todoCardItem: TodoCard = this.todoCardObjectList[i]
+	// 		if ( todoCardID === todoCardItem.cardID ){
+	// 			return todoCardItem;
+	// 		}
+	// 	}
+	// }
+	// changeTaskStatus(  ) {
+	// 	let todoTaskContainer: JQuery = this.pageContainer.find('.todo--task--item');
+	// 	todoTaskContainer.addClass('taskChecked');
+
+	// 	this.updateLocalStorage();
+	// }
+
+
+
+
+
+
+
+
+	/*
+
+	JSON za todoApp:
+
+	{
+		todoCardsCounter: number
+		todoCardsArray: [ JSON za todoCard ]
+
 	}
 
-
-	fetchParentContainer( todoCardID: number ): TodoCard {
-		for( let i = 0; i < this.todoCardObjectList.length; i++ ){
-			
-			let todoCardItem: TodoCard = this.todoCardObjectList[i]
-			if ( todoCardID === todoCardItem.cardID ){
-				return todoCardItem;
-			}
-		}
-	}
-	
-
-
-
-
-
-
-	taskItemDeleted( taskId: number) {
-
-		for( let objectElement in this.todoTaskObject ){
-			let arrayOfTodoTaskObject = this.todoTaskObject[objectElement]
-			
-			for( let i = 0; i < arrayOfTodoTaskObject.length; i++ ){
-			
-				if( taskId === arrayOfTodoTaskObject[i].taskId ){
-					arrayOfTodoTaskObject[i].destroy();
-					arrayOfTodoTaskObject.splice(i, 1);
-					
-				}
-			}
-		}
-		this.updateLocalStorage();
+	JSON za todoCard:
+	{
+		todoTaskCounter: number
+		color: string
+		title: string
+		todoTasks: [ JSON za todoTask ]		
 	}
 
+	JSON za todoTask
+	{
+		id: number
+		desciption: string
+		done: bool
+	}
 
-
-
-
-
+	*/
 
 
 

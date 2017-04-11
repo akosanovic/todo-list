@@ -54,7 +54,7 @@ export class MainTodoCard implements TodoCardInterface {
 				// this.createTodoCard( e );
 			}
 			else if(floatingButtonClicked.hasClass('floating--button--add--task')){
-				console.log("add task clicked");
+				
 				this.createNewCardWithTask( e );
 			}
 		}

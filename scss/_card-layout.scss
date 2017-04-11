@@ -118,13 +118,13 @@
 	position: relative;
 	height: 22rem;
 	background-color: $white;
-	overflow: hidden;
 	@include transition(all 0.7s linear);
 	&.showCardBody {
 		overflow: visible;
 		height: 22rem;
 	}
 	@media screen and (max-width: $br-w-md) {
+		overflow: hidden;
 		height: 0;
 	}
 
@@ -144,6 +144,12 @@
 			}
 		}
 	}
+	.newTaskInputContainer {
+		.todoTaskItem {
+			color: $blue-dark;
+			border-bottom: 1px solid $blue-light;
+		}
+	}
 
 	.todoCardTaskList {
 		position: absolute;
@@ -152,12 +158,12 @@
 		right : 0;
 		bottom: 0;
 		overflow: auto;
+		&.newTaskInputOpened {
+			top: 74px;
+		}
 		.todoTaskItem {
 			color: $blue-dark;
 			border-bottom: 1px solid $blue-light;
-			&:last-child {
-				border-bottom: 0;
-			}
 		}
 	}
 }

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* line 5, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,45 +21,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -269,14 +269,36 @@ body {
   transition: all 1s linear;
 }
 
-/* line 125, ../scss/_main-style.scss */
+/* line 124, ../scss/_main-style.scss */
+.add {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  -moz-transition: all 1s linear;
+  -o-transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+  transition: all 1s linear;
+}
+
+/* line 130, ../scss/_main-style.scss */
+.remove {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  -moz-transition: all 1s linear;
+  -o-transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+  transition: all 1s linear;
+}
+
+/* line 138, ../scss/_main-style.scss */
 .mobileOnly {
   display: none;
   visibility: hidden;
   opacity: 0;
 }
 @media screen and (max-width: 769px) {
-  /* line 125, ../scss/_main-style.scss */
+  /* line 138, ../scss/_main-style.scss */
   .mobileOnly {
     display: block;
     visibility: visible;
@@ -284,14 +306,14 @@ body {
   }
 }
 
-/* line 136, ../scss/_main-style.scss */
+/* line 149, ../scss/_main-style.scss */
 .hideOnMobile {
   display: block;
   visibility: visible;
   opacity: 1;
 }
 @media screen and (max-width: 769px) {
-  /* line 136, ../scss/_main-style.scss */
+  /* line 149, ../scss/_main-style.scss */
   .hideOnMobile {
     display: none !important;
     visibility: hidden !important;
@@ -515,10 +537,10 @@ body {
 }
 /* line 46, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer {
-  -moz-transition: all 0.7s ease-in-out;
-  -o-transition: all 0.7s ease-in-out;
-  -webkit-transition: all 0.7s ease-in-out;
-  transition: all 0.7s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   position: relative;
   display: inline-block;
   height: 6rem;
@@ -534,10 +556,10 @@ body {
 }
 /* line 61, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .addCardFloatingButton {
-  -moz-transition: all 0.7s ease-in-out;
-  -o-transition: all 0.7s ease-in-out;
-  -webkit-transition: all 0.7s ease-in-out;
-  transition: all 0.7s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   position: absolute;
   top: 1.5rem;
   right: 0;
@@ -546,10 +568,10 @@ body {
 }
 /* line 71, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .addTaskFloatingButton {
-  -moz-transition: all 0.7s ease-in-out;
-  -o-transition: all 0.7s ease-in-out;
-  -webkit-transition: all 0.7s ease-in-out;
-  transition: all 0.7s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   position: absolute;
   bottom: 1.5rem;
   right: 0;
@@ -558,10 +580,10 @@ body {
 }
 /* line 82, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.showFloatingButtons .addCardFloatingButton {
-  -moz-transition: all 0.7s ease-in-out;
-  -o-transition: all 0.7s ease-in-out;
-  -webkit-transition: all 0.7s ease-in-out;
-  transition: all 0.7s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   position: absolute;
   top: -0.75rem !important;
   right: -5.25rem;
@@ -569,10 +591,10 @@ body {
 }
 /* line 90, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.showFloatingButtons .addTaskFloatingButton {
-  -moz-transition: all 0.7s ease-in-out;
-  -o-transition: all 0.7s ease-in-out;
-  -webkit-transition: all 0.7s ease-in-out;
-  transition: all 0.7s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   position: absolute;
   right: -5.25rem;
   bottom: -0.75rem !important;
@@ -681,7 +703,7 @@ body {
 }
 /* line 197, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList:after {
-  content: "ItΓÇÖs time for cocktail, \a All tasks are done!";
+  content: "It’s time for cocktail, \a All tasks are done!";
   white-space: pre;
   display: block;
   width: 20rem;
@@ -835,13 +857,12 @@ body {
   position: relative;
   height: 22rem;
   background-color: #fff;
-  overflow: hidden;
   -moz-transition: all 0.7s linear;
   -o-transition: all 0.7s linear;
   -webkit-transition: all 0.7s linear;
   transition: all 0.7s linear;
 }
-/* line 123, ../scss/_card-layout.scss */
+/* line 122, ../scss/_card-layout.scss */
 .todoCardBody.showCardBody {
   overflow: visible;
   height: 22rem;
@@ -849,6 +870,7 @@ body {
 @media screen and (max-width: 995px) {
   /* line 117, ../scss/_card-layout.scss */
   .todoCardBody {
+    overflow: hidden;
     height: 0;
   }
 }
@@ -871,6 +893,11 @@ body {
   height: 100%;
 }
 /* line 148, ../scss/_card-layout.scss */
+.todoCardBody .newTaskInputContainer .todoTaskItem {
+  color: #5d6e7c;
+  border-bottom: 1px solid #d9e5f9;
+}
+/* line 154, ../scss/_card-layout.scss */
 .todoCardBody .todoCardTaskList {
   position: absolute;
   top: 0;
@@ -879,14 +906,14 @@ body {
   bottom: 0;
   overflow: auto;
 }
-/* line 155, ../scss/_card-layout.scss */
+/* line 161, ../scss/_card-layout.scss */
+.todoCardBody .todoCardTaskList.newTaskInputOpened {
+  top: 74px;
+}
+/* line 164, ../scss/_card-layout.scss */
 .todoCardBody .todoCardTaskList .todoTaskItem {
   color: #5d6e7c;
   border-bottom: 1px solid #d9e5f9;
-}
-/* line 158, ../scss/_card-layout.scss */
-.todoCardBody .todoCardTaskList .todoTaskItem:last-child {
-  border-bottom: 0;
 }
 
 /* line 1, ../scss/_task-item.scss */
@@ -894,8 +921,12 @@ body {
   padding: 1.5rem 0.75rem;
   background-color: #fff;
 }
+/* line 5, ../scss/_task-item.scss */
+.taskItemContainer.taskChecked {
+  background-color: #f6f9ff;
+}
 
-/* line 15, ../scss/_task-item.scss */
+/* line 17, ../scss/_task-item.scss */
 .inputGroup {
   display: inline-block;
   width: 100%;
@@ -903,7 +934,7 @@ body {
   position: relative;
   vertical-align: middle;
 }
-/* line 23, ../scss/_task-item.scss */
+/* line 25, ../scss/_task-item.scss */
 .inputGroup .absolutePositionedPrefix {
   position: absolute;
   top: 0;
@@ -914,19 +945,19 @@ body {
   vertical-align: bottom;
   line-height: 1.5rem;
 }
-/* line 33, ../scss/_task-item.scss */
+/* line 35, ../scss/_task-item.scss */
 .inputGroup .absolutePositionedPrefix .customCheckbox {
   display: inline-block;
 }
-/* line 36, ../scss/_task-item.scss */
+/* line 38, ../scss/_task-item.scss */
 .inputGroup .absolutePositionedPrefix .iconContainer {
   text-align: right;
 }
-/* line 38, ../scss/_task-item.scss */
+/* line 40, ../scss/_task-item.scss */
 .inputGroup .absolutePositionedPrefix .iconContainer .fa {
   font-size: 1rem;
 }
-/* line 45, ../scss/_task-item.scss */
+/* line 47, ../scss/_task-item.scss */
 .inputGroup .inputGroupDescription {
   display: inline-block;
   width: 100%;
@@ -939,12 +970,12 @@ body {
   font-weight: 400;
   text-overflow: ellipsis;
 }
-/* line 58, ../scss/_task-item.scss */
+/* line 60, ../scss/_task-item.scss */
 .inputGroup .inputGroupDescription:focus {
   outline: 0;
 }
 
-/* line 65, ../scss/_task-item.scss */
+/* line 67, ../scss/_task-item.scss */
 .customCheckbox {
   /* Base for label styling */
   /* checkbox aspect */
@@ -953,18 +984,18 @@ body {
   /* disabled checkbox */
   /* accessibility */
 }
-/* line 67, ../scss/_task-item.scss */
+/* line 69, ../scss/_task-item.scss */
 .customCheckbox label {
   width: 1.5rem;
   height: 1.5rem;
 }
-/* line 74, ../scss/_task-item.scss */
+/* line 76, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:not(:checked),
 .customCheckbox [type="checkbox"]:checked {
   position: absolute;
   left: -9999px;
 }
-/* line 79, ../scss/_task-item.scss */
+/* line 81, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:not(:checked) + label,
 .customCheckbox [type="checkbox"]:checked + label {
   position: absolute;
@@ -974,7 +1005,7 @@ body {
   vertical-align: bottom;
   cursor: pointer;
 }
-/* line 93, ../scss/_task-item.scss */
+/* line 95, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:not(:checked) + label:before,
 .customCheckbox [type="checkbox"]:checked + label:before {
   content: '';
@@ -986,7 +1017,7 @@ body {
   background: #fff;
   border-radius: 4px;
 }
-/* line 107, ../scss/_task-item.scss */
+/* line 109, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:not(:checked) + label:after,
 .customCheckbox [type="checkbox"]:checked + label:after {
   content: url("../images/check-icon.svg");
@@ -1000,32 +1031,32 @@ body {
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
-/* line 121, ../scss/_task-item.scss */
+/* line 123, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:not(:checked) + label:after {
   opacity: 0;
   transform: scale(0);
 }
-/* line 126, ../scss/_task-item.scss */
+/* line 128, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:checked + label:after {
   opacity: 1;
   transform: scale(1);
 }
-/* line 131, ../scss/_task-item.scss */
+/* line 133, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:disabled:not(:checked) + label:before,
 .customCheckbox [type="checkbox"]:disabled:checked + label:before {
   box-shadow: none;
   border-color: #9facb3;
   background-color: #ddd;
 }
-/* line 137, ../scss/_task-item.scss */
+/* line 139, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:disabled:checked + label:after {
   color: #999;
 }
-/* line 140, ../scss/_task-item.scss */
+/* line 142, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:disabled + label {
   color: #aaa;
 }
-/* line 144, ../scss/_task-item.scss */
+/* line 146, ../scss/_task-item.scss */
 .customCheckbox [type="checkbox"]:checked + label:before {
   border: 2px solid #9facb3;
 }
