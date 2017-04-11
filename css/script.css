@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* line 5, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,45 +21,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -524,14 +524,15 @@ body {
   height: 6rem;
   width: 6rem;
 }
-/* line 52, ../scss/_main-card-layout.scss */
+/* line 53, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .addNewTaskButton {
   display: inline-block;
   height: 6rem;
   width: 6rem;
   cursor: pointer;
+  z-index: 10;
 }
-/* line 59, ../scss/_main-card-layout.scss */
+/* line 61, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .addCardFloatingButton {
   -moz-transition: all 0.7s ease-in-out;
   -o-transition: all 0.7s ease-in-out;
@@ -540,10 +541,10 @@ body {
   position: absolute;
   top: 1.5rem;
   right: 0;
-  z-index: -10;
   color: #ff2929;
+  z-index: -1;
 }
-/* line 68, ../scss/_main-card-layout.scss */
+/* line 71, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .addTaskFloatingButton {
   -moz-transition: all 0.7s ease-in-out;
   -o-transition: all 0.7s ease-in-out;
@@ -552,34 +553,32 @@ body {
   position: absolute;
   bottom: 1.5rem;
   right: 0;
-  z-index: -10;
   color: #ff2929;
+  z-index: -1;
 }
-/* line 78, ../scss/_main-card-layout.scss */
+/* line 82, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.showFloatingButtons .addCardFloatingButton {
   -moz-transition: all 0.7s ease-in-out;
   -o-transition: all 0.7s ease-in-out;
   -webkit-transition: all 0.7s ease-in-out;
   transition: all 0.7s ease-in-out;
-  z-index: 10;
+  position: absolute;
   top: -0.75rem !important;
   right: -5.25rem;
-  position: absolute;
   color: #ff2929;
 }
-/* line 86, ../scss/_main-card-layout.scss */
+/* line 90, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.showFloatingButtons .addTaskFloatingButton {
   -moz-transition: all 0.7s ease-in-out;
   -o-transition: all 0.7s ease-in-out;
   -webkit-transition: all 0.7s ease-in-out;
   transition: all 0.7s ease-in-out;
-  z-index: 10;
+  position: absolute;
   right: -5.25rem;
   bottom: -0.75rem !important;
-  position: absolute;
   color: #ff2929;
 }
-/* line 101, ../scss/_main-card-layout.scss */
+/* line 105, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .floatingButtonContent {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -597,7 +596,7 @@ body {
   -webkit-box-shadow: 1px 3px 3px 3px rgba(206, 213, 225, 0.75);
   box-shadow: 1px 3px 3px 3px rgba(206, 213, 225, 0.75);
 }
-/* line 115, ../scss/_main-card-layout.scss */
+/* line 119, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .floatingButtonContent .fa {
   position: absolute;
   top: 0.75rem;
@@ -605,16 +604,16 @@ body {
   font-size: 1.5rem;
   line-height: 1.5rem;
 }
-/* line 123, ../scss/_main-card-layout.scss */
+/* line 127, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons .buttonDescription {
   font-weight: 600;
 }
-/* line 132, ../scss/_main-card-layout.scss */
+/* line 136, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardBodyContainer {
   padding-bottom: 1.5rem;
 }
 @media screen and (max-height: 900px) {
-  /* line 135, ../scss/_main-card-layout.scss */
+  /* line 139, ../scss/_main-card-layout.scss */
   .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent {
     position: relative;
     overflow: hidden;
@@ -622,19 +621,19 @@ body {
   }
 }
 @media screen and (max-width: 666px) {
-  /* line 135, ../scss/_main-card-layout.scss */
+  /* line 139, ../scss/_main-card-layout.scss */
   .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent {
     height: 100%;
   }
 }
-/* line 144, ../scss/_main-card-layout.scss */
+/* line 148, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .mainTodoCardTitle {
   margin-bottom: 0.75rem;
   color: #a8b9d0;
   text-transform: uppercase;
   font-size: 0.75rem;
 }
-/* line 151, ../scss/_main-card-layout.scss */
+/* line 155, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
   position: absolute;
   top: 15rem;
@@ -645,7 +644,7 @@ body {
   color: #e56e6e;
 }
 @media screen and (max-height: 900px) {
-  /* line 151, ../scss/_main-card-layout.scss */
+  /* line 155, ../scss/_main-card-layout.scss */
   .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
     top: 3rem;
     bottom: 1.5rem;
@@ -654,24 +653,24 @@ body {
   }
 }
 @media screen and (max-width: 666px) {
-  /* line 151, ../scss/_main-card-layout.scss */
+  /* line 155, ../scss/_main-card-layout.scss */
   .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer {
     position: static;
   }
 }
-/* line 169, ../scss/_main-card-layout.scss */
+/* line 173, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardBodyContainer .cardBodyContent .oldestTaskListContainer .todoTaskItem {
   margin-bottom: 1.5rem;
   border-color: #e56e6e;
 }
 
-/* line 179, ../scss/_main-card-layout.scss */
+/* line 183, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList {
   display: none;
   position: static !important;
   color: #5d6e7c;
 }
-/* line 185, ../scss/_main-card-layout.scss */
+/* line 189, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList:before {
   content: "";
   background: transparent url("../images/cocktail.svg") no-repeat;
@@ -680,9 +679,9 @@ body {
   width: 6rem;
   margin: 0 auto;
 }
-/* line 193, ../scss/_main-card-layout.scss */
+/* line 197, ../scss/_main-card-layout.scss */
 .emptyMainTodoCardTaskList:after {
-  content: "It’s time for cocktail, \a All tasks are done!";
+  content: "ItΓÇÖs time for cocktail, \a All tasks are done!";
   white-space: pre;
   display: block;
   width: 20rem;

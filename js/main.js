@@ -33,18 +33,16 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	// identity function for calling harmory imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
-/******/ 	// define getter function for harmony exports
+/******/ 	// define getter function for harmory exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
+/******/ 		Object.defineProperty(exports, name, {
+/******/ 			configurable: false,
+/******/ 			enumerable: true,
+/******/ 			get: getter
+/******/ 		});
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -68,11 +66,10 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainTodoCard", function() { return MainTodoCard; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "MainTodoCard", function() { return MainTodoCard; });
 var MainTodoCard = (function () {
     function MainTodoCard(mainTodoCard) {
         this.mainTodoCardContainer = mainTodoCard;
@@ -138,13 +135,351 @@ var MainTodoCard = (function () {
 
 
 
-/***/ }),
+/***/ },
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToDoItem", function() { return ToDoItem; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "TodoTask", function() { return TodoTask; });
+var TodoTask = (function () {
+    function TodoTask(todoTaskObject) {
+        this.todoTaskID = todoTaskObject.todoTaskID;
+        this.todoTaskDescripion = todoTaskObject.taskDescription;
+        this.todoTaskStatus = todoTaskObject.todoTaskStatus;
+        this.parentID = todoTaskObject.parentID;
+        // this.parentContext = todoTaskObject.parentContainer;
+        this.todoTaskHTML = this.getTodoTaskHTML();
+        this.todoTaskJQuery = $(this.todoTaskHTML);
+        this.todoDate = new Date();
+    }
+    TodoTask.prototype.destroy = function () {
+        this.todoTaskID = null;
+        this.todoTaskDescripion = null;
+        this.todoTaskStatus = null;
+        this.todoTaskJQuery.remove();
+        this.todoTaskJQuery = null;
+    };
+    TodoTask.prototype.appendToCardContainer = function () {
+        this.parentContext.prepend(this.todoTaskJQuery);
+    };
+    TodoTask.prototype.clickHandler = function (e) {
+        var target = $(e.target);
+    };
+    TodoTask.prototype.getTodoTaskHTML = function () {
+        var taskChecked = this.todoTaskStatus ? this.todoTaskStatus : '';
+        var taskItemHTML = "<li class=\"todoTaskItem taskItemContainer todo--task--item\" data-task-id=\"" + this.todoTaskID + "\">\n\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" taskChecked  name=\"task status\" \n\t\t\t\t\t\t\t\tclass=\"task--done--status\" id=\"todo--card--task--status" + this.todoTaskID + "\">\n\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status" + this.todoTaskID + "\"></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" \n\t\t\t\t\t\treadonly=\"readonly\" value=\"" + this.todoTaskDescripion + "\">\n\t\t\t\t\t</div>\n\t\t\t\t</li>";
+        return taskItemHTML;
+    };
+    TodoTask.prototype.getTaskStatus = function () {
+        return this.todoTaskStatus;
+    };
+    TodoTask.prototype.deleteTodoTask = function () { };
+    return TodoTask;
+}());
+
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__todoCard__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__todoTask__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(exports, "todoApp", function() { return todoApp; });
+
+
+
+
+/*
+    Adding new task card can be done on enter, clicking on submit button
+    Every task is submitted:
+        - New task input field is empty and focus is back on it
+
+*/
+var todoApp = (function () {
+    function todoApp() {
+        // data property storing page container
+        // visible globally 
+        this.pageContainer = __WEBPACK_IMPORTED_MODULE_0_jquery__('.page--container');
+        // Main Todo Card 
+        this.mainTodoCardContainer = this.pageContainer.find('.main--todo--card');
+        // add new Todo Card to row 
+        this.mainTodoCardAddCardButton = this.pageContainer.find('.floating--button--add--card');
+        this.todoCardsContainer = this.pageContainer.find('.todo--cards--row');
+        this.todoCardCounter = 0;
+        // Todo Task List Container
+        this.todoTask = this.pageContainer.find('.todo--task--item');
+        // append new task cards
+        this.todoTaskListContainer = this.pageContainer.find('.todo--tasks--container');
+        // show submit task button on input
+        this.submitNewTask = this.pageContainer.find('.submit--new--task--btn');
+        this.todoTasksCardContainer = this.pageContainer.find('.todo--tasks--container');
+        this.doneTasksCardContainer = this.pageContainer.find('.done--tasks--container');
+        // counter
+        this.taskCounter = 0;
+        // object is updated: 
+        // on task submit
+        // on task delete
+        // when task is changed(text and status)
+        this.todoTaskObject = {
+            'todoTasks': [],
+            'doneTasks': []
+        };
+        // Todo Card Object is updated: 
+        //  when new is created
+        //  when one is deleted
+        // 	when one is edited
+        this.todoCardsObject = {
+            'todoCardList': []
+        };
+        this.todoCardObjectsList = this.todoCardsObject.todoCardList;
+        this.todoObject = {
+            'todoCardList': [],
+            'todoTaskList': []
+        };
+        this.todoCardObjectList = this.todoObject.todoCardList;
+        this.todoTaskObjectsList = this.todoObject.todoTaskList;
+        this.localStorageObject = {
+            cardCounter: 0,
+            cardArray: [],
+            taskCounter: 0,
+            taskArray: []
+        };
+        // initializing event handlers on document 
+        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("keypress", this.keypressHandler.bind(this));
+        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("click", this.clickHandler.bind(this));
+        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on('focusout', this.focusOutHandler.bind(this));
+        this.mainTodoCard = new __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__["MainTodoCard"](this.mainTodoCardContainer);
+        this.getValueFromLocalStorage();
+    }
+    // INITIALIZING HANDLERS :: BEGIN
+    todoApp.prototype.keypressHandler = function (e) {
+        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
+        this.newTaskInputField = this.pageContainer.find('.new--todo--task--description');
+        // on enter submit new task
+        if (e.charCode === 13 || e.which === 13 || e.key == 'Enter') {
+            var newTaskInputField = target.closest(this.newTaskInputField);
+            if (newTaskInputField.length > 0) {
+                var todoCardParentContainerID = newTaskInputField.closest('.todo--card--contianer').data('card-id');
+                this.newTask(todoCardParentContainerID);
+            }
+        }
+        this.todoCardTitle = this.pageContainer.find('.todo--card--title--input');
+        var todoCardTitleFocusOut = target.closest(this.todoCardTitle);
+        if (todoCardTitleFocusOut.length > 0) {
+            var todoCardID = todoCardTitleFocusOut.closest('. todo--card--contianer').data('card-id');
+            if (todoCardTitleFocusOut.val()) {
+                var newTitle = todoCardTitleFocusOut.val();
+                this.editTodoCard(todoCardID, newTitle);
+            }
+        }
+    };
+    todoApp.prototype.clickHandler = function (e) {
+        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
+        // if clicked on Main Todo Card pass evet to Main Cards handler
+        var clickedElement = target.closest(this.mainTodoCardContainer);
+        if (clickedElement.length > 0) {
+            this.mainTodoCard.clickHandler(e);
+        }
+        // click on Main Card Add New Card button - creates new Todo Card Object
+        var mainTodoCardAddCardButton = this.pageContainer.find('.floating--button--add--card');
+        var createNewTodoCardButtonClicked = target.closest(mainTodoCardAddCardButton);
+        if (createNewTodoCardButtonClicked.length > 0) {
+            this.createTodoCard(e);
+        }
+        // if clicked on Todo Card pass click event to TodoCard click handler
+        this.todoCardItem = this.pageContainer.find('.todo--card--contianer');
+        var clickedTodoCard = target.closest(this.todoCardItem);
+        var todoCardsListLength = this.todoCardObjectList.length;
+        if (clickedTodoCard.length > 0) {
+            var clickedCardID = Number(clickedTodoCard.attr('data-card-id'));
+            for (var i = 0; i < todoCardsListLength; i++) {
+                if (clickedCardID === this.todoCardObjectList[i].cardID) {
+                    var clickedTodoCardItem = this.todoCardObjectList[i];
+                    clickedTodoCardItem.clickHandler(e);
+                }
+            }
+        }
+        // find card object that was clicked on in the todoTaskObject and call event for that 
+        // task card
+        var element = target.closest('.to--do--card');
+        if (element.length > 0) {
+            var clickedTaskId = Number(element.attr('data-task-id'));
+            for (var todoTaskObjectProperty in this.todoTaskObject) {
+                var arrayOfTodoTaskObject = this.todoTaskObject[todoTaskObjectProperty];
+                for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
+                    if (clickedTaskId === arrayOfTodoTaskObject[i].taskId) {
+                        var clickedTaskCard = arrayOfTodoTaskObject[i];
+                        clickedTaskCard.onClick(e);
+                    }
+                }
+            }
+        }
+    };
+    todoApp.prototype.focusOutHandler = function (e) {
+        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
+    };
+    todoApp.prototype.updateLocalStorage = function () {
+        localStorage.clear();
+        this.localStorageObject.cardCounter = 0;
+        this.localStorageObject.cardArray = [];
+        this.localStorageObject.taskArray = [];
+        this.localStorageObject.taskCounter = 0;
+        this.localStorageObject.cardCounter = this.todoCardCounter;
+        for (var i = 0; i < this.todoCardObjectList.length; i++) {
+            var todoCardItem = this.todoCardObjectList[i];
+            var todoCardObject = {
+                'cardID': todoCardItem.cardID,
+                'cardTitle': todoCardItem.cardTitle
+            };
+            this.localStorageObject.cardArray.push(todoCardObject);
+        }
+        this.localStorageObject.taskCounter = this.taskCounter;
+        for (var i = 0; i < this.todoTaskObjectsList.length; i++) {
+            var todoTaskItem = this.todoTaskObjectsList[i];
+            if (!todoTaskItem.todoTaskStatus) {
+                var todoTaskObject = {
+                    'todoTaskID': todoTaskItem.todoTaskID,
+                    'todoTaskDescripion': todoTaskItem.todoTaskDescripion,
+                    'todoTaskStatus': false,
+                    'parentID': todoTaskItem.parentID
+                };
+            }
+            this.localStorageObject.taskArray.push(todoTaskItem);
+        }
+        localStorage.setItem('localStorageObject', JSON.stringify(this.localStorageObject));
+    };
+    todoApp.prototype.getValueFromLocalStorage = function () {
+        if (localStorage.length > 0) {
+            var localStorageObject = JSON.parse(localStorage.getItem('localStorageObject'));
+            this.renderValueFromLocalStorage(localStorageObject);
+        }
+    };
+    todoApp.prototype.renderValueFromLocalStorage = function (localStorageObject) {
+        // reset counters
+        this.todoCardCounter = localStorageObject.cardArray.length;
+        for (var i = 0; i < localStorageObject.cardArray.length; i++) {
+            var cardItem = localStorageObject.cardArray[i];
+            var newCard = {
+                cardID: i,
+                cardTitle: cardItem[i],
+            };
+            this.appendTodoCard(newCard);
+        }
+        // reseting counter
+        this.taskCounter = localStorageObject.taskArray.length;
+        for (var i = 0; i < localStorageObject.taskArray.length; i++) {
+            var taskItem = localStorageObject.taskArray[i];
+            var taskObject = {
+                'todoTaskID': i,
+                'todoTaskDescripion': taskItem.todoTaskDescripion,
+                'todoTaskStatus': false,
+                'parentID': taskItem.parentID
+            };
+            this.newTask(taskObject.parentID);
+        }
+    };
+    // Todo Card :: BEGIN
+    todoApp.prototype.createTodoCard = function (e) {
+        e.stopPropagation();
+        var newCard = {
+            cardID: this.todoCardCounter++,
+            cardTitle: ""
+        };
+        this.appendTodoCard(newCard);
+    };
+    todoApp.prototype.appendTodoCard = function (cardObject) {
+        var newTodoCard = new __WEBPACK_IMPORTED_MODULE_2__todoCard__["a" /* TodoCard */](cardObject, this);
+        this.todoCardObjectList.push(newTodoCard);
+        newTodoCard.appendCard(this.todoCardsContainer);
+        this.updateLocalStorage();
+    };
+    todoApp.prototype.editTodoCard = function (todoCardID, todoCardTitle) {
+        for (var i = 0; i < this.todoCardObjectList.length; i++) {
+            var todoCardItem = this.todoCardObjectList[i];
+            if (todoCardID === todoCardItem.cardID) {
+                todoCardItem.cardTitle = todoCardTitle;
+                debugger;
+            }
+        }
+        this.updateLocalStorage();
+    };
+    // remove deleted Card From Card Object list, update local storage
+    todoApp.prototype.deleteTodoCard = function (todoCardID) {
+        for (var i = 0; i < this.todoCardObjectList.length; i++) {
+            var todoCardItem = this.todoCardObjectList[i];
+            if (todoCardID === todoCardItem.cardID) {
+                console.log(todoCardItem);
+                todoCardItem.destroy();
+                this.todoCardObjectList.splice(i, 1);
+            }
+        }
+        this.updateLocalStorage();
+    };
+    // CREATE NEW TASK OBJECT
+    todoApp.prototype.newTask = function (parentID) {
+        var newTaskDescription = this.newTaskInputField.val();
+        if (newTaskDescription) {
+            this.newTaskInputField.val('');
+            var newTask = {
+                todoTaskID: this.taskCounter++,
+                todoTaskStatus: false,
+                taskDescription: newTaskDescription,
+                taskParentID: parentID
+            };
+        }
+        var taskObject = new __WEBPACK_IMPORTED_MODULE_3__todoTask__["TodoTask"](newTask);
+        var cardContainer = this.fetchParentContainer(parentID);
+        cardContainer.prependNewTodoTask(taskObject);
+        this.todoTaskObjectsList.push(taskObject);
+        console.log(taskObject);
+    };
+    todoApp.prototype.fetchUserInput = function () {
+        var newTaskData = this.newTaskInputField.val();
+        if (newTaskData) {
+            this.newTaskInputField.val('');
+            return newTaskData;
+        }
+    };
+    todoApp.prototype.fetchParentContainer = function (todoCardID) {
+        for (var i = 0; i < this.todoCardObjectList.length; i++) {
+            var todoCardItem = this.todoCardObjectList[i];
+            if (todoCardID === todoCardItem.cardID) {
+                return todoCardItem;
+            }
+        }
+    };
+    todoApp.prototype.taskItemDeleted = function (taskId) {
+        for (var objectElement in this.todoTaskObject) {
+            var arrayOfTodoTaskObject = this.todoTaskObject[objectElement];
+            for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
+                if (taskId === arrayOfTodoTaskObject[i].taskId) {
+                    arrayOfTodoTaskObject[i].destroy();
+                    arrayOfTodoTaskObject.splice(i, 1);
+                }
+            }
+        }
+        this.updateLocalStorage();
+    };
+    return todoApp;
+}()); // Class todoApp :: END
+
+// loading aplication once DOM is ready using $(callback)
+__WEBPACK_IMPORTED_MODULE_0_jquery__(function () {
+    var todoCard = new todoApp();
+});
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(exports, "ToDoItem", function() { return ToDoItem; });
 var ToDoItem = (function () {
     function ToDoItem(taskObject, parentContext) {
         this.parentContext = parentContext;
@@ -201,402 +536,18 @@ var ToDoItem = (function () {
 
 
 
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__todoItem__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__todoCard__ = __webpack_require__(6);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "todoApp", function() { return todoApp; });
-
-
-
-
-/*
-    Adding new task card can be done on enter, clicking on submit button
-    Every task is submitted:
-        - New task input field is empty and focus is back on it
-
-*/
-var todoApp = (function () {
-    function todoApp() {
-        // data property storing page container
-        // visible globally 
-        this.pageContainer = __WEBPACK_IMPORTED_MODULE_0_jquery__('.page--container');
-        // Main Todo Card 
-        this.mainTodoCardContainer = this.pageContainer.find('.main--todo--card');
-        // add new Todo Card to row 
-        this.mainTodoCardAddCardButton = this.pageContainer.find('.floating--button--add--card');
-        this.todoCardsContainer = this.pageContainer.find('.todo--cards--row');
-        this.todoCardCounter = 0;
-        // append new task cards
-        this.todoTaskListContainer = this.pageContainer.find('.todo--tasks--container');
-        // take user value from input field for new task cards
-        this.newTaskInputField = this.pageContainer.find('.new--task--input');
-        // show submit task button on input
-        this.submitNewTask = this.pageContainer.find('.submit--new--task--btn');
-        this.todoTasksCardContainer = this.pageContainer.find('.todo--tasks--container');
-        this.doneTasksCardContainer = this.pageContainer.find('.done--tasks--container');
-        // counter
-        this.taskCounter = 0;
-        // object is updated: 
-        // on task submit
-        // on task delete
-        // when task is changed(text and status)
-        this.todoTaskObject = {
-            'todoTasks': [],
-            'doneTasks': []
-        };
-        // Todo Card Object is updated: 
-        //  when new is created
-        //  when one is deleted
-        // 	when one is edited
-        this.todoCardsObject = {
-            'todoCardList': []
-        };
-        this.todoCardObjectsList = this.todoCardsObject.todoCardList;
-        this.localStorageObject = {
-            cardCounter: 0,
-            cardArray: [],
-            counter: 0,
-            taskArray: []
-        };
-        // initializing event handlers on document 
-        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("keypress", this.keypressHandler.bind(this));
-        // display submit new task button
-        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on('input', this.inputHandler.bind(this));
-        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("click", this.clickHandler.bind(this));
-        // remove disabled property from todo(uncopleated cards)
-        __WEBPACK_IMPORTED_MODULE_0_jquery__(document).on("dblclick", this.doubleClickHandler.bind(this));
-        this.mainTodoCard = new __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__["MainTodoCard"](this.mainTodoCardContainer);
-        this.getValueFromLocalStorage();
-    }
-    todoApp.prototype.updateLocalStorage = function () {
-        localStorage.clear();
-        this.localStorageObject.cardCounter = 0;
-        this.localStorageObject.cardArray = [];
-        this.localStorageObject.taskArray = [];
-        this.localStorageObject.counter = 0;
-        this.localStorageObject.cardCounter = this.todoCardCounter;
-        for (var i = 0; i < this.todoCardObjectsList.length; i++) {
-            var todoCardItem = this.todoCardObjectsList[i];
-            var todoCardObject = {
-                'cardID': todoCardItem.cardID,
-                'cardTitle': todoCardItem.cardTitle
-            };
-            this.localStorageObject.cardArray.push(todoCardObject);
-        }
-        // for(let todoTaskObjectProperty in this.todoTaskObject) {
-        // 	let arrayOfTaskObject = this.todoTaskObject[ todoTaskObjectProperty ]
-        // 	if( arrayOfTaskObject.length > 0 ) {
-        // 		for( let i = 0; i < arrayOfTaskObject.length; i++ ) {
-        // 			var todoTaskObject  = arrayOfTaskObject[i];
-        // 			var taskJSON = {
-        // 				taskId         : todoTaskObject.taskId,
-        // 				taskDescription: todoTaskObject.taskDescription,
-        // 				taskCompleted  : todoTaskObject.taskCompleted
-        // 			}
-        // 			this.localStorageObject.taskArray.push(taskJSON);
-        // 		}
-        // 	}			
-        // }
-        // this.localStorageObject.counter = this.taskCounter;
-        localStorage.setItem('localStorageObject', JSON.stringify(this.localStorageObject));
-    };
-    todoApp.prototype.getValueFromLocalStorage = function () {
-        if (localStorage.length > 0) {
-            var localStorageObject = JSON.parse(localStorage.getItem('localStorageObject'));
-            this.renderValueFromLocalStorage(localStorageObject);
-        }
-    };
-    todoApp.prototype.renderValueFromLocalStorage = function (localStorageObject) {
-        // reset counters
-        this.todoCardCounter = localStorageObject.cardArray.length;
-        for (var i = 0; i < localStorageObject.cardArray.length; i++) {
-            var cardItem = localStorageObject.cardArray[i];
-            var newCard = {
-                cardID: i,
-                cardTitle: cardItem[i],
-            };
-            this.appendTodoCard(newCard);
-        }
-        // reseting counter
-        this.taskCounter = localStorageObject.taskArray.length;
-        var localStorageItem;
-        for (var i = 0; i < localStorageObject.taskArray.length; i++) {
-            localStorageItem = localStorageObject.taskArray[i];
-            var newTask = {
-                id: i,
-                taskDescription: localStorageItem.taskDescription,
-                done: localStorageItem.taskCompleted
-            };
-            // adds element to todoTaskObject
-            // displays it on sceen
-            this.appendNewTaskToCardContainer(newTask);
-        }
-    };
-    // INITIALIZING HANDLERS :: BEGIN
-    todoApp.prototype.keypressHandler = function (e) {
-        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
-        // on enter submit new task
-        if (e.charCode === 13 || e.which === 13 || e.key == 'Enter') {
-            var newTaskInputField = target.closest(this.newTaskInputField);
-            if (newTaskInputField.length > 0) {
-                this.createNewTask();
-            }
-            // when using tab to move to submit button
-            var submitButton = target.closest(this.submitNewTask);
-            if (submitButton.length > 0) {
-                this.createNewTask();
-            }
-        }
-    };
-    todoApp.prototype.inputHandler = function (e) {
-        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
-        var element = target.closest(this.newTaskInputField);
-        if (element.length > 0) {
-            this.toggleSubmitButton();
-        }
-    };
-    todoApp.prototype.clickHandler = function (e) {
-        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
-        // if clicked on Main Todo Card pass evet to Main Cards handler
-        var clickedElement = target.closest(this.mainTodoCardContainer);
-        if (clickedElement.length > 0) {
-            this.mainTodoCard.clickHandler(e);
-        }
-        // click on Main Card Add New Card button - creates new Todo Card Object
-        var mainTodoCardAddCardButton = this.pageContainer.find('.floating--button--add--card');
-        var createNewTodoCardButtonClicked = target.closest(mainTodoCardAddCardButton);
-        if (createNewTodoCardButtonClicked.length > 0) {
-            this.createTodoCard(e);
-        }
-        // if clicked on Todo Card pass click event to TodoCard click handler
-        this.todoCardItem = this.pageContainer.find('.todo--card--contianer');
-        var clickedTodoCard = target.closest(this.todoCardItem);
-        var todoCardsListLength = this.todoCardObjectsList.length;
-        if (clickedTodoCard.length > 0) {
-            var clickedCardID = Number(clickedTodoCard.attr('data-card-id'));
-            for (var i = 0; i < todoCardsListLength; i++) {
-                if (clickedCardID === this.todoCardObjectsList[i].cardID) {
-                    var clickedTodoCardItem = this.todoCardObjectsList[i];
-                    clickedTodoCardItem.clickHandler(e);
-                }
-            }
-        }
-        // submit user input to the new card
-        var submitButton = target.closest(this.submitNewTask);
-        if (submitButton.length > 0) {
-            this.createNewTask();
-        }
-        // find card object that was clicked on in the todoTaskObject and call event for that 
-        // task card
-        var element = target.closest('.to--do--card');
-        if (element.length > 0) {
-            var clickedTaskId = Number(element.attr('data-task-id'));
-            for (var todoTaskObjectProperty in this.todoTaskObject) {
-                var arrayOfTodoTaskObject = this.todoTaskObject[todoTaskObjectProperty];
-                for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
-                    if (clickedTaskId === arrayOfTodoTaskObject[i].taskId) {
-                        var clickedTaskCard = arrayOfTodoTaskObject[i];
-                        clickedTaskCard.onClick(e);
-                    }
-                }
-            }
-        }
-    };
-    todoApp.prototype.doubleClickHandler = function (e) {
-        var target = __WEBPACK_IMPORTED_MODULE_0_jquery__(e.target);
-        this.todoCardElement = this.pageContainer.find('.to--do--card');
-        var todoCardElement = target.closest(this.todoCardElement);
-        if (todoCardElement.length > 0) {
-            todoCardElement.find('.to--do--task--input').prop('disabled', false);
-        }
-    }; // INITIALIZING HANDLERS :: END
-    // CREATE NEW TASK OBJECT
-    todoApp.prototype.createNewTask = function () {
-        var newTaskDescription = this.newTaskInputField.val();
-        if (newTaskDescription) {
-            this.newTaskInputField.val('');
-            var newTask = {
-                id: this.taskCounter++,
-                taskDescription: newTaskDescription,
-                done: false
-            };
-            this.appendNewTaskToCardContainer(newTask);
-            this.toggleSubmitButton();
-        }
-    };
-    todoApp.prototype.fetchUserInput = function () {
-        var newTaskData = this.newTaskInputField.val();
-        if (newTaskData) {
-            this.newTaskInputField.val('');
-            return newTaskData;
-        }
-    };
-    todoApp.prototype.appendNewTaskToCardContainer = function (newTask) {
-        var item = new __WEBPACK_IMPORTED_MODULE_2__todoItem__["ToDoItem"](newTask, this);
-        if (item.getTaskStatus()) {
-            item.appendTo(this.doneTasksCardContainer);
-            this.todoTaskObject['doneTasks'].push(item);
-        }
-        else {
-            item.appendTo(this.todoTaskListContainer);
-            this.todoTaskObject['todoTasks'].push(item);
-        }
-        this.updateLocalStorage();
-    };
-    // Todo Card :: BEGIN
-    todoApp.prototype.createTodoCard = function (e) {
-        e.stopPropagation();
-        var newCard = {
-            cardID: this.todoCardCounter++,
-            cardTitle: ""
-        };
-        this.appendTodoCard(newCard);
-    };
-    todoApp.prototype.appendTodoCard = function (cardObject) {
-        var newTodoCard = new __WEBPACK_IMPORTED_MODULE_3__todoCard__["a" /* TodoCard */](cardObject, this);
-        this.todoCardsObject['todoCardList'].push(newTodoCard);
-        newTodoCard.appendCard(this.todoCardsContainer);
-        this.updateLocalStorage();
-    };
-    todoApp.prototype.editTodoCard = function (todoCardID, todoCardTitle) {
-        for (var i = 0; i < this.todoCardObjectsList.length; i++) {
-            var todoCardItem = this.todoCardObjectsList[i];
-            if (todoCardID === todoCardItem.cardID) {
-                console.log(todoCardItem);
-            }
-        }
-        this.updateLocalStorage();
-    };
-    // remove deleted Card From Card Object list, update local storage
-    todoApp.prototype.deleteTodoCard = function (todoCardID) {
-        for (var i = 0; i < this.todoCardObjectsList.length; i++) {
-            var todoCardItem = this.todoCardObjectsList[i];
-            if (todoCardID === todoCardItem.cardID) {
-                console.log(todoCardItem);
-                todoCardItem.destroy();
-                this.todoCardObjectsList.splice(i, 1);
-            }
-        }
-        this.updateLocalStorage();
-    };
-    // findTodoCardObjectByID( todoCardID: number ): TodoCard {
-    // 	let todoCardObject: TodoCard;
-    // 	for( let i = 0; i < this.todoCardObjectsList.length; i++ ){
-    // 		let todoCardObject: TodoCard = this.todoCardObjectsList[i]
-    // 		if ( todoCardID === todoCardObject.cardID ){
-    // 			return todoCardObject;
-    // 		}
-    // 	}
-    // }
-    // Todo Card :: END
-    // show/hide buton if New Task input has value
-    todoApp.prototype.toggleSubmitButton = function () {
-        var inputValue = this.newTaskInputField.val();
-        if (inputValue.length > 0) {
-            this.submitNewTask.addClass('showSubmitNewTaskButton');
-        }
-        else {
-            this.submitNewTask.removeClass('showSubmitNewTaskButton');
-        }
-    };
-    todoApp.prototype.taskItemDeleted = function (taskId) {
-        for (var objectElement in this.todoTaskObject) {
-            var arrayOfTodoTaskObject = this.todoTaskObject[objectElement];
-            for (var i = 0; i < arrayOfTodoTaskObject.length; i++) {
-                if (taskId === arrayOfTodoTaskObject[i].taskId) {
-                    arrayOfTodoTaskObject[i].destroy();
-                    arrayOfTodoTaskObject.splice(i, 1);
-                }
-            }
-        }
-        this.updateLocalStorage();
-    };
-    todoApp.prototype.toggleDoneTask = function (jQueryElement, taskId, taskCompleted) {
-        var todoList = this.todoTaskObject['todoTasks'];
-        var doneTaskList = this.todoTaskObject['doneTasks'];
-        var removedObject;
-        if (taskCompleted) {
-            jQueryElement.remove();
-            this.doneTasksCardContainer.append(jQueryElement);
-            for (var i = 0; i < todoList.length; i++) {
-                var elementId = todoList[i].taskId;
-                if (taskId === todoList[i].taskId) {
-                    removedObject = todoList.splice(i, 1);
-                    doneTaskList.push(removedObject[0]);
-                }
-            }
-        }
-        else {
-            jQueryElement.remove();
-            this.todoTaskListContainer.append(jQueryElement);
-            for (var i = 0; i < todoList.length; i++) {
-                var elementId = todoList[i].taskId;
-                if (taskId === todoList[i].taskId) {
-                    removedObject = todoList.splice(i, 1);
-                    doneTaskList.push(removedObject[0]);
-                }
-            }
-        }
-        this.updateLocalStorage();
-    };
-    return todoApp;
-}()); // Class todoApp :: END
-
-// loading aplication once DOM is ready using $(callback)
-__WEBPACK_IMPORTED_MODULE_0_jquery__(function () {
-    var todoCard = new todoApp();
-});
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
+/***/ },
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoTask", function() { return TodoTask; });
-var TodoTask = (function () {
-    function TodoTask(taskItemObject, parentConstext) {
-        this.taskItemDescription = taskItemObject.taskDescription;
-    }
-    TodoTask.prototype.clickHandler = function (e) {
-        var target = $(e.target);
-    };
-    Object.defineProperty(TodoTask.prototype, "taskItemHTML", {
-        get: function () {
-            var taskItemHTML = "<li class=\"todoTaskItem taskItemContainer todo--task--item\">\n\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t</div>\n\t\t\t\t</li>";
-            return taskItemHTML;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    TodoTask.prototype.compleateTodTask = function () { };
-    TodoTask.prototype.deleteTodoTask = function () { };
-    return TodoTask;
-}());
+/***/ function(module, exports) {
 
 
 
-/***/ }),
+/***/ },
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.2.0
+ * jQuery JavaScript Library v3.2.1
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -606,7 +557,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2017-03-16T21:26Z
+ * Date: 2017-03-20T18:59Z
  */
 ( function( global, factory ) {
 
@@ -685,7 +636,7 @@ var support = {};
 
 
 var
-	version = "3.2.0",
+	version = "3.2.1",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -5940,11 +5891,9 @@ jQuery.event = {
 		},
 		click: {
 
-			// For checkable types, fire native event so checked state will be right
+			// For checkbox, fire native event so checked state will be right
 			trigger: function() {
-				if ( rcheckableType.test( this.type ) &&
-					this.click && nodeName( this, "input" ) ) {
-
+				if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
 					this.click();
 					return false;
 				}
@@ -6764,6 +6713,11 @@ var getStyles = function( elem ) {
 
 function curCSS( elem, name, computed ) {
 	var width, minWidth, maxWidth, ret,
+
+		// Support: Firefox 51+
+		// Retrieving style before computed somehow
+		// fixes an issue with getting wrong values
+		// on detached elements
 		style = elem.style;
 
 	computed = computed || getStyles( elem );
@@ -6951,6 +6905,12 @@ function getWidthOrHeight( elem, name, extra ) {
 	// for getComputedStyle silently falls back to the reliable elem.style
 	valueIsBorderBox = isBorderBox &&
 		( support.boxSizingReliable() || val === elem.style[ name ] );
+
+	// Fall back to offsetWidth/Height when value is "auto"
+	// This happens for inline elements with no explicit setting (gh-3571)
+	if ( val === "auto" ) {
+		val = elem[ "offset" + name[ 0 ].toUpperCase() + name.slice( 1 ) ];
+	}
 
 	// Normalize "", auto, and prepare for extra
 	val = parseFloat( val ) || 0;
@@ -10768,16 +10728,16 @@ jQuery.fn.extend( {
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
 			this.off( types, selector || "**", fn );
-	},
-	holdReady: function( hold ) {
-		if ( hold ) {
-			jQuery.readyWait++;
-		} else {
-			jQuery.ready( true );
-		}
 	}
 } );
 
+jQuery.holdReady = function( hold ) {
+	if ( hold ) {
+		jQuery.readyWait++;
+	} else {
+		jQuery.ready( true );
+	}
+};
 jQuery.isArray = Array.isArray;
 jQuery.parseJSON = JSON.parse;
 jQuery.nodeName = nodeName;
@@ -10801,8 +10761,7 @@ jQuery.nodeName = nodeName;
 if ( true ) {
 	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
 		return jQuery;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 }
 
 
@@ -10842,14 +10801,15 @@ return jQuery;
 } );
 
 
-/***/ }),
+/***/ },
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TodoCard; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return TodoCard; });
 var TodoCard = (function () {
     function TodoCard(cardObject, parentContext) {
+        console.log('hello world');
         this.parentContext = parentContext;
         this.cardID = cardObject.cardID;
         this.cardTitle = cardObject.cardTitle ? cardObject.cardTitle : "Undefined";
@@ -10861,7 +10821,9 @@ var TodoCard = (function () {
         this.cardMenuEditButton = this.cardJQueryElement.find('.card--menu--edit--button');
         this.cardTitleInput = this.cardJQueryElement.find('.todo--card--title--input');
         this.cardMenuDeleteButton = this.cardJQueryElement.find('.card--menu--delete--button');
-        this.cardTitleInput.on("blur", this.chageCardTitle.bind(this));
+        this.addNewTaskButton = this.cardJQueryElement.find('.todo--card--add--new--task--button');
+        this.todoTasksListContainer = this.cardJQueryElement.find('.todo--task--list--container');
+        this.cardJQueryElement.on("focusout", this.focusOutHandler.bind(this));
     }
     TodoCard.prototype.destroy = function () {
         this.cardID = null;
@@ -10870,7 +10832,6 @@ var TodoCard = (function () {
         this.cardJQueryElement.remove();
         this.cardJQueryElement = null;
     };
-    TodoCard.prototype.createTodoTask = function () { };
     TodoCard.prototype.appendTodoTaskToCardContainer = function () { };
     TodoCard.prototype.createTodoCard = function () { };
     TodoCard.prototype.deleteTodoCard = function () { };
@@ -10898,6 +10859,25 @@ var TodoCard = (function () {
         if (deleteCardButtonClicked.length > 0) {
             e.preventDefault();
             this.parentContext.deleteTodoCard(this.cardID);
+        }
+        var addNewTaskClicked = target.closest(this.addNewTaskButton);
+        if (addNewTaskClicked.length > 0) {
+            e.preventDefault();
+            this.prependTodoTaskFrame();
+        }
+    };
+    TodoCard.prototype.focusOutHandler = function (e) {
+        // this.chageCardTitle.bind(this)
+        var target = $(e.target);
+        console.log("Does this works?");
+        // on Card Title Change
+        // on Todo Taks Empty Frame Change
+        var emptyTaskFrame = this.cardJQueryElement.find('.new--todo--task--description');
+        var emptyTaskFrameBlured = target.closest(emptyTaskFrame);
+        if (emptyTaskFrameBlured.length > 0) {
+            if (!emptyTaskFrameBlured.val()) {
+                // this.removeRenderTodoTaskFrame();
+            }
         }
     };
     TodoCard.prototype.showCardMenu = function () {
@@ -10933,8 +10913,24 @@ var TodoCard = (function () {
             this.cardTitle = this.cardTitleInput.val();
         }
     };
+    TodoCard.prototype.prependTodoTaskFrame = function () {
+        this.todoTasksListContainer.prepend(this.renderTodoTaskFrame);
+    };
+    TodoCard.prototype.renderTodoTaskFrame = function () {
+        var todoTaskHTMLFrame = "<li class=\"todoTaskItem taskItemContainer todo--task--empty--frame\">\n\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status\">\n\t\t\t\t\t\t\t<label for=\"todo--card--task--status\"></label>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription new--todo--task--description\" \n\t\t\t\t\tname=\"todo card description\" value=\"\" autofocus>\n\t\t\t\t</div>\n\t\t\t</li>";
+        return todoTaskHTMLFrame;
+    };
+    TodoCard.prototype.createNewTodoTask = function () {
+        //this.parentContext.addNewTodoTask(this.cardID, )
+    };
+    TodoCard.prototype.prependNewTodoTask = function (todoTaskItem) {
+        this.todoTasksListContainer.prepend(todoTaskItem.todoTaskJQuery);
+    };
+    TodoCard.prototype.removeRenderTodoTaskFrame = function () {
+        this.cardJQueryElement.find('.todo--task--empty--frame').remove();
+    };
     TodoCard.prototype.getHTML = function () {
-        var todoCardHTML = "<div class=\"col-sm-1 col-ms-1 col-lg-4 col-md-6\" \n\t\t\t draggable=\"true\">\n\t\t\t\t<div class=\"todoCardContainer todo--card--contianer\" data-card-id = " + this.cardID + ">\n\t\t\t\t\t<div class=\"todoCardContent\">\n\n\t\t\t\t\t\t<!-- Todo Card Header :: BEGIN -->\n\t\t\t\t\t\t<div class=\"todoCardHeader " + this.cardHeaderColor + "\">\n\n\t\t\t\t\t\t\t<!-- #1 -->\n\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t<div class=\"iconContainer\">\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-file-text-o\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription todo--card--title--input\"  readonly=\"readonly\"\n\t\t\t\t\t\t\t\t  name=\"todo card description\" value=\"" + this.cardTitle + "\">\n\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t<!-- #2 -->\n\t\t\t\t\t\t\t<!-- On Click display Drop Down Menu :: BEGIN  -->\n\t\t\t\t\t\t\t<a href=\"#\" class=\"cardMenuButton todo--card--menu--button\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t<div class=\"todoCardDropDownMenu todo--card--dropdown--menu\">\n\t\t\t\t\t\t\t\t<div class=\"dropDownMenuContainer\">\n\t\t\t\t\t\t\t\t\t<ul class=\"dropdownMenuList\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink card--menu--edit--button\">\n\t\t\t\t\t\t\t\t\t\t\t\tEdit Card\n\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink card--menu--delete--button\">\n\t\t\t\t\t\t\t\t\t\t\t\tDelete Card\n\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div><!-- On Click display Drop Down Menu :: END  -->\n\t\t\t\t\t\t\n\n\t\t\t\t\t\t</div><!-- Todo Card Header :: END -->\n\n\n\t\t\t\t\t\t<!-- Todo Card Body :: BEGIN -->\n\t\t\t\t\t\t<div class=\"todoCardBody showCardBody show--card--body\">\n\n\t\t\t\t\t\t\t<!-- #3 -->\n\t\t\t\t\t\t\t<div class=\"todoCardAddNewTaskButtonSmall todo--card--add--new--task--button\" >\n\t\t\t\t\t\t\t\t<a href=\"#\" class=\"todoCardAddNewTaskButton\">\n\t\t\t\t\t\t\t\t\t<img class=\"addNewButtonImageSmall\" src=\"images/add-button-small.svg\">\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<!-- Todo Card Task List:: BEGIN -->\n\t\t\t\t\t\t\t<ul class=\"todoCardTaskList\">\n\n\n\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status5\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status5\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\n\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\n\n\t\t\t\t\t\t\t</ul><!-- Todo Card Task List:: END -->\n\t\t\t\t\t\t</div><!-- Todo Card Body :: END -->\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div><!-- Card Container :: END -->";
+        var todoCardHTML = "<div class=\"col-sm-1 col-ms-1 col-lg-4 col-md-6\" \n\t\t\t draggable=\"true\">\n\t\t\t\t<div class=\"todoCardContainer todo--card--contianer\" data-card-id = " + this.cardID + ">\n\t\t\t\t\t<div class=\"todoCardContent\">\n\n\t\t\t\t\t\t<!-- Todo Card Header :: BEGIN -->\n\t\t\t\t\t\t<div class=\"todoCardHeader " + this.cardHeaderColor + "\">\n\n\t\t\t\t\t\t\t<!-- #1 -->\n\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t<div class=\"iconContainer\">\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-file-text-o\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription todo--card--title--input\"  readonly=\"readonly\"\n\t\t\t\t\t\t\t\t  name=\"todo card description\" value=\"" + this.cardTitle + "\">\n\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t<!-- #2 -->\n\t\t\t\t\t\t\t<!-- On Click display Drop Down Menu :: BEGIN  -->\n\t\t\t\t\t\t\t<a href=\"#\" class=\"cardMenuButton todo--card--menu--button\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t<div class=\"todoCardDropDownMenu todo--card--dropdown--menu\">\n\t\t\t\t\t\t\t\t<div class=\"dropDownMenuContainer\">\n\t\t\t\t\t\t\t\t\t<ul class=\"dropdownMenuList\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink card--menu--edit--button\">\n\t\t\t\t\t\t\t\t\t\t\t\tEdit Card\n\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink card--menu--delete--button\">\n\t\t\t\t\t\t\t\t\t\t\t\tDelete Card\n\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div><!-- On Click display Drop Down Menu :: END  -->\n\t\t\t\t\t\t\n\n\t\t\t\t\t\t</div><!-- Todo Card Header :: END -->\n\n\n\t\t\t\t\t\t<!-- Todo Card Body :: BEGIN -->\n\t\t\t\t\t\t<div class=\"todoCardBody showCardBody show--card--body\">\n\n\t\t\t\t\t\t\t<!-- #3 -->\n\t\t\t\t\t\t\t<div class=\"todoCardAddNewTaskButtonSmall todo--card--add--new--task--button\" >\n\t\t\t\t\t\t\t\t<a href=\"#\" class=\"todoCardAddNewTaskButton\">\n\t\t\t\t\t\t\t\t\t<img class=\"addNewButtonImageSmall\" src=\"images/add-button-small.svg\">\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<!-- Todo Card Task List:: BEGIN -->\n\t\t\t\t\t\t\t<ul class=\"todoCardTaskList todo--task--list--container\">\n\n\n\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status5\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status5\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\n\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" class=\"task--done--status\" id=\"todo--card--task--status7\">\n\t\t\t\t\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status7\"></label>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" value=\"Danasnji Taskovi\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\n\n\t\t\t\t\t\t\t</ul><!-- Todo Card Task List:: END -->\n\t\t\t\t\t\t</div><!-- Todo Card Body :: END -->\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div><!-- Card Container :: END -->";
         return todoCardHTML;
     };
     return TodoCard;
@@ -10942,17 +10938,17 @@ var TodoCard = (function () {
 
 
 
-/***/ }),
+/***/ },
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
-__webpack_require__(4);
+__webpack_require__(1);
 __webpack_require__(2);
 __webpack_require__(0);
-__webpack_require__(1);
-module.exports = __webpack_require__(3);
+__webpack_require__(3);
+module.exports = __webpack_require__(4);
 
 
-/***/ })
+/***/ }
 /******/ ]);
 //# sourceMappingURL=main.js.map

@@ -49,11 +49,13 @@
 				display: inline-block;
 				height: $lh*4;
 				width : $lh *4;
+				
 				.addNewTaskButton {
 					display: inline-block;
 					height: $lh*4;
-					width : $lh *4;
+					width : $lh *4;	
 					cursor: pointer;
+					z-index: 10;
 				}
 				&.hideFloatingButtons {
 					.addCardFloatingButton {
@@ -61,8 +63,9 @@
 						position: absolute;
 						top: $lh;
 						right: 0;
-						z-index: -10;
 						color   : $pink;
+						z-index: -1;
+						
 
 					}
 					.addTaskFloatingButton {
@@ -70,26 +73,27 @@
 						position: absolute;
 						bottom: $lh;
 						right: 0;
-						z-index: -10;
 						color   : $pink;
+						z-index: -1;
+						
 					}
 				}
 				&.showFloatingButtons {
 					.addCardFloatingButton{
 						@include transition(all 0.7s ease-in-out);
-						z-index: 10;
+						position: absolute;
 						top: -($lh/2) !important;
 						right: -($lh*3.5);
-						position: absolute;
 						color   : $pink;
+
 					}
 					.addTaskFloatingButton {
 						@include transition(all 0.7s ease-in-out);
-						z-index: 10;
+						position: absolute;
 						right  : -($lh*3.5);
 						bottom  : -($lh/2) !important;
-						position: absolute;
 						color   : $pink;
+
 					}
 				}
 				

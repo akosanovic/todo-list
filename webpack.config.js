@@ -1,5 +1,6 @@
-//var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+path: path.resolve(__dirname, './ts'),
+// var webpack = require('webpack');
 
 module.exports = {
 	devtool: 'source-map',
@@ -11,7 +12,7 @@ module.exports = {
 		'./ts/todoItemList.ts'
 	],
 	output: {
-		path    : "./js",
+		path    : "js",
 		filename: '[name].js'
 	},
 

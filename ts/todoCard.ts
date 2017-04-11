@@ -21,7 +21,7 @@ export class TodoCard implements TodoCardInterface {
 	private cardMenuDeleteButton: JQuery;
 	private cardTitleInput : JQuery;
 	private addNewTaskButton: JQuery;
-	private todoTasksListContainer: JQuery;
+	public  todoTasksListContainer: JQuery;
 	public todoTask           : JQuery;
 
 
@@ -34,6 +34,8 @@ export class TodoCard implements TodoCardInterface {
 		this.cardHeaderColor = this.setCardHeaderColor();
 		this.cardHTMLContent    = this.getHTML();
 		this.cardJQueryElement  = $(this.cardHTMLContent);
+
+
 		this.cardDropDownMenu     = this.cardJQueryElement.find('.todo--card--dropdown--menu');
 		this.cardShowMenuButton   = this.cardJQueryElement.find('.todo--card--menu--button');
 		this.cardMenuEditButton   = this.cardJQueryElement.find('.card--menu--edit--button');
@@ -43,7 +45,7 @@ export class TodoCard implements TodoCardInterface {
 		this.todoTasksListContainer = this.cardJQueryElement.find('.todo--task--list--container');
 		
 
-		this.cardJQueryElement.on("blur", this.focusOutHandler.bind(this));
+		this.cardJQueryElement.on("focusout", this.focusOutHandler.bind(this));
 	}
 
 
@@ -97,11 +99,26 @@ export class TodoCard implements TodoCardInterface {
 		let addNewTaskClicked = target.closest(this.addNewTaskButton);
 		if (addNewTaskClicked.length > 0) {
 			e.preventDefault();
-			this.addNewTodoTask();
+			this.prependTodoTaskFrame();
 		}
+
 	}
 	focusOutHandler(e): void{
 		// this.chageCardTitle.bind(this)
+		let target = $(e.target);
+		console.log("Does this works?");
+
+		// on Card Title Change
+
+		// on Todo Taks Empty Frame Change
+		let emptyTaskFrame = this.cardJQueryElement.find('.new--todo--task--description');
+		let emptyTaskFrameBlured = target.closest(emptyTaskFrame);
+		if (emptyTaskFrameBlured.length > 0) {
+			
+			if (!emptyTaskFrameBlured.val()) {
+				// this.removeRenderTodoTaskFrame();
+			}
+		}
 	}
 
 
@@ -147,11 +164,40 @@ export class TodoCard implements TodoCardInterface {
 			this.cardTitle = this.cardTitleInput.val();
 		}
 	}
-	addNewTodoTask(): void {
 
-
+	prependTodoTaskFrame(): void {
+		this.todoTasksListContainer.prepend(this.renderTodoTaskFrame)
 	}
 
+	renderTodoTaskFrame(): string {
+		let todoTaskHTMLFrame: string = 
+			`<li class="todoTaskItem taskItemContainer todo--task--empty--frame">
+				<div class="inputGroup">
+					<div class="absolutePositionedPrefix">
+						<div class="customCheckbox">
+							<input type="checkbox" name="task status" class="task--done--status" id="todo--card--task--status">
+							<label for="todo--card--task--status"></label>
+						</div>
+					</div>											
+					<input type="text" class="inputGroupDescription new--todo--task--description" 
+					name="todo card description" value="" autofocus>
+				</div>
+			</li>`;
+		
+		return todoTaskHTMLFrame;
+	}
+
+	createNewTodoTask(): void {
+
+		//this.parentContext.addNewTodoTask(this.cardID, )
+	}
+	prependNewTodoTask( todoTaskItem: TodoTask ):void {
+		this.todoTasksListContainer.prepend( todoTaskItem.todoTaskJQuery )
+	}
+	removeRenderTodoTaskFrame(): void {
+
+		this.cardJQueryElement.find('.todo--task--empty--frame').remove();
+	}
 
 	private getHTML(): string{
 
