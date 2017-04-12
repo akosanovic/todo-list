@@ -2,12 +2,12 @@
 import {TodoCardInterface} from './todoCardInterface';
 import {TodoTask} from './todoTask';
 import {Persistable} from './persistable';
-
+import {todoApp} from './todoApp';
 
 
 export class TodoCard implements Persistable  {
 	
-	private parentContext: TodoCardInterface;
+	private parentContext: todoApp;
 	
 	public cardID           : number;
 	public cardJQueryElement: JQuery;
@@ -28,10 +28,10 @@ export class TodoCard implements Persistable  {
 
 	private todoTaskCounter: number = 0;
 	public todoTask    : JQuery;
-
-	public todoTasksArray = [];
-
-	private headerColor: string = '';
+	
+	public todoTasksArray  = [];
+	private todoTasksJsons;
+	private headerColor    : string = '';
 
 	constructor( cardObject, parentContext ) {	
 		
@@ -39,6 +39,12 @@ export class TodoCard implements Persistable  {
 
 		this.cardID          = cardObject.cardID;
 		this.cardTitle       = cardObject.cardTitle ? cardObject.cardTitle : "Undefined";
+		
+		
+		this.todoTasksJsons  = cardObject.todoTasksJsons ?  cardObject.todoTasksJsons : [];
+		
+
+
 		this.cardHeaderColor = cardObject.cardHeaderColor ?  cardObject.cardHeaderColor : this.setCardHeaderColor();
 
 
@@ -56,7 +62,15 @@ export class TodoCard implements Persistable  {
 		this.todoTaskInputContainer = this.cardJQueryElement.find('.new--task--input--container');
 		this.newTodoTaskDescriptionInput = this.todoTaskInputContainer.find('.new--todo--task--description');
 
+
+		this.cardJQueryElement.on("click", this.clickHandler.bind(this));
+
 		this.cardJQueryElement.on("keypress", this.keypressHandler.bind(this));
+		
+		if (this.todoTasksJsons > 0){
+			debugger
+			this.renderTodoTasksFromLocalStorage(this.todoTasksJsons)
+		}
 	}
 
 
@@ -70,13 +84,16 @@ export class TodoCard implements Persistable  {
 
 
 	public getLocalStorageRepresentation() {
+		
+		debugger
+		let todoTasksJsons = [];
 
-		let todoTasksJsons = []
-
-		for (var i = this.todoTasksArray.length - 1; i >= 0; i--) {
+		for (var i = 0; i < this.todoTasksArray.length; i++) {
+			
 			let todoTask = this.todoTasksArray[i];
-			let todoTaskJson = todoTask.getLocalStorageRepresentation(); 
-			todoTasksJsons.push( todoTaskJson );
+			
+			let todoTaskStringified = todoTask.getLocalStorageRepresentation(); 
+			todoTasksJsons.push( todoTaskStringified );
 		};
 
 
@@ -90,8 +107,6 @@ export class TodoCard implements Persistable  {
 		return json;
 	}
 
-	
-	appendTodoTaskToCardContainer(){}	
 	
 	public appendCard(parentContext: JQuery): void {
 		parentContext.append(this.cardJQueryElement);
@@ -137,6 +152,7 @@ export class TodoCard implements Persistable  {
 		let addNewTaskButton = this.cardJQueryElement.find('.todo--card--add--new--task--button');
 		let addNewTaskClicked = target.closest(addNewTaskButton);
 		if (addNewTaskClicked.length > 0) {
+			
 			e.preventDefault();
 			e.stopPropagation();
 			this.showNewTaskInputContainer();
@@ -230,13 +246,13 @@ export class TodoCard implements Persistable  {
 	//  On Add New Task Button Prepend Empty Task Frame 
 	showNewTaskInputContainer(): void {
 
-		this.todoTasksListContainer.addClass('newTaskInputOpened');
+		this.todoTaskInputContainer.addClass('newTaskInputOpened');
 		this.todoTaskInputContainer.removeClass('remove');
 
 		this.newTodoTaskDescriptionInput.focus();
 	}
 	hideNewTaskInputContainer(): void {
-		this.todoTasksListContainer.removeClass('newTaskInputOpened');
+		this.todoTaskInputContainer.removeClass('newTaskInputOpened');
 		this.todoTaskInputContainer.addClass('remove');
 		this.newTodoTaskDescriptionInput.val( '');
 	}
@@ -247,27 +263,48 @@ export class TodoCard implements Persistable  {
 	createNewTodoTask(): void {
 
 		var newTaskObject = {
-			"todoTaskID": this.todoTaskCounter++,
+
+			"todoTaskID"        : this.todoTaskCounter++,
 			"todoTaskDescripion": this.todoTaskDescripion,
-			"todoTaskStatus": false,
-			"parentID": this.cardID
+			"todoTaskStatus"    : false,
+			"parentID"          : this.cardID,
+			"taskDate"          : new Date(),
 		}
 
 		this.prependNewTask( newTaskObject );
 	}
+	
+	renderTodoTasksFromLocalStorage( todoTaskJSON ): void {
 
+		let taskItem: TodoTask;
+		for(let i = 0; i < todoTaskJSON.length; i++ ){
+			
+			taskItem = todoTaskJSON[i];
+			this.prependNewTask(taskItem);
+		}
+
+	}
 
 	prependNewTask( newTaskObject ): void {
 
 		let newTodoTask: TodoTask = new TodoTask( newTaskObject, this );
-		newTodoTask.prependTo(this.todoTasksListContainer);
-		console.log(newTodoTask)
-		// this.todoTasksArray.push(newTodoTask);
-		console.log(this.getLocalStorageRepresentation());
+		console.log("new to do task object: ", newTaskObject);
+		
+		newTodoTask.prependTo( this.todoTasksListContainer );
+		
+		this.todoTasksArray.push(newTodoTask);
+		
+		this.getLocalStorageRepresentation();
+		this.parentContext.updateLocalStorage();
+		
+
 	}
 
 
-	private getHTML(): string{
+
+
+
+	private getHTML(): string {
 
 		var todoCardHTML = 
 			`<div class="col-sm-1 col-ms-1 col-lg-4 col-md-6" draggable="true">
