@@ -170,41 +170,47 @@ export class todoApp implements TodoCardInterface {
 	
 
 	renderValueFromLocalStorage(): any {
-		let localStorageObject = this.getValueFromLocalStorage();
-		console.log(localStorageObject)
-		// reset counters
-		this.todoCardCounter = localStorageObject.length;
-		let cardObject ;
 		
-		for(let i = 0; i < localStorageObject.length; i++){
-			cardObject = localStorageObject[i]
-			this.appendTodoCard(cardObject);
-		}	
+		let localStorageObject = this.getValueFromLocalStorage();
+		if (localStorageObject) {
+			// reset counters
+			this.todoCardCounter = localStorageObject.length;
+			let cardObject ;
+			
+			for(let i = 0; i < localStorageObject.length; i++){
+				cardObject = localStorageObject[i]
+				this.appendTodoCard(cardObject);
+			}	
+		}		
 	}
 
 
-	getOldestTasksForMainTodoCard (  ) {
-		let listOfTaskCards = this.getValueFromLocalStorage();
+	getOldestTasksForMainTodoCard ( ) {
+		let arrayOfTodoCards = this.getValueFromLocalStorage();
 
-		let taskCardItem: TodoCard,
-			todoTaskArray = [];
-		let arrayOfTodoCards = listOfTaskCards;
-		for(let i = 0; i < arrayOfTodoCards.length; i++) {
+		if (arrayOfTodoCards){
+
+			let todoCardItem: TodoCard,
+				todoTaskArray = [];
 			
-			taskCardItem  = arrayOfTodoCards[i];
-			todoTaskArray.push(taskCardItem.todoTasksJsons);
+			for(let i = 0; i < arrayOfTodoCards.length; i++) {
+				
+				todoCardItem  = arrayOfTodoCards[i];
+				let todoCardItemLength = todoCardItem.todoTasksJsons.length;
+				
+				for(let i = 0; i < todoCardItemLength; i++) {
+					todoTaskArray.push(todoCardItem.todoTasksJsons[i]);
+				}
+			}
+			
+			return  todoTaskArray;
 		}
-		todoTaskArray.sort(this.sortTasksByDate);
-		return todoTaskArray;
 	}
 
 
 	sortTasksByDate(task1, task2 ): number {
 		
-			let date1 = new Date(task1[0].taskDate);
-			let date2 = new Date(task2[0].taskDate);
-
-			return date2 - date1;
+		return task1.taskDate - task2.taskDate;
 	}
 
 

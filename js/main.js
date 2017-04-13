@@ -125,9 +125,14 @@ var MainTodoCard = (function () {
         console.log('connect with Task Card and Task Item');
     };
     MainTodoCard.prototype.fillOldestTaskListContainer = function () {
+        var oldestTaskInput = [];
+        oldestTaskInput.push(this.mainTodoCardContainer.find('.oldest--task--input'));
         var taskArray = this.parentContext.getOldestTasksForMainTodoCard();
-        for (var i = 0; i = taskArray.length; i++) {
-            // console.log('length ', this.oldestTaskItem);
+        for (var j = 0; j < oldestTaskInput.length; j++) {
+            for (var i = 0; i < taskArray.length; i++) {
+                // let taskDescription = taskArray[j].todoTaskDescripion;
+                // oldestTaskInput[i].val(taskDescription);		
+            }
         }
     };
     MainTodoCard.prototype.appendTodoTaskToCardContainer = function () { };
@@ -328,30 +333,32 @@ var todoApp = (function () {
     };
     todoApp.prototype.renderValueFromLocalStorage = function () {
         var localStorageObject = this.getValueFromLocalStorage();
-        console.log(localStorageObject);
-        // reset counters
-        this.todoCardCounter = localStorageObject.length;
-        var cardObject;
-        for (var i = 0; i < localStorageObject.length; i++) {
-            cardObject = localStorageObject[i];
-            this.appendTodoCard(cardObject);
+        if (localStorageObject) {
+            // reset counters
+            this.todoCardCounter = localStorageObject.length;
+            var cardObject = void 0;
+            for (var i = 0; i < localStorageObject.length; i++) {
+                cardObject = localStorageObject[i];
+                this.appendTodoCard(cardObject);
+            }
         }
     };
     todoApp.prototype.getOldestTasksForMainTodoCard = function () {
-        var listOfTaskCards = this.getValueFromLocalStorage();
-        var taskCardItem, todoTaskArray = [];
-        var arrayOfTodoCards = listOfTaskCards;
-        for (var i = 0; i < arrayOfTodoCards.length; i++) {
-            taskCardItem = arrayOfTodoCards[i];
-            todoTaskArray.push(taskCardItem.todoTasksJsons);
+        var arrayOfTodoCards = this.getValueFromLocalStorage();
+        if (arrayOfTodoCards) {
+            var todoCardItem = void 0, todoTaskArray = [];
+            for (var i = 0; i < arrayOfTodoCards.length; i++) {
+                todoCardItem = arrayOfTodoCards[i];
+                var todoCardItemLength = todoCardItem.todoTasksJsons.length;
+                for (var i_1 = 0; i_1 < todoCardItemLength; i_1++) {
+                    todoTaskArray.push(todoCardItem.todoTasksJsons[i_1]);
+                }
+            }
+            return todoTaskArray;
         }
-        todoTaskArray.sort(this.sortTasksByDate);
-        return todoTaskArray;
     };
     todoApp.prototype.sortTasksByDate = function (task1, task2) {
-        var date1 = new Date(task1[0].taskDate);
-        var date2 = new Date(task2[0].taskDate);
-        return date2 - date1;
+        return task1.taskDate - task2.taskDate;
     };
     // Todo Card :: BEGIN
     todoApp.prototype.createTodoCard = function (e) {
