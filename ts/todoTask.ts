@@ -6,7 +6,7 @@ import {Persistable} from './persistable';
 
 
 export class TodoTask implements Persistable {
-	private parentContext: todoTaskInteface;
+	private parentContext: TodoCard;
 	private todoTaskHTML : string;
 	
 	public todoTaskID        : number;
@@ -25,14 +25,12 @@ export class TodoTask implements Persistable {
 		this.todoTaskDescripion = todoTaskObject.todoTaskDescripion;
 		this.todoTaskStatus     = todoTaskObject.todoTaskStatus;
 		this.parentID           = todoTaskObject.parentID;
-		this.taskDate       = todoTaskObject.taskDate ? todoTaskObject.taskDate : new Date();
+		this.taskDate           = todoTaskObject.taskDate ? todoTaskObject.taskDate : new Date();
 
 
 		this.todoTaskHTML   = this.getTodoTaskHTML();
 		this.todoTaskJQuery = $(this.todoTaskHTML);
-		
 
-		
 
 		this.todoTaskJQuery.on('click', this.clickHandler.bind(this));
 	}
@@ -41,14 +39,15 @@ export class TodoTask implements Persistable {
 	destroy() {
 		this.todoTaskID         = null;
 		this.todoTaskDescripion = null;
-		this.todoTaskStatus     = null;
+		this.todoTaskStatus     = false;
 		this.todoTaskJQuery.remove();
 		this.todoTaskJQuery     = null;
 	}
 
+
 	getLocalStorageRepresentation(): any {
 
-		let json = {
+		let json: Object = {
 
 			todoTaskID        : this.todoTaskID,
 			todoTaskDescripion: this.todoTaskDescripion,
@@ -58,22 +57,21 @@ export class TodoTask implements Persistable {
 		return json;
 	}
 
+
 	public prependTo( parentContainer: JQuery): void {
-		
-		debugger
+
 		this.todoTaskJQuery.prependTo( parentContainer );
-		console.log( "element to prepend", this.todoTaskJQuery);
-		console.log( "parent", parentContainer )
 	}
 
 		
 
-	clickHandler( e ) {
-		let target = $(e.target);
+	clickHandler( e ): void {
+		let target:JQuery = $(e.target);
+
 		
 
-		let checkBocks = this.todoTaskJQuery.find('.task--done--status');
-		let checkBocksChecked = target.closest(checkBocks);
+		let checkBocks: JQuery = this.todoTaskJQuery.find('.task--done--status');
+		let checkBocksChecked: JQuery = target.closest(checkBocks);
 		if(checkBocksChecked.length > 0) {
 			this.changeTaskStatus();
 		}
@@ -81,17 +79,18 @@ export class TodoTask implements Persistable {
 
 
 	private getTodoTaskHTML(): string{
-		
-		let taskChecked = this.todoTaskStatus ? 'checked' : '';
+		// * Hack 
+		//  checkbox is hidden and instead label is listening for user action
+		//  In order for that to work label and checkbox need same id / for value
 		let randomCheckboxID = Math.floor(Math.random()*1000);
-
+		
 
 		var taskItemHTML: string = 
 				`<li class="todoTaskItem taskItemContainer todo--task--item" data-task-id="${this.todoTaskID}">
 					<div class="inputGroup">
 						<div class="absolutePositionedPrefix">
 							<div class="customCheckbox">
-								<input type="checkbox" taskChecked  name="task status" 
+								<input type="checkbox" name="task status" 
 								class="task--done--status" id="todo--card--task--status${randomCheckboxID}">
 								<label for="todo--card--task--status${randomCheckboxID}"></label>
 							</div>
@@ -99,25 +98,21 @@ export class TodoTask implements Persistable {
 						<input type="text" class="inputGroupDescription" name="todo card description" 
 						readonly="readonly" value="${this.todoTaskDescripion}">
 					</div>
-				</li>`;
-		
+				</li>`;		
 
 		return taskItemHTML;
 	}
 
-	changeTaskStatus(){
 
-		let todoTaskContainer: JQuery = this.todoTaskJQuery.find('.todo--task--item');
-		todoTaskContainer.addClass('taskChecked');
+	// Register user Done Status change
+	// if task is checked it will not render at new session
+	changeTaskStatus(): void{
+
+		this.todoTaskStatus = (this.todoTaskJQuery.find('.task--done--status')).is(":checked");
+		
+		this.getLocalStorageRepresentation();
+
+		this.parentContext.saveChangesToLocalStorage();
 	}
-
-
-
-
-	getTaskStatus(){
-		return this.todoTaskStatus;
-	}
-
-	
 
 }

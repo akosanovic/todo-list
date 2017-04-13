@@ -1,23 +1,26 @@
-import {todoApp} from './todoApp';
 import {TodoCardInterface} from './todoCardInterface';
+import {todoApp} from './todoApp';
 import {TodoCard} from './todoCard';
-
+import {TodoTask} from './todoTask';
 
 export class MainTodoCard implements TodoCardInterface {
 
-	private mainTodoCardContainer: JQuery;
-	private addNewButton: JQuery;
-	private addNewButtonContainer: JQuery;
-	private floatingButton : JQuery;
-	private floatingButtonAddCard: JQuery;
+	private parentContext : todoApp;
+	private mainTodoCardContainer  : JQuery;
+	private addNewButton           : JQuery;
+	private addNewButtonContainer  : JQuery;
+	private floatingButton         : JQuery;
+	private floatingButtonAddCard  : JQuery;
 	private oldestTaskListContainer: JQuery;
 
-	
+	public oldestTaskItem: JQuery;
+		
 
 
-	constructor( mainTodoCard: JQuery ) {
+	constructor( mainTodoCard: JQuery, parentContext ) {
 		this.mainTodoCardContainer   = mainTodoCard;
 		
+		this.parentContext = parentContext;
 		// On click show floating buttons
 		this.addNewButton            = this.mainTodoCardContainer.find('.main--content--add--new--button');
 
@@ -25,16 +28,21 @@ export class MainTodoCard implements TodoCardInterface {
 		this.addNewButtonContainer   = this.mainTodoCardContainer.find('.main--content--add--new--button--container');
 		
 		//  On click detect which floating button was clicked
-		this.floatingButton          = this.mainTodoCardContainer.find('.floating--button');
-		this.floatingButtonAddCard   = this.mainTodoCardContainer.find('.floating--button--add--card');
+		this.floatingButton        = this.mainTodoCardContainer.find('.floating--button');
+		this.floatingButtonAddCard = this.mainTodoCardContainer.find('.floating--button--add--card');
+		
 
 		//  container to fill with oldest tasks
 		this.oldestTaskListContainer = this.mainTodoCardContainer.find('.oldest--task--container');
+
 
 		this.fillOldestTaskListContainer();
 	}
 
 
+
+
+	// EVENT HANDLERS
 	public clickHandler( e ): void {
 		let target = $(e.target);
 
@@ -42,7 +50,7 @@ export class MainTodoCard implements TodoCardInterface {
 		let addNewButton = target.closest(this.addNewButton);
 		if (addNewButton.length > 0){
 			e.stopPropagation();
-			this.displayFloatingButtons( e );
+			this.showFloatingButtons( e );
 		}
 
 
@@ -50,46 +58,38 @@ export class MainTodoCard implements TodoCardInterface {
 		if(floatingButtonClicked.length > 0){
 			e.stopPropagation();
 			
-			if (floatingButtonClicked.hasClass('floating--button--add--card')){
+			this.hideFloatingButtons( e );
+
+			if (floatingButtonClicked.hasClass('floating--button--add--card')) {
 				// this.createTodoCard( e );
 			}
-			else if(floatingButtonClicked.hasClass('floating--button--add--task')){
+			else if( floatingButtonClicked.hasClass('floating--button--add--task')) {
 				
-				this.createNewCardWithTask( e );
+				this.parentContext.createTodoCardWithTask( e );
 			}
 		}
 	}
 
 
 
-	private displayFloatingButtons( e ): void {
+
+
+	showFloatingButtons( e ): void {
 		e.stopPropagation();
 		
 
-		if( this.addNewButtonContainer.hasClass('showFloatingButtons') ) {		
-			this.addNewButtonContainer.addClass('hideFloatingButtons').removeClass('showFloatingButtons');
+		if( this.addNewButtonContainer.hasClass('hideFloatingButtons') ) {		
+			this.addNewButtonContainer.removeClass('hideFloatingButtons');
 		}
-		else{
+	}
+	hideFloatingButtons( e ): void {
 
-			this.addNewButtonContainer.removeClass('hideFloatingButtons').addClass('showFloatingButtons');
+		if (!this.addNewButtonContainer.hasClass('hideFloatingButtons')){
+			this.addNewButtonContainer.addClass('hideFloatingButtons');
 		}
 	}
 
 	createTodoTask(){}
-
-	// createTodoCard( e ): void {
-	// 	e.stopPropagation();
-	// 	console.log('connect with Task Card and Task Item');
-
-
-	// 	let newTodoCard: TodoCard = new TodoCard( this.todoCardCounter  );
-	// 	console.log(newTodoCard.getHTML());
-	// 	$('.todo--cards--row').append(newTodoCard.getHTML());
-
-	// 	this.todoCardCounter++;
-	// }
-
-
 
 
 	createNewCardWithTask( e ): void {
@@ -100,7 +100,11 @@ export class MainTodoCard implements TodoCardInterface {
 
 
 	fillOldestTaskListContainer(){
-		console.log("Fill Oldest Task List Container on load");
+	
+		let taskArray = this.parentContext.getOldestTasksForMainTodoCard( );
+		for(let i = 0; i = taskArray.length; i++) {
+			// console.log('length ', this.oldestTaskItem);
+		}
 	}
 
 	appendTodoTaskToCardContainer(){}

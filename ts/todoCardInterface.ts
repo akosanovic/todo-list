@@ -1,11 +1,11 @@
 
 export interface TodoCardInterface{
 
-	addNewTodoTask();
 	appendTodoTaskToCardContainer();
-	
-	editTodoCard( cardId:number, jqueryElement: JQuery, newTitle: string ): void;
+	fillOldestTaskListContainer();
 	deleteTodoCard( cardID: number ): void;
-	updateLocalStorage();
 	
+	showFloatingButtons( e );
+	createTodoCardWithTask( event );
+	updateLocalStorage();
 }

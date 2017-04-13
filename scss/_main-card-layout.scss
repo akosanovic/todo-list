@@ -44,92 +44,105 @@
 			}
 
 			.addNewButtonContainer {
-				@include transition(all 0.5s ease-in-out);
+				
+
 				position: relative;
 				display: inline-block;
 				height: $lh*4;
 				width : $lh *4;
 				
 				.addNewTaskButton {
+					position: absolute;
+					left: 0;
+
 					display: inline-block;
 					height: $lh*4;
 					width : $lh *4;	
 					cursor: pointer;
 					z-index: 10;
 				}
-				&.hideFloatingButtons {
-					.addCardFloatingButton {
-						@include transition(all 0.5s ease-in-out);
-						position: absolute;
-						top: $lh;
-						right: 0;
-						color   : $pink;
-						z-index: -1;
-						
 
-					}
-					.addTaskFloatingButton {
-						@include transition(all 0.5s ease-in-out);
-						position: absolute;
-						bottom: $lh;
-						right: 0;
-						color   : $pink;
-						z-index: -1;
-						
-					}
-				}
-				&.showFloatingButtons {
-					.addCardFloatingButton{
-						@include transition(all 0.5s ease-in-out);
-						position: absolute;
-						top: -($lh/2) !important;
-						right: -($lh*3.5);
-						color   : $pink;
-
-					}
-					.addTaskFloatingButton {
-						@include transition(all 0.5s ease-in-out);
-						position: absolute;
-						right  : -($lh*3.5);
-						bottom  : -($lh/2) !important;
-						color   : $pink;
-
-					}
-				}
-				
-				
-
-				//Visible on click on add New Button
+				// FLOATING BUTTONS ANIMATION :: BEGIN
 				.floatingButtons {
-
-					.floatingButtonContent {
-						@include border-radius(50%);
-						position: relative;
-						display: inline-block;
-						width : $lh*2;
-						height: $lh*2;
-						
-						background-color: $white;
-						font-size  : $lh;
-						line-height: $lh;
-
-						cursor: pointer;
-						vertical-align: middle;
-						@include box-shadow( 1px 3px 3px 3px rgba(206,213,225,0.75));
-						.fa {
-							position: absolute;
-							top : $lh/2;
-							left: 14px;
-							font-size  : $lh;
-							line-height: $lh 						
-						}						
-					}
-					.buttonDescription {
-						font-weight: 600;
-					}
+					@include transition(all 0.5s ease-in-out, z-index 0.7s ease);
 				}
+				.addCardFloatingButton {					
+					position: absolute;
+					top     : -($lh/2) !important;
+					right   : -($lh*3.5);
+					color   : $pink;
+					z-index : 10;
+
+				}
+				.addTaskFloatingButton {					
+					position: absolute;
+					right  : -($lh*3.5);
+					bottom  : -($lh/2) !important;
+					color   : $pink;
+					z-index: 10;
+					
+
+				}
+				
+				&.hideFloatingButtons {
+					.floatingButtons {
+						@include transition(all 0.5s ease-in-out, z-index 0.7s ease);
+					}
+					.addCardFloatingButton {
+						@include transition(all 0.5s ease-in-out, z-index 0.7s ease);
+						position: absolute;
+						top     : $lh !important;
+						right   : 0 !important;
+						color   : $pink;
+						z-index : 0;
+						visibility: hidden;
+						
+
+					}
+					.addTaskFloatingButton {
+						@include transition(all 0.5s ease-in-out, z-index 0.7s ease);
+						position: absolute;
+						bottom  : $lh !important;
+						right   : 0;
+						color   : $pink;
+						z-index : 0;
+						visibility: hidden;
+						
+					}
+				}// FLOATING BUTTONS ANIMATION :: END
 			}
 		} // Main Todo Card Header :: END
+
+	//Visible on click on add New Button
+	.floatingButtons {
+
+		.floatingButtonContent {
+			@include border-radius(50%);
+			position: relative;
+			display: inline-block;
+			width : $lh*2;
+			height: $lh*2;
+			
+			background-color: $white;
+			font-size  : $lh;
+			line-height: $lh;
+
+			cursor: pointer;
+			vertical-align: middle;
+			@include box-shadow( 1px 3px 3px 3px rgba(206,213,225,0.75));
+			.fa {
+				position: absolute;
+				top : $lh/2;
+				left: 14px;
+				font-size  : $lh;
+				line-height: $lh 						
+			}						
+		}
+		.buttonDescription {
+			font-weight: 600;
+		}
+	}
+
 
 
 		// Main Todo Card Body  :: BEGIN
