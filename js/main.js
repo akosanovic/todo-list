@@ -132,10 +132,15 @@ var MainTodoCard = (function () {
             }
         }
         else if (taskArray.length === 0) {
+            this.emptyMainTodoTaskContainer();
         }
     };
-    MainTodoCard.prototype.appendTodoTaskToCardContainer = function () { };
-    MainTodoCard.prototype.deleteTodoCard = function () { };
+    MainTodoCard.prototype.emptyMainTodoTaskContainer = function () {
+        this.mainTodoTaskContainer = this.mainTodoCardContainer.find('.main--card--body--container');
+        this.mainTodoTaskContainer.addClass('emptyMainTodoCardTaskList');
+    };
+    // function managed in todoApp.ts
+    MainTodoCard.prototype.createTodoCardWithTask = function () { };
     return MainTodoCard;
 }());
 

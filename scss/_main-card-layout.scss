@@ -193,9 +193,11 @@
 		}// Main Todo Card Body  :: END
 	}
 }
+// added to the cardBodyContainer 
 .emptyMainTodoCardTaskList {
-
-	display: none;
+	.cardBodyContent {
+		display: none;
+	}
 	// When there is no task 
 	position: static !important;
 	color: $blue-dark;
@@ -208,11 +210,10 @@
 		margin: 0 auto;
 	}
 	&:after {
-		content: "It’s time for cocktail, \a
+		content: "It\'s time for cocktail, \a
 				All tasks are done!";
 		white-space: pre;
 		display: block;
-		width: 20rem;
 		margin: $lh auto;
 		text-align: center;
 		font-size: 19px;

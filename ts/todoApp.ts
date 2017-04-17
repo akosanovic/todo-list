@@ -13,7 +13,7 @@ import {TodoCardInterface} from './todoCardInterface';
 */ 
 
 
-export class todoApp implements TodoCardInterface {
+export class todoApp  {
 
 	// data property storing page container
 	// visible globally 
