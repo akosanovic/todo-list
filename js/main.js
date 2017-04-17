@@ -33,18 +33,16 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	// identity function for calling harmory imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
-/******/ 	// define getter function for harmony exports
+/******/ 	// define getter function for harmory exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
+/******/ 		Object.defineProperty(exports, name, {
+/******/ 			configurable: false,
+/******/ 			enumerable: true,
+/******/ 			get: getter
+/******/ 		});
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -68,11 +66,10 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainTodoCard", function() { return MainTodoCard; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "MainTodoCard", function() { return MainTodoCard; });
 var MainTodoCard = (function () {
     function MainTodoCard(mainTodoCard, parentContext) {
         this.mainTodoCardContainer = mainTodoCard;
@@ -125,14 +122,16 @@ var MainTodoCard = (function () {
         console.log('connect with Task Card and Task Item');
     };
     MainTodoCard.prototype.fillOldestTaskListContainer = function () {
-        var oldestTaskInput = [];
-        oldestTaskInput.push(this.mainTodoCardContainer.find('.oldest--task--input'));
+        var oldestTaskInput = this.mainTodoCardContainer.find('.oldest--task--input');
         var taskArray = this.parentContext.getOldestTasksForMainTodoCard();
-        for (var j = 0; j < oldestTaskInput.length; j++) {
-            for (var i = 0; i < taskArray.length; i++) {
-                // let taskDescription = taskArray[j].todoTaskDescripion;
-                // oldestTaskInput[i].val(taskDescription);		
+        console.log('task array', taskArray);
+        if (taskArray.length >= oldestTaskInput.length) {
+            for (var i = 0; i < oldestTaskInput.length; i++) {
+                var oldestTask = taskArray[i].todoTaskDescripion;
+                $(oldestTaskInput[i]).val(oldestTask);
             }
+        }
+        else if (taskArray.length === 0) {
         }
     };
     MainTodoCard.prototype.appendTodoTaskToCardContainer = function () { };
@@ -142,13 +141,12 @@ var MainTodoCard = (function () {
 
 
 
-/***/ }),
+/***/ },
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoTask", function() { return TodoTask; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "TodoTask", function() { return TodoTask; });
 var TodoTask = (function () {
     function TodoTask(todoTaskObject, parentContext) {
         this.parentContext = parentContext;
@@ -208,17 +206,16 @@ var TodoTask = (function () {
 
 
 
-/***/ }),
+/***/ },
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__todoCard__ = __webpack_require__(6);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "todoApp", function() { return todoApp; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "todoApp", function() { return todoApp; });
 
 
 
@@ -410,13 +407,12 @@ __WEBPACK_IMPORTED_MODULE_0_jquery__(function () {
 });
 
 
-/***/ }),
+/***/ },
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToDoItem", function() { return ToDoItem; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "ToDoItem", function() { return ToDoItem; });
 var ToDoItem = (function () {
     function ToDoItem(taskObject, parentContext) {
         this.parentContext = parentContext;
@@ -473,18 +469,18 @@ var ToDoItem = (function () {
 
 
 
-/***/ }),
+/***/ },
 /* 4 */
-/***/ (function(module, exports) {
+/***/ function(module, exports) {
 
 
 
-/***/ }),
+/***/ },
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.2.0
+ * jQuery JavaScript Library v3.2.1
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -494,7 +490,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2017-03-16T21:26Z
+ * Date: 2017-03-20T18:59Z
  */
 ( function( global, factory ) {
 
@@ -573,7 +569,7 @@ var support = {};
 
 
 var
-	version = "3.2.0",
+	version = "3.2.1",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -5828,11 +5824,9 @@ jQuery.event = {
 		},
 		click: {
 
-			// For checkable types, fire native event so checked state will be right
+			// For checkbox, fire native event so checked state will be right
 			trigger: function() {
-				if ( rcheckableType.test( this.type ) &&
-					this.click && nodeName( this, "input" ) ) {
-
+				if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
 					this.click();
 					return false;
 				}
@@ -6652,6 +6646,11 @@ var getStyles = function( elem ) {
 
 function curCSS( elem, name, computed ) {
 	var width, minWidth, maxWidth, ret,
+
+		// Support: Firefox 51+
+		// Retrieving style before computed somehow
+		// fixes an issue with getting wrong values
+		// on detached elements
 		style = elem.style;
 
 	computed = computed || getStyles( elem );
@@ -6839,6 +6838,12 @@ function getWidthOrHeight( elem, name, extra ) {
 	// for getComputedStyle silently falls back to the reliable elem.style
 	valueIsBorderBox = isBorderBox &&
 		( support.boxSizingReliable() || val === elem.style[ name ] );
+
+	// Fall back to offsetWidth/Height when value is "auto"
+	// This happens for inline elements with no explicit setting (gh-3571)
+	if ( val === "auto" ) {
+		val = elem[ "offset" + name[ 0 ].toUpperCase() + name.slice( 1 ) ];
+	}
 
 	// Normalize "", auto, and prepare for extra
 	val = parseFloat( val ) || 0;
@@ -10656,16 +10661,16 @@ jQuery.fn.extend( {
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
 			this.off( types, selector || "**", fn );
-	},
-	holdReady: function( hold ) {
-		if ( hold ) {
-			jQuery.readyWait++;
-		} else {
-			jQuery.ready( true );
-		}
 	}
 } );
 
+jQuery.holdReady = function( hold ) {
+	if ( hold ) {
+		jQuery.readyWait++;
+	} else {
+		jQuery.ready( true );
+	}
+};
 jQuery.isArray = Array.isArray;
 jQuery.parseJSON = JSON.parse;
 jQuery.nodeName = nodeName;
@@ -10689,8 +10694,7 @@ jQuery.nodeName = nodeName;
 if ( true ) {
 	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
 		return jQuery;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 }
 
 
@@ -10730,13 +10734,13 @@ return jQuery;
 } );
 
 
-/***/ }),
+/***/ },
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(1);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TodoCard; });
+/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return TodoCard; });
 
 var TodoCard = (function () {
     function TodoCard(cardObject, parentContext) {
@@ -10944,9 +10948,9 @@ var TodoCard = (function () {
 
 
 
-/***/ }),
+/***/ },
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
 __webpack_require__(2);
@@ -10955,6 +10959,6 @@ __webpack_require__(3);
 module.exports = __webpack_require__(4);
 
 
-/***/ })
+/***/ }
 /******/ ]);
 //# sourceMappingURL=main.js.map

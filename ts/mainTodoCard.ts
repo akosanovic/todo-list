@@ -36,7 +36,6 @@ export class MainTodoCard implements TodoCardInterface {
 		this.oldestTaskListContainer = this.mainTodoCardContainer.find('.oldest--task--container');
 
 
-		
 		this.fillOldestTaskListContainer()
 		
 	}
@@ -102,21 +101,20 @@ export class MainTodoCard implements TodoCardInterface {
 
 
 	fillOldestTaskListContainer() {
-		let oldestTaskInput = []
-		oldestTaskInput.push(this.mainTodoCardContainer.find('.oldest--task--input'))
+		let oldestTaskInput = this.mainTodoCardContainer.find('.oldest--task--input');
+		let taskArray: TodoTask[] = this.parentContext.getOldestTasksForMainTodoCard();
 		
-		 let taskArray: TodoTask[] = this.parentContext.getOldestTasksForMainTodoCard();
-		
-		for(let j = 0; j < oldestTaskInput.length; j++){
+		console.log('task array', taskArray);
+		if (taskArray.length >= oldestTaskInput.length ) {
+			for(let i = 0; i < oldestTaskInput.length; i++) {
 
-			for(let i = 0; i < taskArray.length; i++) {
-
-				// let taskDescription = taskArray[j].todoTaskDescripion;
-				// oldestTaskInput[i].val(taskDescription);		
+				let oldestTask = taskArray[i].todoTaskDescripion;
+				$(oldestTaskInput[i]).val(oldestTask);
 			}
 		}
-		
-		
+		else if (taskArray.length === 0) {
+			
+		}
 	}
 
 	appendTodoTaskToCardContainer(){}
@@ -124,8 +122,5 @@ export class MainTodoCard implements TodoCardInterface {
 
 	
 	deleteTodoCard(){}
-
-
-}
 
 
