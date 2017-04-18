@@ -13,7 +13,7 @@ export class MainTodoCard implements TodoCardInterface {
 	private floatingButtonAddCard  : JQuery;
 	private oldestTaskListContainer: JQuery;
 	private mainTodoTaskContainer  : JQuery;
-
+	private maxNumOfOldestTaskToDisplay: number;
 
 	public oldestTaskItem: JQuery;
 		
@@ -32,13 +32,13 @@ export class MainTodoCard implements TodoCardInterface {
 		//  On click detect which floating button was clicked
 		this.floatingButton        = this.mainTodoCardContainer.find('.floating--button');
 		this.floatingButtonAddCard = this.mainTodoCardContainer.find('.floating--button--add--card');
-		
+		this.maxNumOfOldestTaskToDisplay = 3;
 
 		//  container to fill with oldest tasks
 		this.oldestTaskListContainer = this.mainTodoCardContainer.find('.oldest--task--container');
 
 
-		this.fillOldestTaskListContainer()
+		this.renderTodoTasksFromLocalStorage()
 		
 	}
 
@@ -102,21 +102,27 @@ export class MainTodoCard implements TodoCardInterface {
 	}
 
 
-	fillOldestTaskListContainer() {
-		let oldestTaskInput = this.mainTodoCardContainer.find('.oldest--task--input');
-		let taskArray: TodoTask[] = this.parentContext.getOldestTasksForMainTodoCard();
+	renderTodoTasksFromLocalStorage() {
 		
-		console.log('task array', taskArray);
-		if (taskArray.length >= oldestTaskInput.length ) {
-			for(let i = 0; i < oldestTaskInput.length; i++) {
+		let taskArray: TodoTask[] = this.parentContext.getOldestTasksForMainTodoCard();
+		if ( taskArray.length > 0 ) {
+			
+			for(let i = 0; i < this.maxNumOfOldestTaskToDisplay; i++) {
 
-				let oldestTask = taskArray[i].todoTaskDescripion;
-				$(oldestTaskInput[i]).val(oldestTask);
+				let oldestTask = taskArray[i];
+				this.prependOldestTask( oldestTask )
 			}
 		}
 		else if (taskArray.length === 0) {
 			this.emptyMainTodoTaskContainer()
 		}
+	}
+	prependOldestTask( taskObject: Object ): void {
+		let oldTodoTask: TodoTask = new TodoTask( taskObject, this );
+		let oldestTaskContainer: JQuery = this.mainTodoCardContainer.find('.oldest--task--container');
+		oldTodoTask.prependTo( oldestTaskContainer );
+
+
 	}
 
 	emptyMainTodoTaskContainer() {
@@ -126,3 +132,6 @@ export class MainTodoCard implements TodoCardInterface {
 
 	// function managed in todoApp.ts
 	createTodoCardWithTask () {}
+
+
+}

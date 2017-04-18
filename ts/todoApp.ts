@@ -13,7 +13,7 @@ import {TodoCardInterface} from './todoCardInterface';
 */ 
 
 
-export class todoApp  {
+export class todoApp {
 
 	// data property storing page container
 	// visible globally 
@@ -184,11 +184,11 @@ export class todoApp  {
 		}		
 	}
 
-
-	getOldestTasksForMainTodoCard ( ) {
+ 	// grup all tasks into one array
+	getOldestTasksForMainTodoCard () {
 		let arrayOfTodoCards = this.getValueFromLocalStorage();
 
-		if (arrayOfTodoCards){
+		if (arrayOfTodoCards) {
 
 			let todoCardItem: TodoCard,
 				todoTaskArray = [];
@@ -201,8 +201,7 @@ export class todoApp  {
 				for(let i = 0; i < todoCardItemLength; i++) {
 					todoTaskArray.push(todoCardItem.todoTasksJsons[i]);
 				}
-			}
-			
+			}			
 			return  todoTaskArray;
 		}
 	}

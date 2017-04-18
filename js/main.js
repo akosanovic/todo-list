@@ -69,88 +69,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(exports, "MainTodoCard", function() { return MainTodoCard; });
-var MainTodoCard = (function () {
-    function MainTodoCard(mainTodoCard, parentContext) {
-        this.mainTodoCardContainer = mainTodoCard;
-        this.parentContext = parentContext;
-        // On click show floating buttons
-        this.addNewButton = this.mainTodoCardContainer.find('.main--content--add--new--button');
-        // toggle showFloatingButtons Class
-        this.addNewButtonContainer = this.mainTodoCardContainer.find('.main--content--add--new--button--container');
-        //  On click detect which floating button was clicked
-        this.floatingButton = this.mainTodoCardContainer.find('.floating--button');
-        this.floatingButtonAddCard = this.mainTodoCardContainer.find('.floating--button--add--card');
-        //  container to fill with oldest tasks
-        this.oldestTaskListContainer = this.mainTodoCardContainer.find('.oldest--task--container');
-        this.fillOldestTaskListContainer();
-    }
-    // EVENT HANDLERS
-    MainTodoCard.prototype.clickHandler = function (e) {
-        var target = $(e.target);
-        var addNewButton = target.closest(this.addNewButton);
-        if (addNewButton.length > 0) {
-            e.stopPropagation();
-            this.showFloatingButtons(e);
-        }
-        var floatingButtonClicked = target.closest(this.floatingButton);
-        if (floatingButtonClicked.length > 0) {
-            e.stopPropagation();
-            this.hideFloatingButtons(e);
-            if (floatingButtonClicked.hasClass('floating--button--add--card')) {
-                // this.createTodoCard( e );
-            }
-            else if (floatingButtonClicked.hasClass('floating--button--add--task')) {
-                this.parentContext.createTodoCardWithTask(e);
-            }
-        }
-    };
-    MainTodoCard.prototype.showFloatingButtons = function (e) {
-        e.stopPropagation();
-        if (this.addNewButtonContainer.hasClass('hideFloatingButtons')) {
-            this.addNewButtonContainer.removeClass('hideFloatingButtons');
-        }
-    };
-    MainTodoCard.prototype.hideFloatingButtons = function (e) {
-        if (!this.addNewButtonContainer.hasClass('hideFloatingButtons')) {
-            this.addNewButtonContainer.addClass('hideFloatingButtons');
-        }
-    };
-    MainTodoCard.prototype.createTodoTask = function () { };
-    MainTodoCard.prototype.createNewCardWithTask = function (e) {
-        e.stopPropagation();
-        console.log('connect with Task Card and Task Item');
-    };
-    MainTodoCard.prototype.fillOldestTaskListContainer = function () {
-        var oldestTaskInput = this.mainTodoCardContainer.find('.oldest--task--input');
-        var taskArray = this.parentContext.getOldestTasksForMainTodoCard();
-        console.log('task array', taskArray);
-        if (taskArray.length >= oldestTaskInput.length) {
-            for (var i = 0; i < oldestTaskInput.length; i++) {
-                var oldestTask = taskArray[i].todoTaskDescripion;
-                $(oldestTaskInput[i]).val(oldestTask);
-            }
-        }
-        else if (taskArray.length === 0) {
-            this.emptyMainTodoTaskContainer();
-        }
-    };
-    MainTodoCard.prototype.emptyMainTodoTaskContainer = function () {
-        this.mainTodoTaskContainer = this.mainTodoCardContainer.find('.main--card--body--container');
-        this.mainTodoTaskContainer.addClass('emptyMainTodoCardTaskList');
-    };
-    // function managed in todoApp.ts
-    MainTodoCard.prototype.createTodoCardWithTask = function () { };
-    return MainTodoCard;
-}());
-
-
-
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(exports, "TodoTask", function() { return TodoTask; });
 var TodoTask = (function () {
     function TodoTask(todoTaskObject, parentContext) {
@@ -212,13 +130,101 @@ var TodoTask = (function () {
 
 
 /***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(exports, "MainTodoCard", function() { return MainTodoCard; });
+
+var MainTodoCard = (function () {
+    function MainTodoCard(mainTodoCard, parentContext) {
+        this.mainTodoCardContainer = mainTodoCard;
+        this.parentContext = parentContext;
+        // On click show floating buttons
+        this.addNewButton = this.mainTodoCardContainer.find('.main--content--add--new--button');
+        // toggle showFloatingButtons Class
+        this.addNewButtonContainer = this.mainTodoCardContainer.find('.main--content--add--new--button--container');
+        //  On click detect which floating button was clicked
+        this.floatingButton = this.mainTodoCardContainer.find('.floating--button');
+        this.floatingButtonAddCard = this.mainTodoCardContainer.find('.floating--button--add--card');
+        this.maxNumOfOldestTaskToDisplay = 3;
+        //  container to fill with oldest tasks
+        this.oldestTaskListContainer = this.mainTodoCardContainer.find('.oldest--task--container');
+        this.renderTodoTasksFromLocalStorage();
+    }
+    // EVENT HANDLERS
+    MainTodoCard.prototype.clickHandler = function (e) {
+        var target = $(e.target);
+        var addNewButton = target.closest(this.addNewButton);
+        if (addNewButton.length > 0) {
+            e.stopPropagation();
+            this.showFloatingButtons(e);
+        }
+        var floatingButtonClicked = target.closest(this.floatingButton);
+        if (floatingButtonClicked.length > 0) {
+            e.stopPropagation();
+            this.hideFloatingButtons(e);
+            if (floatingButtonClicked.hasClass('floating--button--add--card')) {
+                // this.createTodoCard( e );
+            }
+            else if (floatingButtonClicked.hasClass('floating--button--add--task')) {
+                this.parentContext.createTodoCardWithTask(e);
+            }
+        }
+    };
+    MainTodoCard.prototype.showFloatingButtons = function (e) {
+        e.stopPropagation();
+        if (this.addNewButtonContainer.hasClass('hideFloatingButtons')) {
+            this.addNewButtonContainer.removeClass('hideFloatingButtons');
+        }
+    };
+    MainTodoCard.prototype.hideFloatingButtons = function (e) {
+        if (!this.addNewButtonContainer.hasClass('hideFloatingButtons')) {
+            this.addNewButtonContainer.addClass('hideFloatingButtons');
+        }
+    };
+    MainTodoCard.prototype.createTodoTask = function () { };
+    MainTodoCard.prototype.createNewCardWithTask = function (e) {
+        e.stopPropagation();
+        console.log('connect with Task Card and Task Item');
+    };
+    MainTodoCard.prototype.renderTodoTasksFromLocalStorage = function () {
+        var taskArray = this.parentContext.getOldestTasksForMainTodoCard();
+        if (taskArray.length > 0) {
+            for (var i = 0; i < this.maxNumOfOldestTaskToDisplay; i++) {
+                var oldestTask = taskArray[i];
+                this.prependOldestTask(oldestTask);
+            }
+        }
+        else if (taskArray.length === 0) {
+            this.emptyMainTodoTaskContainer();
+        }
+    };
+    MainTodoCard.prototype.prependOldestTask = function (taskObject) {
+        var oldTodoTask = new __WEBPACK_IMPORTED_MODULE_0__todoTask__["TodoTask"](taskObject, this);
+        var oldestTaskContainer = this.mainTodoCardContainer.find('.oldest--task--container');
+        oldTodoTask.prependTo(oldestTaskContainer);
+    };
+    MainTodoCard.prototype.emptyMainTodoTaskContainer = function () {
+        this.mainTodoTaskContainer = this.mainTodoCardContainer.find('.main--card--body--container');
+        this.mainTodoTaskContainer.addClass('emptyMainTodoCardTaskList');
+    };
+    // function managed in todoApp.ts
+    MainTodoCard.prototype.createTodoCardWithTask = function () { };
+    return MainTodoCard;
+}());
+
+
+
+/***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__todoCard__ = __webpack_require__(6);
 /* harmony export (binding) */ __webpack_require__.d(exports, "todoApp", function() { return todoApp; });
 
@@ -345,6 +351,7 @@ var todoApp = (function () {
             }
         }
     };
+    // grup all tasks into one array
     todoApp.prototype.getOldestTasksForMainTodoCard = function () {
         var arrayOfTodoCards = this.getValueFromLocalStorage();
         if (arrayOfTodoCards) {
@@ -10744,7 +10751,7 @@ return jQuery;
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(0);
 /* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return TodoCard; });
 
 var TodoCard = (function () {
@@ -10957,9 +10964,9 @@ var TodoCard = (function () {
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-__webpack_require__(1);
-__webpack_require__(2);
 __webpack_require__(0);
+__webpack_require__(2);
+__webpack_require__(1);
 __webpack_require__(3);
 module.exports = __webpack_require__(4);
 
