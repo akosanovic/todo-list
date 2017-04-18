@@ -72,7 +72,76 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoTask", function() { return TodoTask; });
+var TodoTask = (function () {
+    function TodoTask(todoTaskObject, parentContext) {
+        this.parentContext = parentContext;
+        this.todoTaskID = todoTaskObject.todoTaskID;
+        this.todoTaskDescripion = todoTaskObject.todoTaskDescripion;
+        this.todoTaskStatus = todoTaskObject.todoTaskStatus;
+        this.parentID = todoTaskObject.parentID;
+        this.taskDate = todoTaskObject.taskDate ? todoTaskObject.taskDate : new Date();
+        this.todoTaskHTML = this.getTodoTaskHTML();
+        this.todoTaskJQuery = $(this.todoTaskHTML);
+        this.todoTaskJQuery.on('click', this.clickHandler.bind(this));
+    }
+    TodoTask.prototype.destroy = function () {
+        this.todoTaskID = null;
+        this.todoTaskDescripion = null;
+        this.todoTaskStatus = false;
+        this.todoTaskJQuery.remove();
+        this.todoTaskJQuery = null;
+    };
+    TodoTask.prototype.getLocalStorageRepresentation = function () {
+        var json = {
+            todoTaskID: this.todoTaskID,
+            todoTaskDescripion: this.todoTaskDescripion,
+            todoTaskStatus: this.todoTaskStatus,
+            taskDate: this.taskDate
+        };
+        return json;
+    };
+    TodoTask.prototype.prependTo = function (parentContainer) {
+        this.todoTaskJQuery.prependTo(parentContainer);
+    };
+    TodoTask.prototype.clickHandler = function (e) {
+        var target = $(e.target);
+        var checkBocks = this.todoTaskJQuery.find('.task--done--status');
+        var checkBocksChecked = target.closest(checkBocks);
+        if (checkBocksChecked.length > 0) {
+            this.changeTaskStatus();
+        }
+    };
+    TodoTask.prototype.getTodoTaskHTML = function () {
+        // * Hack 
+        //  checkbox is hidden and instead label is listening for user action
+        //  In order for that to work label and checkbox need same id / for value
+        var randomCheckboxID = Math.floor(Math.random() * 1000);
+        var taskItemHTML = "<li class=\"todoTaskItem taskItemContainer todo--task--item\" data-task-id=\"" + this.todoTaskID + "\">\n\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" \n\t\t\t\t\t\t\t\tclass=\"task--done--status\" id=\"todo--card--task--status" + randomCheckboxID + "\">\n\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status" + randomCheckboxID + "\"></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" \n\t\t\t\t\t\treadonly=\"readonly\" value=\"" + this.todoTaskDescripion + "\">\n\t\t\t\t\t</div>\n\t\t\t\t</li>";
+        return taskItemHTML;
+    };
+    // Register user Done Status change
+    // if task is checked it will not render at new session
+    TodoTask.prototype.changeTaskStatus = function () {
+        // update Task Status variable
+        this.todoTaskStatus = (this.todoTaskJQuery.find('.task--done--status')).is(":checked");
+        // set css class
+        this.todoTaskJQuery.toggleClass('taskChecked');
+        this.getLocalStorageRepresentation();
+        this.parentContext.saveChangesToLocalStorage();
+    };
+    return TodoTask;
+}());
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(0);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainTodoCard", function() { return MainTodoCard; });
 
 var MainTodoCard = (function () {
@@ -150,7 +219,7 @@ var MainTodoCard = (function () {
         }
     };
     MainTodoCard.prototype.prependOldestTask = function (taskObject) {
-        var oldTodoTask = new __WEBPACK_IMPORTED_MODULE_0__todoTask__["TodoTask"](taskObject);
+        var oldTodoTask = new __WEBPACK_IMPORTED_MODULE_0__todoTask__["TodoTask"](taskObject, this);
         var oldestTaskContainer = this.mainTodoCardContainer.find('.oldest--task--container');
         oldTodoTask.prependTo(oldestTaskContainer);
     };
@@ -164,75 +233,6 @@ var MainTodoCard = (function () {
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoTask", function() { return TodoTask; });
-var TodoTask = (function () {
-    function TodoTask(todoTaskObject, parentContext) {
-        this.parentContext = parentContext;
-        this.todoTaskID = todoTaskObject.todoTaskID;
-        this.todoTaskDescripion = todoTaskObject.todoTaskDescripion;
-        this.todoTaskStatus = todoTaskObject.todoTaskStatus;
-        this.parentID = todoTaskObject.parentID;
-        this.taskDate = todoTaskObject.taskDate ? todoTaskObject.taskDate : new Date();
-        this.todoTaskHTML = this.getTodoTaskHTML();
-        this.todoTaskJQuery = $(this.todoTaskHTML);
-        this.todoTaskJQuery.on('click', this.clickHandler.bind(this));
-    }
-    TodoTask.prototype.destroy = function () {
-        this.todoTaskID = null;
-        this.todoTaskDescripion = null;
-        this.todoTaskStatus = false;
-        this.todoTaskJQuery.remove();
-        this.todoTaskJQuery = null;
-    };
-    TodoTask.prototype.getLocalStorageRepresentation = function () {
-        var json = {
-            todoTaskID: this.todoTaskID,
-            todoTaskDescripion: this.todoTaskDescripion,
-            todoTaskStatus: this.todoTaskStatus,
-            taskDate: this.taskDate
-        };
-        return json;
-    };
-    TodoTask.prototype.prependTo = function (parentContainer) {
-        this.todoTaskJQuery.prependTo(parentContainer);
-    };
-    TodoTask.prototype.clickHandler = function (e) {
-        var target = $(e.target);
-        var checkBocks = this.todoTaskJQuery.find('.task--done--status');
-        var checkBocksChecked = target.closest(checkBocks);
-        if (checkBocksChecked.length > 0) {
-            this.changeTaskStatus();
-        }
-    };
-    TodoTask.prototype.getTodoTaskHTML = function () {
-        // * Hack 
-        //  checkbox is hidden and instead label is listening for user action
-        //  In order for that to work label and checkbox need same id / for value
-        var randomCheckboxID = Math.floor(Math.random() * 1000);
-        var taskItemHTML = "<li class=\"todoTaskItem taskItemContainer todo--task--item\" data-task-id=\"" + this.todoTaskID + "\">\n\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t<div class=\"customCheckbox\">\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"task status\" \n\t\t\t\t\t\t\t\tclass=\"task--done--status\" id=\"todo--card--task--status" + randomCheckboxID + "\">\n\t\t\t\t\t\t\t\t<label for=\"todo--card--task--status" + randomCheckboxID + "\"></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription\" name=\"todo card description\" \n\t\t\t\t\t\treadonly=\"readonly\" value=\"" + this.todoTaskDescripion + "\">\n\t\t\t\t\t</div>\n\t\t\t\t</li>";
-        return taskItemHTML;
-    };
-    // Register user Done Status change
-    // if task is checked it will not render at new session
-    TodoTask.prototype.changeTaskStatus = function () {
-        // update Task Status variable
-        this.todoTaskStatus = (this.todoTaskJQuery.find('.task--done--status')).is(":checked");
-        // set css class
-        this.todoTaskJQuery.toggleClass('taskChecked');
-        this.getLocalStorageRepresentation();
-        this.parentContext.saveChangesToLocalStorage();
-    };
-    return TodoTask;
-}());
-
-
-
-/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -240,7 +240,7 @@ var TodoTask = (function () {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__todoCard__ = __webpack_require__(6);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "todoApp", function() { return todoApp; });
 
@@ -10756,7 +10756,7 @@ return jQuery;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(0);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TodoCard; });
 
 var TodoCard = (function () {
@@ -10981,9 +10981,9 @@ var TodoCard = (function () {
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(1);
-__webpack_require__(2);
 __webpack_require__(0);
+__webpack_require__(2);
+__webpack_require__(1);
 __webpack_require__(3);
 module.exports = __webpack_require__(4);
 

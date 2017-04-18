@@ -124,7 +124,7 @@ export class MainTodoCard implements TodoCardInterface {
 	}
 	prependOldestTask( taskObject: Object ): void {
 
-		let oldTodoTask: TodoTask = new TodoTask( taskObject );
+		let oldTodoTask: TodoTask = new TodoTask( taskObject, this);
 		let oldestTaskContainer: JQuery = this.mainTodoCardContainer.find('.oldest--task--container');
 		oldTodoTask.prependTo( oldestTaskContainer );
 	}
