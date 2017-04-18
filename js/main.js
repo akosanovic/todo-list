@@ -33,16 +33,18 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
-/******/ 	// define getter function for harmory exports
+/******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		Object.defineProperty(exports, name, {
-/******/ 			configurable: false,
-/******/ 			enumerable: true,
-/******/ 			get: getter
-/******/ 		});
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -66,10 +68,108 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(exports, "TodoTask", function() { return TodoTask; });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainTodoCard", function() { return MainTodoCard; });
+
+var MainTodoCard = (function () {
+    function MainTodoCard(mainTodoCard, parentContext) {
+        this.mainTodoCardContainer = mainTodoCard;
+        this.parentContext = parentContext;
+        // On click show floating buttons
+        this.addNewButton = this.mainTodoCardContainer.find('.main--content--add--new--button');
+        // toggle showFloatingButtons Class
+        this.addNewButtonContainer = this.mainTodoCardContainer.find('.main--content--add--new--button--container');
+        //  On click detect which floating button was clicked
+        this.floatingButton = this.mainTodoCardContainer.find('.floating--button');
+        this.floatingButtonAddCard = this.mainTodoCardContainer.find('.floating--button--add--card');
+        this.maxNumOfOldestTaskToDisplay = 3;
+        //  container to fill with oldest tasks
+        this.oldestTaskListContainer = this.mainTodoCardContainer.find('.oldest--task--container');
+        this.mainTodoCardContainer.on('focusout', this.blurHandler.bind(this));
+        this.renderTodoTasksFromLocalStorage();
+    }
+    // EVENT HANDLERS
+    MainTodoCard.prototype.clickHandler = function (e) {
+        var target = $(e.target);
+        var addNewButton = target.closest(this.addNewButton);
+        if (addNewButton.length > 0) {
+            e.stopPropagation();
+            this.showFloatingButtons(e);
+        }
+        var floatingButtonClicked = target.closest(this.floatingButton);
+        if (floatingButtonClicked.length > 0) {
+            e.stopPropagation();
+            this.hideFloatingButtons(e);
+            if (floatingButtonClicked.hasClass('floating--button--add--card')) {
+                // this.createTodoCard( e );
+            }
+            else if (floatingButtonClicked.hasClass('floating--button--add--task')) {
+                this.parentContext.createTodoCardWithTask(e);
+            }
+        }
+    };
+    MainTodoCard.prototype.blurHandler = function (e) {
+        var target = $(e.target);
+        var addNewButtonBlured = target.closest(this.addNewButton);
+        if (addNewButtonBlured.length > 0) {
+            this.hideFloatingButtons(e);
+        }
+    };
+    MainTodoCard.prototype.updateLocalStorage = function () {
+        this.parentContext.updateLocalStorage();
+    };
+    MainTodoCard.prototype.showFloatingButtons = function (e) {
+        e.stopPropagation();
+        if (this.addNewButtonContainer.hasClass('hideFloatingButtons')) {
+            this.addNewButtonContainer.removeClass('hideFloatingButtons');
+        }
+        else {
+            this.hideFloatingButtons(e);
+        }
+    };
+    MainTodoCard.prototype.hideFloatingButtons = function (e) {
+        if (!this.addNewButtonContainer.hasClass('hideFloatingButtons')) {
+            this.addNewButtonContainer.addClass('hideFloatingButtons');
+        }
+    };
+    MainTodoCard.prototype.renderTodoTasksFromLocalStorage = function () {
+        var oldestTaskArray = this.parentContext.getOldestTasksForMainTodoCard();
+        if (oldestTaskArray.length > 0) {
+            for (var i = 0; (i < this.maxNumOfOldestTaskToDisplay && i < oldestTaskArray.length); i++) {
+                var oldestTask = oldestTaskArray[i];
+                console.log('oldest task', oldestTask);
+                this.prependOldestTask(oldestTask);
+            }
+        }
+        else if (oldestTaskArray.length === 0) {
+            this.emptyMainTodoTaskContainer();
+        }
+    };
+    MainTodoCard.prototype.prependOldestTask = function (taskObject) {
+        var oldTodoTask = new __WEBPACK_IMPORTED_MODULE_0__todoTask__["TodoTask"](taskObject);
+        var oldestTaskContainer = this.mainTodoCardContainer.find('.oldest--task--container');
+        oldTodoTask.prependTo(oldestTaskContainer);
+    };
+    MainTodoCard.prototype.emptyMainTodoTaskContainer = function () {
+        this.mainTodoTaskContainer = this.mainTodoCardContainer.find('.main--card--body--container');
+        this.mainTodoTaskContainer.addClass('emptyMainTodoCardTaskList');
+    };
+    return MainTodoCard;
+}());
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoTask", function() { return TodoTask; });
 var TodoTask = (function () {
     function TodoTask(todoTaskObject, parentContext) {
         this.parentContext = parentContext;
@@ -120,7 +220,10 @@ var TodoTask = (function () {
     // Register user Done Status change
     // if task is checked it will not render at new session
     TodoTask.prototype.changeTaskStatus = function () {
+        // update Task Status variable
         this.todoTaskStatus = (this.todoTaskJQuery.find('.task--done--status')).is(":checked");
+        // set css class
+        this.todoTaskJQuery.toggleClass('taskChecked');
         this.getLocalStorageRepresentation();
         this.parentContext.saveChangesToLocalStorage();
     };
@@ -129,104 +232,17 @@ var TodoTask = (function () {
 
 
 
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(0);
-/* harmony export (binding) */ __webpack_require__.d(exports, "MainTodoCard", function() { return MainTodoCard; });
-
-var MainTodoCard = (function () {
-    function MainTodoCard(mainTodoCard, parentContext) {
-        this.mainTodoCardContainer = mainTodoCard;
-        this.parentContext = parentContext;
-        // On click show floating buttons
-        this.addNewButton = this.mainTodoCardContainer.find('.main--content--add--new--button');
-        // toggle showFloatingButtons Class
-        this.addNewButtonContainer = this.mainTodoCardContainer.find('.main--content--add--new--button--container');
-        //  On click detect which floating button was clicked
-        this.floatingButton = this.mainTodoCardContainer.find('.floating--button');
-        this.floatingButtonAddCard = this.mainTodoCardContainer.find('.floating--button--add--card');
-        this.maxNumOfOldestTaskToDisplay = 3;
-        //  container to fill with oldest tasks
-        this.oldestTaskListContainer = this.mainTodoCardContainer.find('.oldest--task--container');
-        this.renderTodoTasksFromLocalStorage();
-    }
-    // EVENT HANDLERS
-    MainTodoCard.prototype.clickHandler = function (e) {
-        var target = $(e.target);
-        var addNewButton = target.closest(this.addNewButton);
-        if (addNewButton.length > 0) {
-            e.stopPropagation();
-            this.showFloatingButtons(e);
-        }
-        var floatingButtonClicked = target.closest(this.floatingButton);
-        if (floatingButtonClicked.length > 0) {
-            e.stopPropagation();
-            this.hideFloatingButtons(e);
-            if (floatingButtonClicked.hasClass('floating--button--add--card')) {
-                // this.createTodoCard( e );
-            }
-            else if (floatingButtonClicked.hasClass('floating--button--add--task')) {
-                this.parentContext.createTodoCardWithTask(e);
-            }
-        }
-    };
-    MainTodoCard.prototype.showFloatingButtons = function (e) {
-        e.stopPropagation();
-        if (this.addNewButtonContainer.hasClass('hideFloatingButtons')) {
-            this.addNewButtonContainer.removeClass('hideFloatingButtons');
-        }
-    };
-    MainTodoCard.prototype.hideFloatingButtons = function (e) {
-        if (!this.addNewButtonContainer.hasClass('hideFloatingButtons')) {
-            this.addNewButtonContainer.addClass('hideFloatingButtons');
-        }
-    };
-    MainTodoCard.prototype.createTodoTask = function () { };
-    MainTodoCard.prototype.createNewCardWithTask = function (e) {
-        e.stopPropagation();
-        console.log('connect with Task Card and Task Item');
-    };
-    MainTodoCard.prototype.renderTodoTasksFromLocalStorage = function () {
-        var taskArray = this.parentContext.getOldestTasksForMainTodoCard();
-        if (taskArray.length > 0) {
-            for (var i = 0; i < this.maxNumOfOldestTaskToDisplay; i++) {
-                var oldestTask = taskArray[i];
-                this.prependOldestTask(oldestTask);
-            }
-        }
-        else if (taskArray.length === 0) {
-            this.emptyMainTodoTaskContainer();
-        }
-    };
-    MainTodoCard.prototype.prependOldestTask = function (taskObject) {
-        var oldTodoTask = new __WEBPACK_IMPORTED_MODULE_0__todoTask__["TodoTask"](taskObject, this);
-        var oldestTaskContainer = this.mainTodoCardContainer.find('.oldest--task--container');
-        oldTodoTask.prependTo(oldestTaskContainer);
-    };
-    MainTodoCard.prototype.emptyMainTodoTaskContainer = function () {
-        this.mainTodoTaskContainer = this.mainTodoCardContainer.find('.main--card--body--container');
-        this.mainTodoTaskContainer.addClass('emptyMainTodoCardTaskList');
-    };
-    // function managed in todoApp.ts
-    MainTodoCard.prototype.createTodoCardWithTask = function () { };
-    return MainTodoCard;
-}());
-
-
-
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mainTodoCard__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__todoCard__ = __webpack_require__(6);
-/* harmony export (binding) */ __webpack_require__.d(exports, "todoApp", function() { return todoApp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "todoApp", function() { return todoApp; });
 
 
 
@@ -341,7 +357,7 @@ var todoApp = (function () {
     };
     todoApp.prototype.renderValueFromLocalStorage = function () {
         var localStorageObject = this.getValueFromLocalStorage();
-        if (localStorageObject) {
+        if (localStorageObject.length > 0) {
             // reset counters
             this.todoCardCounter = localStorageObject.length;
             var cardObject = void 0;
@@ -353,21 +369,26 @@ var todoApp = (function () {
     };
     // grup all tasks into one array
     todoApp.prototype.getOldestTasksForMainTodoCard = function () {
-        var arrayOfTodoCards = this.getValueFromLocalStorage();
-        if (arrayOfTodoCards) {
-            var todoCardItem = void 0, todoTaskArray = [];
+        var arrayOfTodoCards = this.getValueFromLocalStorage() ? this.getValueFromLocalStorage() : [];
+        console.log(arrayOfTodoCards);
+        var todoCardItem, allTasksArray = [];
+        if (arrayOfTodoCards.length > 0) {
             for (var i = 0; i < arrayOfTodoCards.length; i++) {
                 todoCardItem = arrayOfTodoCards[i];
-                var todoCardItemLength = todoCardItem.todoTasksJsons.length;
-                for (var i_1 = 0; i_1 < todoCardItemLength; i_1++) {
-                    todoTaskArray.push(todoCardItem.todoTasksJsons[i_1]);
+                var todoCardNumberOfTask = todoCardItem.todoTasksJsons.length;
+                for (var i_1 = 0; i_1 < todoCardNumberOfTask; i_1++) {
+                    allTasksArray.push(todoCardItem.todoTasksJsons[i_1]);
                 }
             }
-            return todoTaskArray;
         }
+        var allTasksArraySortByDate = allTasksArray.sort(this.sortTasksByDate);
+        return allTasksArraySortByDate;
     };
     todoApp.prototype.sortTasksByDate = function (task1, task2) {
-        return task1.taskDate - task2.taskDate;
+        var date1 = new Date(task1.taskDate);
+        var date2 = new Date(task2.taskDate);
+        // Sorting task by date
+        return (date1.getTime() - date2.getTime());
     };
     // Todo Card :: BEGIN
     todoApp.prototype.createTodoCard = function (e) {
@@ -379,25 +400,16 @@ var todoApp = (function () {
         };
         return this.appendTodoCard(newCard);
     };
+    todoApp.prototype.createTodoCardWithTask = function (e) {
+        var newCard = this.createTodoCard(e);
+        newCard.showNewTaskInputContainer();
+    };
     todoApp.prototype.appendTodoCard = function (cardObject) {
         var newTodoCard = new __WEBPACK_IMPORTED_MODULE_2__todoCard__["a" /* TodoCard */](cardObject, this);
         this.todoCardArray.push(newTodoCard);
         newTodoCard.appendCard(this.todoCardsContainer);
         this.updateLocalStorage();
         return newTodoCard;
-    };
-    todoApp.prototype.createTodoCardWithTask = function (e) {
-        var newCard = this.createTodoCard(e);
-        newCard.showNewTaskInputContainer();
-    };
-    todoApp.prototype.editTodoCard = function (todoCardID, todoCardJQuery, todoCardTitle) {
-        for (var i = 0; i < this.todoCardArray.length; i++) {
-            var todoCardItem = this.todoCardArray[i];
-            if (todoCardID === todoCardItem.cardID) {
-                todoCardItem.cardTitle = todoCardTitle;
-            }
-        }
-        this.updateLocalStorage();
     };
     // remove deleted Card From Card Object list, update local storage
     todoApp.prototype.deleteTodoCard = function (todoCardID) {
@@ -419,12 +431,13 @@ __WEBPACK_IMPORTED_MODULE_0_jquery__(function () {
 });
 
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(exports, "ToDoItem", function() { return ToDoItem; });
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToDoItem", function() { return ToDoItem; });
 var ToDoItem = (function () {
     function ToDoItem(taskObject, parentContext) {
         this.parentContext = parentContext;
@@ -481,18 +494,18 @@ var ToDoItem = (function () {
 
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.2.1
+ * jQuery JavaScript Library v3.2.0
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -502,7 +515,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2017-03-20T18:59Z
+ * Date: 2017-03-16T21:26Z
  */
 ( function( global, factory ) {
 
@@ -581,7 +594,7 @@ var support = {};
 
 
 var
-	version = "3.2.1",
+	version = "3.2.0",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -5836,9 +5849,11 @@ jQuery.event = {
 		},
 		click: {
 
-			// For checkbox, fire native event so checked state will be right
+			// For checkable types, fire native event so checked state will be right
 			trigger: function() {
-				if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
+				if ( rcheckableType.test( this.type ) &&
+					this.click && nodeName( this, "input" ) ) {
+
 					this.click();
 					return false;
 				}
@@ -6658,11 +6673,6 @@ var getStyles = function( elem ) {
 
 function curCSS( elem, name, computed ) {
 	var width, minWidth, maxWidth, ret,
-
-		// Support: Firefox 51+
-		// Retrieving style before computed somehow
-		// fixes an issue with getting wrong values
-		// on detached elements
 		style = elem.style;
 
 	computed = computed || getStyles( elem );
@@ -6850,12 +6860,6 @@ function getWidthOrHeight( elem, name, extra ) {
 	// for getComputedStyle silently falls back to the reliable elem.style
 	valueIsBorderBox = isBorderBox &&
 		( support.boxSizingReliable() || val === elem.style[ name ] );
-
-	// Fall back to offsetWidth/Height when value is "auto"
-	// This happens for inline elements with no explicit setting (gh-3571)
-	if ( val === "auto" ) {
-		val = elem[ "offset" + name[ 0 ].toUpperCase() + name.slice( 1 ) ];
-	}
 
 	// Normalize "", auto, and prepare for extra
 	val = parseFloat( val ) || 0;
@@ -10673,16 +10677,16 @@ jQuery.fn.extend( {
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
 			this.off( types, selector || "**", fn );
+	},
+	holdReady: function( hold ) {
+		if ( hold ) {
+			jQuery.readyWait++;
+		} else {
+			jQuery.ready( true );
+		}
 	}
 } );
 
-jQuery.holdReady = function( hold ) {
-	if ( hold ) {
-		jQuery.readyWait++;
-	} else {
-		jQuery.ready( true );
-	}
-};
 jQuery.isArray = Array.isArray;
 jQuery.parseJSON = JSON.parse;
 jQuery.nodeName = nodeName;
@@ -10706,7 +10710,8 @@ jQuery.nodeName = nodeName;
 if ( true ) {
 	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
 		return jQuery;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 }
 
 
@@ -10746,13 +10751,13 @@ return jQuery;
 } );
 
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(0);
-/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return TodoCard; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__todoTask__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TodoCard; });
 
 var TodoCard = (function () {
     function TodoCard(cardObject, parentContext) {
@@ -10775,6 +10780,7 @@ var TodoCard = (function () {
         this.newTodoTaskDescriptionInput = this.todoTaskInputContainer.find('.new--todo--task--description');
         this.cardJQueryElement.on("click", this.clickHandler.bind(this));
         this.cardJQueryElement.on("keypress", this.keypressHandler.bind(this));
+        this.cardJQueryElement.on('focusout', this.blurHandler.bind(this));
         if (this.todoTasksJsons.length > 0) {
             this.renderTodoTasksFromLocalStorage(this.todoTasksJsons);
         }
@@ -10783,9 +10789,12 @@ var TodoCard = (function () {
         this.cardID = null;
         this.cardTitle = null;
         this.cardHTMLContent = null;
+        this.cardHeaderColor = null;
+        // this.parentContext.todoCardArray.
         this.cardJQueryElement.remove();
         this.cardJQueryElement = null;
     };
+    // CREATE TODO CARD
     TodoCard.prototype.getLocalStorageRepresentation = function () {
         var todoTasksJsons = [];
         for (var i = 0; i < this.todoTasksArray.length; i++) {
@@ -10796,7 +10805,6 @@ var TodoCard = (function () {
                 todoTasksJsons.push(todoTaskStringified);
             }
         }
-        ;
         var json = {
             cardID: this.cardID,
             cardTitle: this.cardTitle,
@@ -10812,6 +10820,19 @@ var TodoCard = (function () {
     TodoCard.prototype.appendCard = function (parentContext) {
         parentContext.append(this.cardJQueryElement);
     };
+    TodoCard.prototype.setCardHeaderColor = function () {
+        var cardHeaderColorArray = ["yellow", "turquoise", "purple", "blue", "orange"];
+        var currentIndex = this.cardID;
+        var maxNum = cardHeaderColorArray.length;
+        var returnNum = 0;
+        // Color is choosen based on current CardID
+        while (currentIndex > maxNum - 1) {
+            currentIndex = currentIndex % maxNum;
+        }
+        this.headerColor = cardHeaderColorArray[currentIndex] + "CardHeader";
+        return this.headerColor;
+    };
+    // CARD EVENTS
     TodoCard.prototype.clickHandler = function (e) {
         var target = $(e.target);
         var todoCardContainer = this.cardJQueryElement.find('.todo--card--contianer');
@@ -10833,7 +10854,7 @@ var TodoCard = (function () {
         var editCardButtonClicked = target.closest(this.cardMenuEditButton);
         if (editCardButtonClicked.length > 0) {
             e.preventDefault();
-            this.editTodoCard();
+            this.enableTitleChange();
         }
         // Delete Todo Card 
         var deleteCardButtonClicked = target.closest(this.cardMenuDeleteButton);
@@ -10861,10 +10882,7 @@ var TodoCard = (function () {
         if (e.charCode === 13 || e.which === 13 || e.key == 'Enter') {
             // Save changes for Todo Card Title
             if (todoCardHeaderTarget.length > 0) {
-                var newTitle = todoCardHeader.find('.todo--card--title--input').val();
-                if (newTitle) {
-                    this.parentContext.editTodoCard(this.cardID, this.cardJQueryElement, newTitle);
-                }
+                this.chageCardTitle();
             }
             // Check for Users New Task Input 
             if (this.newTodoTaskDescriptionInput.val()) {
@@ -10872,6 +10890,13 @@ var TodoCard = (function () {
                 this.hideNewTaskInputContainer();
                 this.createNewTodoTask();
             }
+        }
+    };
+    TodoCard.prototype.blurHandler = function (e) {
+        var target = $(e.target);
+        var blurTaskInput = target.closest(this.newTodoTaskDescriptionInput);
+        if (blurTaskInput.length > 0) {
+            this.hideNewTaskInputContainer();
         }
     };
     TodoCard.prototype.showCardMenu = function (cardDropDownMenu) {
@@ -10882,33 +10907,24 @@ var TodoCard = (function () {
             cardDropDownMenu.removeClass('showTodoCardDropDownMenu');
         }
     };
-    TodoCard.prototype.setCardHeaderColor = function () {
-        var cardHeaderColorArray = ["yellow", "turquoise", "purple", "blue", "orange"];
-        var currentIndex = this.cardID;
-        var maxNum = cardHeaderColorArray.length;
-        var returnNum = 0;
-        // Color is choosen based on current CardID
-        while (currentIndex > maxNum - 1) {
-            currentIndex = currentIndex % maxNum;
-        }
-        this.headerColor = cardHeaderColorArray[currentIndex] + "CardHeader";
-        return this.headerColor;
-    };
     // remove readonly property, enable user to change value of card title 
-    TodoCard.prototype.editTodoCard = function () {
+    TodoCard.prototype.enableTitleChange = function () {
         this.cardTitleInput.removeAttr('readonly').select();
     };
+    // Change Title of todoCard on Dropdown Edit option
     TodoCard.prototype.chageCardTitle = function () {
-        if (this.cardTitleInput.val() && (this.cardTitleInput.val() !== this.cardTitle)) {
+        if (this.cardTitleInput.val()) {
             this.cardTitleInput.attr('readonly');
             this.cardTitle = this.cardTitleInput.val();
         }
+        this.parentContext.updateLocalStorage();
     };
     // When Max Width <= 950px Hide Todo Card Body
     TodoCard.prototype.toggleTodoBodyHeight = function (cardContainder) {
         $('.show--card--body').removeClass('showCardBody');
         cardContainder.find('.show--card--body').addClass('showCardBody');
     };
+    // RENDER TASK FOR CARD
     //  On Add New Task Button Prepend Empty Task Frame 
     TodoCard.prototype.showNewTaskInputContainer = function () {
         this.todoTasksListContainer.toggleClass('newTaskInputOpened');
@@ -10951,6 +10967,7 @@ var TodoCard = (function () {
         this.todoTasksArray.push(newTodoTask);
         this.saveChangesToLocalStorage();
     };
+    // RENDER CARD HTML
     TodoCard.prototype.getHTML = function () {
         var todoCardHTML = "<div class=\"col-sm-1 col-ms-1 col-lg-4 col-md-6\" draggable=\"true\">\n\t\t\t\t<div class=\"todoCardContainer todo--card--contianer\" data-card-id = " + this.cardID + ">\n\t\t\t\t\t<div class=\"todoCardContent\">\n\n\t\t\t\t\t\t<!-- Todo Card Header :: BEGIN -->\n\t\t\t\t\t\t<div class=\"todoCardHeader " + this.cardHeaderColor + " todo--card--header\">\n\n\t\t\t\t\t\t\t<!-- #1 -->\n\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t<div class=\"absolutePositionedPrefix\">\n\t\t\t\t\t\t\t\t\t<div class=\"iconContainer\">\n\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-file-text-o\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription todo--card--title--input\"  readonly=\"readonly\"\n\t\t\t\t\t\t\t\t  name=\"todo card description\" value=\"" + this.cardTitle + "\">\n\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t<!-- #2 -->\n\t\t\t\t\t\t\t<!-- On Click display Drop Down Menu :: BEGIN  -->\n\t\t\t\t\t\t\t<a href=\"#\" class=\"cardMenuButton todo--card--menu--button\">\n\t\t\t\t\t\t\t\t<i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\"></i>\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t<div class=\"todoCardDropDownMenu todo--card--dropdown--menu\">\n\t\t\t\t\t\t\t\t<div class=\"dropDownMenuContainer\">\n\t\t\t\t\t\t\t\t\t<ul class=\"dropdownMenuList\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink card--menu--edit--button\">\n\t\t\t\t\t\t\t\t\t\t\t\tEdit Card\n\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li class=\"dropdownMenuItem\">\n\t\t\t\t\t\t\t\t\t\t\t<a href=\"#\" class=\"dropdownMenuLink card--menu--delete--button\">\n\t\t\t\t\t\t\t\t\t\t\t\tDelete Card\n\t\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div><!-- On Click display Drop Down Menu :: END  -->\n\t\t\t\t\t\t\n\n\t\t\t\t\t\t</div><!-- Todo Card Header :: END -->\n\n\n\t\t\t\t\t\t<!-- Todo Card Body :: BEGIN -->\n\t\t\t\t\t\t<div class=\"todoCardBody show--card--body\">\n\n\t\t\t\t\t\t\t<!-- #3 -->\n\t\t\t\t\t\t\t<div class=\"todoCardAddNewTaskButtonSmall todo--card--add--new--task--button\" >\n\t\t\t\t\t\t\t\t<a href=\"#\" class=\"todoCardAddNewTaskButton\">\n\t\t\t\t\t\t\t\t\t<img class=\"addNewButtonImageSmall\" src=\"images/add-button-small.svg\">\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<!-- #4 Todo Card Task List:: BEGIN -->\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<ul class = 'newTaskInputContainer remove  new--task--input--container'>\n\t\t\t\t\t\t\t\t<li class=\"todoTaskItem taskItemContainer todo--task--empty--frame\">\n\t\t\t\t\t\t\t\t\t<div class=\"inputGroup\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" class=\"inputGroupDescription new--todo--task--description\" \n\t\t\t\t\t\t\t\t\t\tname=\"todo card description\" value=\"\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t</ul>\n\n\t\t\t\t\t\t\n\n\t\t\t\t\t\t\t<ul class=\"todoCardTaskList todo--task--list--container\">\n\n\t\t\t\t\t\t\t\t<!-- Dynamicaly filled content -->\n\n\t\t\t\t\t\t\t</ul><!-- Todo Card Task List:: END -->\n\t\t\t\t\t\t</div><!-- Todo Card Body :: END -->\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div><!-- Card Container :: END -->";
         return todoCardHTML;
@@ -10960,17 +10977,17 @@ var TodoCard = (function () {
 
 
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(0);
-__webpack_require__(2);
 __webpack_require__(1);
+__webpack_require__(2);
+__webpack_require__(0);
 __webpack_require__(3);
 module.exports = __webpack_require__(4);
 
 
-/***/ }
+/***/ })
 /******/ ]);
 //# sourceMappingURL=main.js.map

@@ -31,7 +31,7 @@ export class TodoCard implements Persistable  {
 	
 	public todoTasksArray  = [];
 	public todoTasksJsons;
-	private headerColor    : string = '';
+	private headerColor: string = '';
 
 	constructor( cardObject, parentContext ) {	
 		
@@ -61,6 +61,8 @@ export class TodoCard implements Persistable  {
 		this.cardJQueryElement.on("click", this.clickHandler.bind(this));
 
 		this.cardJQueryElement.on("keypress", this.keypressHandler.bind(this));
+
+		this.cardJQueryElement.on('focusout', this.blurHandler.bind(this));
 		
 		if (this.todoTasksJsons.length > 0) {
 		
@@ -74,12 +76,15 @@ export class TodoCard implements Persistable  {
 		this.cardID            = null;
 		this.cardTitle         = null;
 		this.cardHTMLContent   = null;
+		this.cardHeaderColor   = null;
+
+		// this.parentContext.todoCardArray.
 		this.cardJQueryElement.remove();
 		this.cardJQueryElement = null;
 	}
 
 
-
+	// CREATE TODO CARD
 
 	public getLocalStorageRepresentation() {
 				
@@ -94,7 +99,7 @@ export class TodoCard implements Persistable  {
 			if (!todoTaskStringified.todoTaskStatus) {
 				todoTasksJsons.push( todoTaskStringified );
 			}
-		};
+		}
 
 
 		let json = {
@@ -105,18 +110,36 @@ export class TodoCard implements Persistable  {
 		}
 		return json;
 	}
+
+
 	public saveChangesToLocalStorage() {
 		this.getLocalStorageRepresentation();
 		this.parentContext.updateLocalStorage();
 	}
 
 
-
-	
 	public appendCard(parentContext: JQuery): void {
 		parentContext.append(this.cardJQueryElement);
 	}
 
+
+	private setCardHeaderColor(): string {
+		let cardHeaderColorArray = [ "yellow", "turquoise", "purple", "blue", "orange" ];
+		
+		let currentIndex = this.cardID;
+		let maxNum = cardHeaderColorArray.length;
+		let returnNum = 0;
+
+		// Color is choosen based on current CardID
+		while( currentIndex > maxNum-1 ) {
+			currentIndex = currentIndex % maxNum;
+		}
+		this.headerColor = cardHeaderColorArray[currentIndex] + "CardHeader";
+		return this.headerColor;
+	}
+
+
+	// CARD EVENTS
 
 	clickHandler( e ): void {
 		let target:JQuery = $(e.target);
@@ -143,7 +166,7 @@ export class TodoCard implements Persistable  {
 		let editCardButtonClicked = target.closest(this.cardMenuEditButton);
 		if (editCardButtonClicked.length > 0) {
 			e.preventDefault();
-			this.editTodoCard();
+			this.enableTitleChange();
 		}
 
 		// Delete Todo Card 
@@ -157,7 +180,7 @@ export class TodoCard implements Persistable  {
 		let addNewTaskButton = this.cardJQueryElement.find('.todo--card--add--new--task--button');
 		let addNewTaskClicked = target.closest(addNewTaskButton);
 		if (addNewTaskClicked.length > 0) {
-			
+
 			e.preventDefault();
 			e.stopPropagation();
 			this.showNewTaskInputContainer();
@@ -181,11 +204,8 @@ export class TodoCard implements Persistable  {
 
 		 	// Save changes for Todo Card Title
 		 	if(todoCardHeaderTarget.length > 0  ) {
-		 		let newTitle: string = todoCardHeader.find('.todo--card--title--input').val();
-		 		if (newTitle){
-		
-					this.parentContext.editTodoCard( this.cardID, this.cardJQueryElement, newTitle )
-				}
+				
+				this.chageCardTitle();				
 		 	}
 
 		 	// Check for Users New Task Input 
@@ -196,6 +216,16 @@ export class TodoCard implements Persistable  {
 		 		this.createNewTodoTask();
 		 	}
 		}		
+	}
+
+
+	blurHandler(e): void {
+		let target = $(e.target);
+
+		let blurTaskInput = target.closest(this.newTodoTaskDescriptionInput)
+		if( blurTaskInput.length > 0 ){
+			this.hideNewTaskInputContainer();
+		}
 	}
 
 
@@ -211,33 +241,25 @@ export class TodoCard implements Persistable  {
 	}
 
 
-	private setCardHeaderColor(): string {
-		let cardHeaderColorArray = [ "yellow", "turquoise", "purple", "blue", "orange" ];
-		
-		let currentIndex = this.cardID;
-		let maxNum = cardHeaderColorArray.length;
-		let returnNum = 0;
-
-		// Color is choosen based on current CardID
-		while( currentIndex > maxNum-1 ) {
-			currentIndex = currentIndex % maxNum;
-		}
-		this.headerColor = cardHeaderColorArray[currentIndex] + "CardHeader";
-		return this.headerColor;
-	}
-
-
 	// remove readonly property, enable user to change value of card title 
-	editTodoCard(): void {
+	enableTitleChange(): void {
 		this.cardTitleInput.removeAttr('readonly').select();
 	}
+	// Change Title of todoCard on Dropdown Edit option
 	chageCardTitle(): void {
 
-		if(this.cardTitleInput.val() && (this.cardTitleInput.val() !== this.cardTitle)){
+		if( this.cardTitleInput.val() ) {
 			this.cardTitleInput.attr('readonly');
 			this.cardTitle = this.cardTitleInput.val();
 		}
+		this.parentContext.updateLocalStorage();
 	}
+
+
+
+
+
+
 	// When Max Width <= 950px Hide Todo Card Body
 	toggleTodoBodyHeight( cardContainder: JQuery ): void {
 
@@ -245,6 +267,8 @@ export class TodoCard implements Persistable  {
 		cardContainder.find('.show--card--body').addClass('showCardBody');
 	}
 
+
+	// RENDER TASK FOR CARD
 
 	//  On Add New Task Button Prepend Empty Task Frame 
 	showNewTaskInputContainer(): void {
@@ -305,7 +329,7 @@ export class TodoCard implements Persistable  {
 	}	
 
 
-	
+	// RENDER CARD HTML
 
 	private getHTML(): string {
 

@@ -1,4 +1,4 @@
-/* line 5, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../home/sandra/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -553,10 +553,10 @@ body {
 }
 /* line 66, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .floatingButtons {
-  -moz-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  -o-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  -webkit-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  transition: all 0.5s ease-in-out, z-index 0.7s ease;
+  -moz-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  -o-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  -webkit-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  transition: all 0.35s ease-in-out, z-index 0.5s ease;
 }
 /* line 69, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer .addCardFloatingButton {
@@ -576,17 +576,17 @@ body {
 }
 /* line 88, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .floatingButtons {
-  -moz-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  -o-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  -webkit-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  transition: all 0.5s ease-in-out, z-index 0.7s ease;
+  -moz-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  -o-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  -webkit-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  transition: all 0.35s ease-in-out, z-index 0.5s ease;
 }
 /* line 91, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .addCardFloatingButton {
-  -moz-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  -o-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  -webkit-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  transition: all 0.5s ease-in-out, z-index 0.7s ease;
+  -moz-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  -o-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  -webkit-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  transition: all 0.35s ease-in-out, z-index 0.5s ease;
   position: absolute;
   top: 1.5rem !important;
   right: 0 !important;
@@ -596,10 +596,10 @@ body {
 }
 /* line 102, ../scss/_main-card-layout.scss */
 .mainTodoCardContainer .mainTodoCard .cardHeader .addNewButtonContainer.hideFloatingButtons .addTaskFloatingButton {
-  -moz-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  -o-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  -webkit-transition: all 0.5s ease-in-out, z-index 0.7s ease;
-  transition: all 0.5s ease-in-out, z-index 0.7s ease;
+  -moz-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  -o-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  -webkit-transition: all 0.35s ease-in-out, z-index 0.5s ease;
+  transition: all 0.35s ease-in-out, z-index 0.5s ease;
   position: absolute;
   bottom: 1.5rem !important;
   right: 0;

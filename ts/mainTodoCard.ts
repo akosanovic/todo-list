@@ -37,7 +37,7 @@ export class MainTodoCard implements TodoCardInterface {
 		//  container to fill with oldest tasks
 		this.oldestTaskListContainer = this.mainTodoCardContainer.find('.oldest--task--container');
 
-
+		this.mainTodoCardContainer.on('focusout', this.blurHandler.bind(this));
 		this.renderTodoTasksFromLocalStorage()
 		
 	}
@@ -67,71 +67,75 @@ export class MainTodoCard implements TodoCardInterface {
 				// this.createTodoCard( e );
 			}
 			else if( floatingButtonClicked.hasClass('floating--button--add--task')) {
-				
+							
 				this.parentContext.createTodoCardWithTask( e );
 			}
 		}
 	}
+	blurHandler(e): void {
+		let target = $(e.target);
+
+		let addNewButtonBlured = target.closest(this.addNewButton);
+		if(addNewButtonBlured.length > 0) {
+			this.hideFloatingButtons(e);
+		}
+	}
+
+	updateLocalStorage() {
+		this.parentContext.updateLocalStorage();
+	}
 
 
 
-
-
-	showFloatingButtons( e ): void {
+	showFloatingButtons(e): void {
 		e.stopPropagation();
 		
 
 		if( this.addNewButtonContainer.hasClass('hideFloatingButtons') ) {		
 			this.addNewButtonContainer.removeClass('hideFloatingButtons');
 		}
+		else {
+			this.hideFloatingButtons(e);
+		}
 	}
-	hideFloatingButtons( e ): void {
+	hideFloatingButtons(e): void {
 
 		if (!this.addNewButtonContainer.hasClass('hideFloatingButtons')){
 			this.addNewButtonContainer.addClass('hideFloatingButtons');
 		}
 	}
 
-	createTodoTask(){}
-
-
-	createNewCardWithTask( e ): void {
-		e.stopPropagation();
-		
-		console.log('connect with Task Card and Task Item')
-	}
-
 
 	renderTodoTasksFromLocalStorage() {
 		
-		let taskArray: TodoTask[] = this.parentContext.getOldestTasksForMainTodoCard();
-		if ( taskArray.length > 0 ) {
-			
-			for(let i = 0; i < this.maxNumOfOldestTaskToDisplay; i++) {
+		let oldestTaskArray: TodoTask[] = this.parentContext.getOldestTasksForMainTodoCard();
 
-				let oldestTask = taskArray[i];
+		if ( oldestTaskArray.length > 0 ) {
+			
+			for(let i = 0; (i < this.maxNumOfOldestTaskToDisplay && i < oldestTaskArray.length); i++) {
+				let oldestTask = oldestTaskArray[i];
+				console.log('oldest task', oldestTask)
 				this.prependOldestTask( oldestTask )
 			}
 		}
-		else if (taskArray.length === 0) {
+		else if (oldestTaskArray.length === 0) {
 			this.emptyMainTodoTaskContainer()
 		}
 	}
 	prependOldestTask( taskObject: Object ): void {
-		let oldTodoTask: TodoTask = new TodoTask( taskObject, this );
+
+		let oldTodoTask: TodoTask = new TodoTask( taskObject );
 		let oldestTaskContainer: JQuery = this.mainTodoCardContainer.find('.oldest--task--container');
 		oldTodoTask.prependTo( oldestTaskContainer );
-
-
 	}
 
 	emptyMainTodoTaskContainer() {
+
 		this.mainTodoTaskContainer = this.mainTodoCardContainer.find('.main--card--body--container');
 		this.mainTodoTaskContainer.addClass('emptyMainTodoCardTaskList');
 	}
 
-	// function managed in todoApp.ts
-	createTodoCardWithTask () {}
+	
 
 
 }

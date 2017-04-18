@@ -19,13 +19,14 @@ export class TodoTask implements Persistable {
 
 
 	constructor( todoTaskObject, parentContext ) {
-		this.parentContext      = parentContext;
 		
+		this.parentContext      = parentContext;
+	
 		this.todoTaskID         = todoTaskObject.todoTaskID;
 		this.todoTaskDescripion = todoTaskObject.todoTaskDescripion;
 		this.todoTaskStatus     = todoTaskObject.todoTaskStatus;
 		this.parentID           = todoTaskObject.parentID;
-		this.taskDate           = todoTaskObject.taskDate ? todoTaskObject.taskDate : new Date();
+		this.taskDate           = todoTaskObject.taskDate ? todoTaskObject.taskDate: new Date();
 
 
 		this.todoTaskHTML   = this.getTodoTaskHTML();
@@ -78,7 +79,7 @@ export class TodoTask implements Persistable {
 	}
 
 
-	private getTodoTaskHTML(): string{
+	private getTodoTaskHTML(): string {
 		// * Hack 
 		//  checkbox is hidden and instead label is listening for user action
 		//  In order for that to work label and checkbox need same id / for value
@@ -107,9 +108,12 @@ export class TodoTask implements Persistable {
 	// Register user Done Status change
 	// if task is checked it will not render at new session
 	changeTaskStatus(): void{
-
+		// update Task Status variable
 		this.todoTaskStatus = (this.todoTaskJQuery.find('.task--done--status')).is(":checked");
 		
+		// set css class
+		this.todoTaskJQuery.toggleClass('taskChecked');
+
 		this.getLocalStorageRepresentation();
 
 		this.parentContext.saveChangesToLocalStorage();

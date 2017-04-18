@@ -1,9 +1,8 @@
 
 export interface TodoCardInterface{
-
-	fillOldestTaskListContainer();
 	
+	renderTodoTasksFromLocalStorage()	
 	showFloatingButtons( e );
-	createTodoCardWithTask( event );
+	
 	updateLocalStorage();
 }

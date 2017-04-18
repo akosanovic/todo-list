@@ -64,7 +64,7 @@
 
 				// FLOATING BUTTONS ANIMATION :: BEGIN
 				.floatingButtons {
-					@include transition(all 0.5s ease-in-out, z-index 0.7s ease);
+					@include transition(all 0.35s ease-in-out, z-index 0.5s ease);
 				}
 				.addCardFloatingButton {					
 					position: absolute;
@@ -86,10 +86,10 @@
 				
 				&.hideFloatingButtons {
 					.floatingButtons {
-						@include transition(all 0.5s ease-in-out, z-index 0.7s ease);
+						@include transition(all 0.35s ease-in-out, z-index 0.5s ease);
 					}
 					.addCardFloatingButton {
-						@include transition(all 0.5s ease-in-out, z-index 0.7s ease);
+						@include transition(all 0.35s ease-in-out, z-index 0.5s ease);
 						position: absolute;
 						top     : $lh !important;
 						right   : 0 !important;
@@ -100,7 +100,7 @@
 
 					}
 					.addTaskFloatingButton {
-						@include transition(all 0.5s ease-in-out, z-index 0.7s ease);
+						@include transition(all 0.35s ease-in-out, z-index 0.5s ease);
 						position: absolute;
 						bottom  : $lh !important;
 						right   : 0;
